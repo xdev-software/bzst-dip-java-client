@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model;
+package software.xdev.bzst.dip.client.model.message;
 
 import java.util.List;
 
@@ -39,5 +39,13 @@ public class BzstDipCompleteResult
 	public List<BzstDipSingleTransferResult> getSingleTransferResults()
 	{
 		return this.singleTransferResults;
+	}
+	
+	public boolean wasSuccessfull()
+	{
+		return this.singleTransferResults.stream().anyMatch(
+			result -> result.transferNumber().equals(this.dataTransferNumber)
+				&& result.getStatusCodeMeaning().equals(BzstDipSingleTransferResult.StatusCodeMeaning.OK)
+		);
 	}
 }

@@ -15,7 +15,6 @@
  */
 package software.xdev.bzst.dip.client.xmldocument;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,26 +23,23 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
 import software.xdev.bzst.dip.client.xmldocument.model.AddressFixType;
 import software.xdev.bzst.dip.client.xmldocument.model.AddressType;
 import software.xdev.bzst.dip.client.xmldocument.model.ConsignmentItemType;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectablePlatformOperatorType;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 import software.xdev.bzst.dip.client.xmldocument.model.CountryCodeType;
-import software.xdev.bzst.dip.client.xmldocument.model.CurrCodeType;
 import software.xdev.bzst.dip.client.xmldocument.model.DPIBodyType;
-import software.xdev.bzst.dip.client.xmldocument.model.DPIMessageTypeIndicEnumType;
 import software.xdev.bzst.dip.client.xmldocument.model.DPIOECD;
 import software.xdev.bzst.dip.client.xmldocument.model.DataType;
 import software.xdev.bzst.dip.client.xmldocument.model.DipBodyType;
 import software.xdev.bzst.dip.client.xmldocument.model.DocSpecType;
 import software.xdev.bzst.dip.client.xmldocument.model.MessageSpecType;
 import software.xdev.bzst.dip.client.xmldocument.model.MessageTypeEnumType;
-import software.xdev.bzst.dip.client.xmldocument.model.MonAmntType;
 import software.xdev.bzst.dip.client.xmldocument.model.NameOrganisationType;
 import software.xdev.bzst.dip.client.xmldocument.model.NexusEnumType;
-import software.xdev.bzst.dip.client.xmldocument.model.OECDDocTypeIndicEnumType;
 import software.xdev.bzst.dip.client.xmldocument.model.OECDLegalAddressTypeEnumType;
 import software.xdev.bzst.dip.client.xmldocument.model.ObjectFactory;
 import software.xdev.bzst.dip.client.xmldocument.model.TINType;
@@ -123,47 +119,27 @@ public class XMLDocumentBodyCreator
 		return dpiBodyType;
 	}
 	
-	public static OECDLegalAddressTypeEnumType createAddressType(final String addressType)
-	{
-		
-		return switch(addressType)
-		{
-			case "residentialOrBusiness" -> OECDLegalAddressTypeEnumType.OECD_301;
-			case "residential" -> OECDLegalAddressTypeEnumType.OECD_302;
-			case "business" -> OECDLegalAddressTypeEnumType.OECD_303;
-			case "registeredOffice" -> OECDLegalAddressTypeEnumType.OECD_304;
-			default -> OECDLegalAddressTypeEnumType.OECD_305;
-		};
-	}
 	
-	public static MonAmntType createMonAmntType(final BigInteger value)
-	{
-		final MonAmntType monAmntType = new MonAmntType();
-		monAmntType.setCurrCode(CurrCodeType.EUR);
-		monAmntType.setValue(value);
-		
-		return monAmntType;
-	}
 	
 	private static DocSpecType createPlatformDocSpec(final BzstDipConfiguration configuration)
 	{
-		final String docTypeIndic = configuration.getDocTypeIndic();
+		final BzstDipOecdDocType docTypeIndic = configuration.getDocTypeIndic();
 		
 		LOGGER.debug("Using DocTypeIndic: {}", docTypeIndic);
 		final DocSpecType specType = new DocSpecType();
 		String docRefId = buildDocRefId(UUID.randomUUID().toString(), configuration.getReportingPeriod());
 		specType.setDocRefId(docRefId);
-		specType.setDocTypeIndic(OECDDocTypeIndicEnumType.fromValue(docTypeIndic));
+		specType.setDocTypeIndic(docTypeIndic.toXmlType());
 		
 		// New transmission
-		if(isNewTransmission(docTypeIndic))
+		if(docTypeIndic.isNewTransmission())
 		{
 			// Just used for new transmission
 			docRefId = configuration.getPlatformOperatorDocRefId();
 			specType.setDocRefId(docRefId);
 		}
 		// Correction or deletion
-		else if(isCorrectionOrDeletion(docTypeIndic))
+		else if(docTypeIndic.isCorrectionOrDeletion())
 		{
 			// Just used for correction or deletion
 			final String corrDocRefId = configuration.getPlatformOperatorCorrDocRefId();
@@ -173,7 +149,9 @@ public class XMLDocumentBodyCreator
 		return specType;
 	}
 	
-	public static CorrectablePlatformOperatorType createPlatformOperatorFromConfiguration(final BzstDipConfiguration configuration)
+	public static CorrectablePlatformOperatorType createPlatformOperatorFromConfiguration(
+		final BzstDipConfiguration configuration
+	)
 	{
 		LOGGER.debug("Creating platform operator...");
 		
@@ -220,12 +198,6 @@ public class XMLDocumentBodyCreator
 		return addressType;
 	}
 	
-	public static AddressFixType createAddressFixForReportableSeller(final String city)
-	{
-		final AddressFixType addressFixType = new AddressFixType();
-		addressFixType.setCity(city);
-		return addressFixType;
-	}
 	
 	private MessageSpecType createMessageSpec()
 	{
@@ -250,15 +222,15 @@ public class XMLDocumentBodyCreator
 		
 		final LocalDate reportingPeriod = this.configuration.getReportingPeriod();
 		messageSpecType.setMessageRefId(createMessageRefId(reportingPeriod));
-		messageSpecType.setMessageTypeIndic(
-			DPIMessageTypeIndicEnumType.fromValue(
-				this.configuration.getMessageTypeIndic()
-			)
+		messageSpecType.setMessageTypeIndic(this.configuration.getMessageTypeIndic().toXmlType());
+		
+		messageSpecType.setReportingPeriod(
+			XMLDocumentCreator.parseLocalDateToXMLGregorianCalendarDate(this.configuration.getReportingPeriod())
 		);
 		
-		messageSpecType.setReportingPeriod(XMLDocumentCreator.parseLocalDateToXMLGregorianCalendarDate(this.configuration.getReportingPeriod()));
-		
-		messageSpecType.setTimestamp(XMLDocumentCreator.parseLocalDateToXMLGregorianCalendarDateTime(LocalDateTime.now()));
+		messageSpecType.setTimestamp(
+			XMLDocumentCreator.parseLocalDateToXMLGregorianCalendarDateTime(LocalDateTime.now())
+		);
 		
 		return messageSpecType;
 	}
@@ -274,15 +246,5 @@ public class XMLDocumentBodyCreator
 	public static String buildDocRefId(final String docRefUUID, final LocalDate reportingPeriod)
 	{
 		return "DE" + reportingPeriod.getYear() + "-" + docRefUUID;
-	}
-	
-	public static boolean isNewTransmission(final String docTypeIndic)
-	{
-		return docTypeIndic.equals("OECD0");
-	}
-	
-	public static boolean isCorrectionOrDeletion(final String docTypeIndic)
-	{
-		return docTypeIndic.equals("OECD2") || docTypeIndic.equals("OECD3");
 	}
 }

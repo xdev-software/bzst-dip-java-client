@@ -13,44 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client;
+package software.xdev.bzst.dip.client.model.configuration;
 
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
-import software.xdev.bzst.dip.client.model.BzstDipAddressFix;
-import software.xdev.bzst.dip.client.xmldocument.model.EnvironmentType;
+import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 
 public class BzstDipConfiguration
 {
-	public enum Environment
-	{
-		TEST,
-		PRODUCTION;
-		
-		public EnvironmentType toEnvironmentType()
-		{
-			if(this.equals(PRODUCTION))
-			{
-				return EnvironmentType.PROD;
-			}
-			return EnvironmentType.TEST;
-		}
-	}
-	
-	
 	private final String certificateKeystorePassword;
 	private final String clientId;
+	/**
+	 * Steueridentifikationsnummer (Steuer-ID) without spaces or slashes ({@code /})
+	 */
 	private final String taxID;
+	/**
+	 * Steuernummer in the "vereinheitlichtem Bundesschema".
+	 * <p>
+	 * See
+	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9">Kommunikationshandbuch
+	 * DIP-Standard 1.3</a> - Section 2.6.2
+	 */
 	private final String taxNumber;
+	/**
+	 * Default: <a href="https://mds-ktst.bzst.bund.de">https://mds-ktst.bzst.bund.de</a>
+	 */
 	private final String realmEnvironmentBaseUrl;
-	private final Environment environment;
-	private final String messageTypeIndic;
+	private final BzstDipEnvironment environment;
+	private final BzstDipDpiMessageType messageTypeIndic;
 	private final LocalDate reportingPeriod;
-	private final String docTypeIndic;
+	private final BzstDipOecdDocType docTypeIndic;
 	private final String platformOperatorDocRefId;
 	private final String platformOperatorCorrDocRefId;
 	private final Supplier<InputStream> certificateKeystoreInputStream;
@@ -67,10 +63,10 @@ public class BzstDipConfiguration
 		final String taxID,
 		final String taxNumber,
 		final String realmEnvironmentBaseUrl,
-		final Environment environment,
-		final String messageTypeIndic,
+		final BzstDipEnvironment environment,
+		final BzstDipDpiMessageType messageTypeIndic,
 		final LocalDate reportingPeriod,
-		final String docTypeIndic,
+		final BzstDipOecdDocType docTypeIndic,
 		final String platformOperatorDocRefId,
 		final String platformOperatorCorrDocRefId,
 		final Supplier<InputStream> certificateKeystoreInputStream,
@@ -126,12 +122,12 @@ public class BzstDipConfiguration
 		return this.realmEnvironmentBaseUrl;
 	}
 	
-	public Environment getEnvironment()
+	public BzstDipEnvironment getEnvironment()
 	{
 		return this.environment;
 	}
 	
-	public String getMessageTypeIndic()
+	public BzstDipDpiMessageType getMessageTypeIndic()
 	{
 		return this.messageTypeIndic;
 	}
@@ -141,7 +137,7 @@ public class BzstDipConfiguration
 		return this.reportingPeriod;
 	}
 	
-	public String getDocTypeIndic()
+	public BzstDipOecdDocType getDocTypeIndic()
 	{
 		return this.docTypeIndic;
 	}

@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model;
+package software.xdev.bzst.dip.client.model.message;
 
-import software.xdev.bzst.dip.client.xmldocument.model.FeesType;
+import java.util.List;
+
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
-public record BzstDipFees(
-	BzstDipMonetaryAmount feesQuarter1,
-	BzstDipMonetaryAmount feesQuarter2,
-	BzstDipMonetaryAmount feesQuarter3,
-	BzstDipMonetaryAmount feesQuarter4
-)
+public record BzstDipMessage
+	(List<BzstDipCorrectableReportableSellerType> correctableReportableSellerTypes)
 {
-	public FeesType toXmlType()
+	public List<CorrectableReportableSellerType> toXmlType(final BzstDipConfiguration configuration)
 	{
-		final FeesType feesType = new FeesType();
-		feesType.setFeesQ1(this.feesQuarter1.toXmlType());
-		feesType.setFeesQ2(this.feesQuarter2.toXmlType());
-		feesType.setFeesQ3(this.feesQuarter3.toXmlType());
-		feesType.setFeesQ4(this.feesQuarter4.toXmlType());
-		return feesType;
+		return this.correctableReportableSellerTypes.stream()
+			.map(sellerTypes -> sellerTypes.toXmlType(configuration))
+			.toList();
 	}
 }

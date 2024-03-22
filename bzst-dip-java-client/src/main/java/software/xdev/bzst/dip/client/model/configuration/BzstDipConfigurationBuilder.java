@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client;
+package software.xdev.bzst.dip.client.model.configuration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,9 +23,10 @@ import java.time.LocalDate;
 import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
-import software.xdev.bzst.dip.client.model.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BzstDipConfigurationBuilder
 {
 	private static final String BASE_URL_DEFAULT_VALUE = "https://mds-ktst.bzst.bund.de";
@@ -34,10 +35,10 @@ public class BzstDipConfigurationBuilder
 	private String taxID;
 	private String taxNumber;
 	private String realmEnvironmentBaseUrl;
-	private BzstDipConfiguration.Environment environment;
-	private String messageTypeIndic;
+	private BzstDipEnvironment environment;
+	private BzstDipDpiMessageType messageTypeIndic;
 	private LocalDate reportingPeriod;
-	private String docTypeIndic;
+	private BzstDipOecdDocType docTypeIndic;
 	private String platformOperatorDocRefId;
 	private String platformOperatorCorrDocRefId;
 	private Supplier<InputStream> certificateKeystoreInputStream;
@@ -79,13 +80,13 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
-	public BzstDipConfigurationBuilder setEnvironment(final BzstDipConfiguration.Environment environment)
+	public BzstDipConfigurationBuilder setEnvironment(final BzstDipEnvironment environment)
 	{
 		this.environment = environment;
 		return this;
 	}
 	
-	public BzstDipConfigurationBuilder setMessageTypeIndic(final String messageTypeIndic)
+	public BzstDipConfigurationBuilder setMessageTypeIndic(final BzstDipDpiMessageType messageTypeIndic)
 	{
 		this.messageTypeIndic = messageTypeIndic;
 		return this;
@@ -97,7 +98,7 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
-	public BzstDipConfigurationBuilder setDocTypeIndic(final String docTypeIndic)
+	public BzstDipConfigurationBuilder setDocTypeIndic(final BzstDipOecdDocType docTypeIndic)
 	{
 		this.docTypeIndic = docTypeIndic;
 		return this;
@@ -156,14 +157,16 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFileEnv(
 				this.environment,
 				PropertiesSupplier.PROPERTY_NAME_ENVIRONMENT,
-				BzstDipConfiguration.Environment.PRODUCTION),
-			this.getSetPropertyOrReadFromFile(
+				BzstDipEnvironment.PRODUCTION),
+			this.getSetPropertyOrReadFromFileDpiMessageType(
 				this.messageTypeIndic,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC),
 			this.getSetPropertyOrReadFromFileDate(
 				this.reportingPeriod,
 				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD),
-			this.getSetPropertyOrReadFromFile(this.docTypeIndic, PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC),
+			this.getSetPropertyOrReadFromFileOecdDocType(
+				this.docTypeIndic,
+				PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorDocRefId,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
@@ -298,19 +301,45 @@ public class BzstDipConfigurationBuilder
 			Long.toString(defaultValue.toMillis()))));
 	}
 	
-	private BzstDipConfiguration.Environment getSetPropertyOrReadFromFileEnv(
-		final BzstDipConfiguration.Environment builderProperty,
+	private BzstDipEnvironment getSetPropertyOrReadFromFileEnv(
+		final BzstDipEnvironment builderProperty,
 		final String propertyNameInFile,
-		final BzstDipConfiguration.Environment defaultProperty)
+		final BzstDipEnvironment defaultProperty)
 	{
 		if(builderProperty != null)
 		{
 			return builderProperty;
 		}
-		return BzstDipConfiguration.Environment.valueOf(this.getSetPropertyOrReadFromFile(
+		return BzstDipEnvironment.valueOf(this.getSetPropertyOrReadFromFile(
 			null,
 			propertyNameInFile,
 			defaultProperty.toString()));
+	}
+	
+	private BzstDipOecdDocType getSetPropertyOrReadFromFileOecdDocType(
+		final BzstDipOecdDocType builderProperty,
+		final String propertyNameInFile)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstDipOecdDocType.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile));
+	}
+	
+	private BzstDipDpiMessageType getSetPropertyOrReadFromFileDpiMessageType(
+		final BzstDipDpiMessageType builderProperty,
+		final String propertyNameInFile)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstDipDpiMessageType.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile));
 	}
 	
 	private String getSetPropertyOrReadFromFile(final String builderProperty, final String propertyNameInFile)
@@ -354,13 +383,15 @@ public class BzstDipConfigurationBuilder
 		return propertyFromFile;
 	}
 	
-	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(final Supplier<InputStream> certificateKeystoreInputStream)
+	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(
+		final Supplier<InputStream> certificateKeystoreInputStream)
 	{
 		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
 		return this;
 	}
 	
-	public BzstDipConfigurationBuilder setPlatformOperatorOrganizationName(final String platformOperatorOrganizationName)
+	public BzstDipConfigurationBuilder setPlatformOperatorOrganizationName(
+		final String platformOperatorOrganizationName)
 	{
 		this.platformOperatorOrganizationName = platformOperatorOrganizationName;
 		return this;

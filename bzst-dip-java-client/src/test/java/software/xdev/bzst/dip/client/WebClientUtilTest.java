@@ -18,49 +18,52 @@ package software.xdev.bzst.dip.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import software.xdev.bzst.dip.client.util.WebClientUtil;
 
+
 class WebClientUtilTest
 {
-    @Test
-    void throwExceptionCanNotParseToXmlTest()
-    {
-        final RuntimeException thrown = assertThrows
-                (
-                        RuntimeException.class,
-                        () ->  WebClientUtil.convertTransferNumberXML("12345")
-                );
-
-        assertEquals("An error occurred while parsing the transfer numbers.", thrown.getMessage());
-    }
-
-    @Test
-    void noTransferNumbersTest()
-    {
-        final List<String> dataTransferNumbers =
-                WebClientUtil.convertTransferNumberXML("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                                                       "<Datentransfernummern/>");
-
-        assertEquals(0, dataTransferNumbers.size());
-    }
-
-    @Test
-    void transferNumbersTest()
-    {
-        final List<String> dataTransferNumbers =
-                WebClientUtil.convertTransferNumberXML("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                                                       "<Datentransfernummern>" +
-                                                       "<Datentransfernummer>2394headfsoiu</Datentransfernummer>" +
-                                                       "<Datentransfernummer>328ddsdfasdfa</Datentransfernummer>" +
-                                                       "<Datentransfernummer>vbmcvbopfdpos</Datentransfernummer>" +
-                                                        "</Datentransfernummern>");
-
-        assertEquals("2394headfsoiu", dataTransferNumbers.get(0));
-        assertEquals("328ddsdfasdfa", dataTransferNumbers.get(1));
-        assertEquals("vbmcvbopfdpos", dataTransferNumbers.get(2));
-    }
+	@Test
+	void throwExceptionCanNotParseToXmlTest()
+	{
+		final IOException thrown = assertThrows(
+			IOException.class,
+			() -> WebClientUtil.extractTransferNumberFromXml("12345")
+		);
+		
+		assertEquals("An error occurred while parsing the transfer numbers.", thrown.getMessage());
+	}
+	
+	@Test
+	void noTransferNumbersTest() throws IOException
+	{
+		final List<String> dataTransferNumbers =
+			WebClientUtil.extractTransferNumberFromXml(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+					"<Datentransfernummern/>");
+		
+		assertEquals(0, dataTransferNumbers.size());
+	}
+	
+	@Test
+	void transferNumbersTest() throws IOException
+	{
+		final List<String> dataTransferNumbers =
+			WebClientUtil.extractTransferNumberFromXml(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+					"<Datentransfernummern>" +
+					"<Datentransfernummer>2394headfsoiu</Datentransfernummer>" +
+					"<Datentransfernummer>328ddsdfasdfa</Datentransfernummer>" +
+					"<Datentransfernummer>vbmcvbopfdpos</Datentransfernummer>" +
+					"</Datentransfernummern>");
+		
+		assertEquals("2394headfsoiu", dataTransferNumbers.get(0));
+		assertEquals("328ddsdfasdfa", dataTransferNumbers.get(1));
+		assertEquals("vbmcvbopfdpos", dataTransferNumbers.get(2));
+	}
 }

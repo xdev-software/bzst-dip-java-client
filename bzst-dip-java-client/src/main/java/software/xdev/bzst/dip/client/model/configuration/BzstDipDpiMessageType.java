@@ -13,47 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model;
+package software.xdev.bzst.dip.client.model.configuration;
 
-import software.xdev.bzst.dip.client.xmldocument.model.OECDLegalAddressTypeEnumType;
+import software.xdev.bzst.dip.client.xmldocument.model.DPIMessageTypeIndicEnumType;
 
 
-public enum BzstDipOecdLegalAddressType
+public enum BzstDipDpiMessageType
 {
 	/**
-	 * residentialOrBusiness
+	 * The message contains new (including additional) information.
 	 */
-	OECD_301,
+	DPI_401,
 	
 	/**
-	 * residential
+	 * The message contains corrections for previously sent information.
 	 */
-	OECD_302,
+	DPI_402,
 	
 	/**
-	 * business
+	 * The message advises that there is no data to report.
 	 */
-	OECD_303,
+	DPI_403;
 	
-	/**
-	 * registeredOffice
-	 */
-	OECD_304,
-	
-	/**
-	 * unspecified
-	 */
-	OECD_305;
-	
-	public OECDLegalAddressTypeEnumType toXmlType()
+	public DPIMessageTypeIndicEnumType toXmlType()
 	{
 		return switch(this)
 		{
-			case OECD_301 -> OECDLegalAddressTypeEnumType.OECD_301;
-			case OECD_302 -> OECDLegalAddressTypeEnumType.OECD_302;
-			case OECD_303 -> OECDLegalAddressTypeEnumType.OECD_303;
-			case OECD_304 -> OECDLegalAddressTypeEnumType.OECD_304;
-			case OECD_305 -> OECDLegalAddressTypeEnumType.OECD_305;
+			case DPI_401 -> DPIMessageTypeIndicEnumType.DPI_401;
+			case DPI_402 -> DPIMessageTypeIndicEnumType.DPI_402;
+			case DPI_403 -> DPIMessageTypeIndicEnumType.DPI_403;
 		};
 	}
 }

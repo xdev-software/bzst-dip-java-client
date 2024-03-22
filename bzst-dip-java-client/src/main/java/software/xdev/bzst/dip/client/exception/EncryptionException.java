@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model;
+package software.xdev.bzst.dip.client.exception;
 
-public record BzstDipSendingResult(String dataTransferNumber)
+public class EncryptionException extends RuntimeException
 {
+	public EncryptionException(final String message)
+	{
+		super(message);
+	}
+	
+	public EncryptionException(final String message, final Throwable cause)
+	{
+		super(message, cause);
+	}
 }

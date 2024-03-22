@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client;
+package software.xdev.bzst.dip.client.model.configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class PropertiesSupplier
 {
 	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD = "CertificateKeystorePassword";

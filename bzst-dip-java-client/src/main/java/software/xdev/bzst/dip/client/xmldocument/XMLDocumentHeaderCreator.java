@@ -18,7 +18,7 @@ package software.xdev.bzst.dip.client.xmldocument;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.model.ApplicationType;
 import software.xdev.bzst.dip.client.xmldocument.model.ConsignmentType;
 import software.xdev.bzst.dip.client.xmldocument.model.CustomerIdentifierType;

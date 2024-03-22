@@ -57,9 +57,10 @@ import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.exception.SigningException;
 import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryExtension;
 import software.xdev.bzst.dip.client.factory.TransformerFactoryExtension;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
 public final class SigningUtil
@@ -97,7 +98,7 @@ public final class SigningUtil
 			
 			if(privateKeyEntry == null)
 			{
-				throw new RuntimeException("Private key entry is null.");
+				throw new SigningException("Private key entry is null.");
 			}
 			
 			// Sign context
@@ -112,11 +113,11 @@ public final class SigningUtil
 				return outputStream.toString(StandardCharsets.UTF_8);
 			}
 			
-			throw new RuntimeException("The validation of the signature from the XML document has failed.");
+			throw new SigningException("The validation of the signature from the XML document has failed.");
 		}
 		catch(final Exception e)
 		{
-			throw new RuntimeException("Something wrong happened while signing the xml document.", e);
+			throw new SigningException("Something wrong happened while signing the xml document.", e);
 		}
 	}
 	
@@ -158,14 +159,13 @@ public final class SigningUtil
 		final Reference reference = xmlSignatureFactory.newReference("#object",
 			xmlSignatureFactory.newDigestMethod(DIGEST_METHOD, null), List.of(), null, null);
 		
-		return xmlSignatureFactory.newSignedInfo
-			(
-				xmlSignatureFactory.newCanonicalizationMethod(
-					CanonicalizationMethod.INCLUSIVE,
-					(C14NMethodParameterSpec)null),
-				xmlSignatureFactory.newSignatureMethod(SIGNATURE_METHOD, null),
-				Collections.singletonList(reference)
-			);
+		return xmlSignatureFactory.newSignedInfo(
+			xmlSignatureFactory.newCanonicalizationMethod(
+				CanonicalizationMethod.INCLUSIVE,
+				(C14NMethodParameterSpec)null),
+			xmlSignatureFactory.newSignatureMethod(SIGNATURE_METHOD, null),
+			Collections.singletonList(reference)
+		);
 	}
 	
 	private static KeyInfo createKeyInfo(
@@ -195,7 +195,7 @@ public final class SigningUtil
 		final NodeList nl = doc.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature");
 		if(nl.getLength() == 0)
 		{
-			throw new RuntimeException("Cannot find Signature element.");
+			throw new SigningException("Cannot find Signature element.");
 		}
 		
 		// Create a DOMValidateContext and specify a KeySelector
@@ -229,7 +229,7 @@ public final class SigningUtil
 		}
 		catch(final Exception e)
 		{
-			throw new RuntimeException(
+			throw new SigningException(
 				"Something wrong happened while getting the private key entry from the keystore.",
 				e);
 		}

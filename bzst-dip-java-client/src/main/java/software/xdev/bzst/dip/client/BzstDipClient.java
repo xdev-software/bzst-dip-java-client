@@ -15,6 +15,7 @@
  */
 package software.xdev.bzst.dip.client;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,11 +25,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
-import software.xdev.bzst.dip.client.model.BzstDipCompleteResult;
-import software.xdev.bzst.dip.client.model.BzstDipMessage;
-import software.xdev.bzst.dip.client.model.BzstDipRequestStatusResult;
-import software.xdev.bzst.dip.client.model.BzstDipSendingResult;
-import software.xdev.bzst.dip.client.model.BzstDipSingleTransferResult;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.BzstDipMessage;
+import software.xdev.bzst.dip.client.model.message.BzstDipRequestStatusResult;
+import software.xdev.bzst.dip.client.model.message.BzstDipSendingResult;
+import software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
 import software.xdev.bzst.dip.client.util.SigningUtil;
 import software.xdev.bzst.dip.client.webclient.WebClient;
@@ -38,6 +40,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.CorrectablePlatformOperat
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BzstDipClient
 {
 	private static final Logger LOGGER = LogManager.getLogger(BzstDipClient.class);
@@ -61,25 +64,23 @@ public class BzstDipClient
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(final BzstDipMessage message)
-		throws HttpStatusCodeNotExceptedException, InterruptedException
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(message.toXmlType(this.configuration));
 	}
 	
 	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(final BzstDipMessage message)
-		throws HttpStatusCodeNotExceptedException
 	{
 		return this.sendDipAndQueryResultAsync(message.toXmlType(this.configuration));
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(final String csvData)
-		throws HttpStatusCodeNotExceptedException, InterruptedException
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(ReportableSellerCsvFileParser.parseCsvData(csvData, this.configuration));
 	}
 	
 	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(final String csvData)
-		throws HttpStatusCodeNotExceptedException
 	{
 		return this.sendDipAndQueryResultAsync(ReportableSellerCsvFileParser.parseCsvData(
 			csvData,
@@ -89,7 +90,7 @@ public class BzstDipClient
 	public BzstDipCompleteResult sendDipAndQueryResult(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes
 	)
-		throws HttpStatusCodeNotExceptedException, InterruptedException
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(
 			correctableReportableSellerTypes,
@@ -101,7 +102,7 @@ public class BzstDipClient
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
 		final CorrectablePlatformOperatorType correctablePlatformOperatorType
 	)
-		throws HttpStatusCodeNotExceptedException, InterruptedException
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
 		try(final WebClient client = new WebClient(this.configuration))
 		{
@@ -114,13 +115,11 @@ public class BzstDipClient
 			
 			return new BzstDipCompleteResult(sendingResult, requestStatusResult);
 		}
-		catch(final HttpStatusCodeNotExceptedException | InterruptedException e)
-		{
-			throw e;
-		}
 	}
 	
-	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(final List<CorrectableReportableSellerType> correctableReportableSellerTypes)
+	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(
+		final List<CorrectableReportableSellerType> correctableReportableSellerTypes
+	)
 	{
 		final ExecutorService executor = Executors.newSingleThreadExecutor();
 		return executor.submit(() -> this.sendDipAndQueryResult(correctableReportableSellerTypes));
@@ -145,21 +144,13 @@ public class BzstDipClient
 		{
 			return this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType, client);
 		}
-		catch(final HttpStatusCodeNotExceptedException e)
-		{
-			throw e;
-		}
 	}
 	
-	public BzstDipRequestStatusResult queryDipResult() throws HttpStatusCodeNotExceptedException
+	public BzstDipRequestStatusResult queryDipResult() throws HttpStatusCodeNotExceptedException, IOException
 	{
 		try(final WebClient client = new WebClient(this.configuration))
 		{
 			return client.readAndConfirmDataTransferNumbers();
-		}
-		catch(final HttpStatusCodeNotExceptedException e)
-		{
-			throw e;
 		}
 	}
 	
@@ -193,7 +184,7 @@ public class BzstDipClient
 	private BzstDipRequestStatusResult queryDipResultWithRetry(
 		final WebClient webClient,
 		final BzstDipSendingResult sendingResult)
-		throws HttpStatusCodeNotExceptedException, InterruptedException
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
 		BzstDipRequestStatusResult requestStatusResult;
 		int retryCounter = 0;
@@ -219,8 +210,8 @@ public class BzstDipClient
 		final BzstDipRequestStatusResult requestStatusResult)
 	{
 		return requestStatusResult.singleTransferResults().stream().anyMatch(
-			status -> status.transferNumber().equals(sendingResult.dataTransferNumber()) &&
-				status.getStatusCodeMeaning().equals(BzstDipSingleTransferResult.StatusCodeMeaning.OK)
+			status -> status.transferNumber().equals(sendingResult.dataTransferNumber())
+				&& status.getStatusCodeMeaning().equals(BzstDipSingleTransferResult.StatusCodeMeaning.OK)
 		);
 	}
 }

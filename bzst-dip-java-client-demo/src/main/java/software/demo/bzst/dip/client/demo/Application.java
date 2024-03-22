@@ -1,36 +1,67 @@
 package software.demo.bzst.dip.client.demo;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import software.xdev.bzst.dip.client.BzstDipClient;
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
-import software.xdev.bzst.dip.client.model.BzstDipAddressFix;
-import software.xdev.bzst.dip.client.model.BzstDipConsiderations;
-import software.xdev.bzst.dip.client.model.BzstDipCorrectableReportableSellerType;
-import software.xdev.bzst.dip.client.model.BzstDipCountryCode;
-import software.xdev.bzst.dip.client.model.BzstDipCurrency;
-import software.xdev.bzst.dip.client.model.BzstDipFees;
-import software.xdev.bzst.dip.client.model.BzstDipMessage;
-import software.xdev.bzst.dip.client.model.BzstDipMonetaryAmount;
-import software.xdev.bzst.dip.client.model.BzstDipNumberOfActivities;
-import software.xdev.bzst.dip.client.model.BzstDipOecdLegalAddressType;
-import software.xdev.bzst.dip.client.model.BzstDipTaxes;
-import software.xdev.bzst.dip.client.model.BzstDipTin;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
+import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.BzstDipConsiderations;
+import software.xdev.bzst.dip.client.model.message.BzstDipCorrectableReportableSellerType;
+import software.xdev.bzst.dip.client.model.message.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.model.message.BzstDipCurrency;
+import software.xdev.bzst.dip.client.model.message.BzstDipFees;
+import software.xdev.bzst.dip.client.model.message.BzstDipMessage;
+import software.xdev.bzst.dip.client.model.message.BzstDipMonetaryAmount;
+import software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities;
+import software.xdev.bzst.dip.client.model.message.BzstDipOecdLegalAddressType;
+import software.xdev.bzst.dip.client.model.message.BzstDipTaxes;
+import software.xdev.bzst.dip.client.model.message.BzstDipTin;
 
 
+@SuppressWarnings("checkstyle:MagicNumber")
 public final class Application
 {
-	public static void main(final String[] args) throws InterruptedException, HttpStatusCodeNotExceptedException
+	private static final Logger LOGGER = LogManager.getLogger(Application.class);
+	
+	public static void main(final String[] args)
+		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException
 	{
-		final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder()
-			.setClientId("TestClient")
-			.build();
+		final BzstDipConfiguration configuration = createConfiguration();
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
-		bzstDipClient.sendDipAndQueryResult(createMessage());
+		final BzstDipCompleteResult bzstDipCompleteResult = bzstDipClient.sendDipAndQueryResult(createMessage());
+		LOGGER.info(
+			String.format(
+				"Sending dip message with transfer number %s %s",
+				bzstDipCompleteResult.getDataTransferNumber(),
+				bzstDipCompleteResult.wasSuccessfull() ? "was successful." : "has failed!"
+			)
+		);
+	}
+	
+	private static BzstDipConfiguration createConfiguration()
+	{
+		return new BzstDipConfigurationBuilder()
+			.setClientId("TestClient")
+			.setTaxID("TaxID")
+			.setTaxNumber("TaxNumber")
+			.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
+			.setReportingPeriod(LocalDate.now())
+			.setDocTypeIndic(BzstDipOecdDocType.OECD_0)
+			.setPlatformOperatorOrganizationName("TestOrg")
+			.setPlatformOperatorPlatformName("TestApp")
+			.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
+			.build();
 	}
 	
 	private static BzstDipMessage createMessage()
@@ -48,12 +79,12 @@ public final class Application
 					"123-456-789",
 					"Mick",
 					"Fleetwood",
-					LocalDate.of(1947,6,24),
+					LocalDate.of(1947, 6, 24),
 					BzstDipOecdLegalAddressType.OECD_301,
 					new BzstDipAddressFix(
 						"Weiden"
 					),
-					new BzstDipNumberOfActivities(1,2,3,4),
+					new BzstDipNumberOfActivities(1, 2, 3, 4),
 					new BzstDipConsiderations(
 						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR),
 						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR),

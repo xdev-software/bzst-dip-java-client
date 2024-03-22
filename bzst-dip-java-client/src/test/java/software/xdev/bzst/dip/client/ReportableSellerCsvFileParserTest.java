@@ -20,30 +20,43 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
+import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
 class ReportableSellerCsvFileParserTest
 {
-	private static final Logger LOGGER = LogManager.getLogger(ReportableSellerCsvFileParser.class);
-	private final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder().build();
+	private final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder()
+		.setClientId("TestClient")
+		.setTaxID("TaxID")
+		.setTaxNumber("TaxNumber")
+		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
+		.setReportingPeriod(LocalDate.now())
+		.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
+		.setPlatformOperatorOrganizationName("TestOrg")
+		.setPlatformOperatorPlatformName("TestApp")
+		.setPlatformOperatorAddress(
+			new BzstDipAddressFix("TestCity")
+		)
+		.build();
 	
 	@Test
 	void shouldParseSuccessfullyTest() throws IOException
 	{
-		final String resourceName = "src/test/resources/datensatz.csv";
+		final String resourceName = "src/test/resources/TestCsvData.csv";
 		
 		final List<CorrectableReportableSellerType> reportableSeller =
 			ReportableSellerCsvFileParser.parseCsvData(Files.readString(Path.of(resourceName)), this.configuration);
-		
-		reportableSeller.forEach(LOGGER::info);
 		
 		// Check size
 		assertEquals(2, reportableSeller.size());

@@ -40,8 +40,10 @@ import org.xml.sax.SAXException;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.exception.EncryptionException;
+import software.xdev.bzst.dip.client.exception.SigningException;
 import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryExtension;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
 public final class WebClientUtil
@@ -56,24 +58,23 @@ public final class WebClientUtil
 	
 	public static String createRequestToken(final BzstDipConfiguration configuration)
 	{
-		LOGGER.info("Creating jwt token...");
+		LOGGER.debug("Creating jwt token...");
 		try(final InputStream keystoreInputStream = configuration.getCertificateKeystoreInputStream().get())
 		{
-			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry
-				(
-					keystoreInputStream,
-					configuration.getCertificateKeystorePassword(),
-					SigningUtil.KEYSTORE_TYPE
-				);
+			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
+				keystoreInputStream,
+				configuration.getCertificateKeystorePassword(),
+				SigningUtil.KEYSTORE_TYPE
+			);
 			
 			if(privateKeyEntry == null)
 			{
-				throw new RuntimeException("The private key entry in the keystore is null.");
+				throw new SigningException("The private key entry in the keystore is null.");
 			}
 			
 			final Key privateKey = privateKeyEntry.getPrivateKey();
 			final String clientId = configuration.getClientId();
-			LOGGER.info("Using client id: {}", clientId);
+			LOGGER.debug("Using client id: {}", clientId);
 			
 			return Jwts.builder()
 				.issuer(clientId)
@@ -90,11 +91,11 @@ public final class WebClientUtil
 		}
 		catch(final IOException ioException)
 		{
-			throw new RuntimeException("An error occurred while creating the request token.", ioException);
+			throw new EncryptionException("An error occurred while creating the request token.", ioException);
 		}
 	}
 	
-	public static List<String> convertTransferNumberXML(final String xmlString)
+	public static List<String> extractTransferNumberFromXml(final String xmlString) throws IOException
 	{
 		try
 		{
@@ -105,25 +106,20 @@ public final class WebClientUtil
 			final NodeList nodeList = doc.getElementsByTagName(TAG_NAME_DATENTRANSFERNUMMER);
 			final List<String> stringList = new ArrayList<>();
 			
-			for(int i = 0;
-				i < nodeList.getLength();
-				i++)
+			for(int i = 0; i < nodeList.getLength(); i++)
 			{
 				final Node node = nodeList.item(i);
-				
 				if(node.getNodeType() == Node.ELEMENT_NODE)
 				{
 					final Element tElement = (Element)node;
-					
 					stringList.add(tElement.getTextContent());
 				}
 			}
-			
 			return stringList;
 		}
 		catch(final ParserConfigurationException | SAXException | IOException e)
 		{
-			throw new RuntimeException("An error occurred while parsing the transfer numbers.", e);
+			throw new IOException("An error occurred while parsing the transfer numbers.", e);
 		}
 	}
 }

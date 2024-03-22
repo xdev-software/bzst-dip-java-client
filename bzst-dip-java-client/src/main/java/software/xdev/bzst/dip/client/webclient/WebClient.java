@@ -32,10 +32,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
-import software.xdev.bzst.dip.client.model.BzstDipRequestStatusResult;
-import software.xdev.bzst.dip.client.model.BzstDipSingleTransferResult;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.message.BzstDipRequestStatusResult;
+import software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult;
 import software.xdev.bzst.dip.client.util.WebClientUtil;
 
 
@@ -210,18 +210,20 @@ public class WebClient implements AutoCloseable
 	 *
 	 * @return String list with data transfer numbers
 	 */
-	public List<String> requestResultLogs() throws HttpStatusCodeNotExceptedException
+	public List<String> requestResultLogs() throws HttpStatusCodeNotExceptedException, IOException
 	{
 		final String responseBody = this.executeRequest(this.createGetResultLogsRequest(), OK_HTTP_STATUS_CODE).body();
 		LOGGER.debug("ResponseBody from data transfer number request:\n{}", responseBody);
 		
-		return WebClientUtil.convertTransferNumberXML(responseBody);
+		return WebClientUtil.extractTransferNumberFromXml(responseBody);
 	}
 	
 	public HttpRequest createGetResultProtocolRequest(final String dataTransferNumber)
 	{
 		return HttpRequest.newBuilder()
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/protocol"))
+			.uri(
+				URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/protocol")
+			)
 			.GET()
 			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
 			.build();
@@ -286,7 +288,8 @@ public class WebClient implements AutoCloseable
 	 *
 	 * @return returns true if the method should be called later again because the result is not yet available
 	 */
-	public BzstDipRequestStatusResult readAndConfirmDataTransferNumbers() throws HttpStatusCodeNotExceptedException
+	public BzstDipRequestStatusResult readAndConfirmDataTransferNumbers()
+		throws HttpStatusCodeNotExceptedException, IOException
 	{
 		final List<String> dataTransferNumbers = this.requestResultLogs();
 		LOGGER.debug("DataTransferNumbers {}", dataTransferNumbers);

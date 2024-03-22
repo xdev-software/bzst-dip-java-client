@@ -13,25 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model;
+package software.xdev.bzst.dip.client.model.message;
 
-import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
-
-
-public record BzstDipTaxes(
-	BzstDipMonetaryAmount taxesQuarter1,
-	BzstDipMonetaryAmount taxesQuarter2,
-	BzstDipMonetaryAmount taxesQuarter3,
-	BzstDipMonetaryAmount taxesQuarter4
-)
+public record BzstDipSendingResult(String dataTransferNumber)
 {
-	public TaxesType toXmlType()
-	{
-		final TaxesType taxesType = new TaxesType();
-		taxesType.setTaxQ1(this.taxesQuarter1().toXmlType());
-		taxesType.setTaxQ2(this.taxesQuarter2().toXmlType());
-		taxesType.setTaxQ3(this.taxesQuarter3().toXmlType());
-		taxesType.setTaxQ4(this.taxesQuarter4().toXmlType());
-		return taxesType;
-	}
 }

@@ -41,8 +41,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.factory.SchemaFactoryExtension;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectablePlatformOperatorType;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 import software.xdev.bzst.dip.client.xmldocument.model.DipType;

@@ -15,7 +15,6 @@
  */
 package software.xdev.bzst.dip.client.xmldocument;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -23,7 +22,8 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import software.xdev.bzst.dip.client.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
 import software.xdev.bzst.dip.client.xmldocument.model.AddressFixType;
 import software.xdev.bzst.dip.client.xmldocument.model.ConsiderationType;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
@@ -32,7 +32,6 @@ import software.xdev.bzst.dip.client.xmldocument.model.DocSpecType;
 import software.xdev.bzst.dip.client.xmldocument.model.FeesType;
 import software.xdev.bzst.dip.client.xmldocument.model.INTypeEnumType;
 import software.xdev.bzst.dip.client.xmldocument.model.MSCountryCodeType;
-import software.xdev.bzst.dip.client.xmldocument.model.MonAmntType;
 import software.xdev.bzst.dip.client.xmldocument.model.NameOrganisationType;
 import software.xdev.bzst.dip.client.xmldocument.model.NamePersonType;
 import software.xdev.bzst.dip.client.xmldocument.model.NumberOfActivitiesType;
@@ -50,7 +49,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 
 public class ReportableSellerCreator
 {
-	private static final Logger logger = LogManager.getLogger(ReportableSellerCreator.class);
+	private static final Logger LOGGER = LogManager.getLogger(ReportableSellerCreator.class);
 	private final BzstDipConfiguration configuration;
 	
 	public ReportableSellerCreator(final BzstDipConfiguration configuration)
@@ -108,15 +107,15 @@ public class ReportableSellerCreator
 	
 	private DocSpecType createReportableSellerDocSpec(final String docRefUUID)
 	{
-		final String docTypeIndic = this.configuration.getDocTypeIndic();
+		final BzstDipOecdDocType docTypeIndic = this.configuration.getDocTypeIndic();
 		
-		logger.info("Using DocTypeIndic: {}", docTypeIndic);
+		LOGGER.info("Using DocTypeIndic: {}", docTypeIndic);
 		final DocSpecType specType = new DocSpecType();
 		
 		final LocalDate reportingPeriod = this.configuration.getReportingPeriod();
 		
 		// Creating new UUID if the xml document should be corrected or deleted.
-		if(XMLDocumentBodyCreator.isCorrectionOrDeletion(docTypeIndic))
+		if(docTypeIndic.isCorrectionOrDeletion())
 		{
 			// Just used for correction or deletion
 			specType.setDocRefId(XMLDocumentBodyCreator.buildDocRefId(UUID.randomUUID().toString(), reportingPeriod));
@@ -127,13 +126,13 @@ public class ReportableSellerCreator
 			specType.setDocRefId(XMLDocumentBodyCreator.buildDocRefId(docRefUUID, reportingPeriod));
 		}
 		
-		if(XMLDocumentBodyCreator.isNewTransmission(docTypeIndic))
+		if(docTypeIndic.isNewTransmission())
 		{
 			specType.setDocTypeIndic(OECDDocTypeIndicEnumType.OECD_1);
 		}
 		else
 		{
-			specType.setDocTypeIndic(OECDDocTypeIndicEnumType.fromValue(docTypeIndic));
+			specType.setDocTypeIndic(docTypeIndic.toXmlType());
 		}
 		
 		return specType;
@@ -174,69 +173,6 @@ public class ReportableSellerCreator
 		otherActivitiesType.setTaxes(taxesType);
 		
 		return otherActivitiesType;
-	}
-	
-	public static TaxesType createTaxesType(
-		final MonAmntType taxQ1,
-		final MonAmntType taxQ2,
-		final MonAmntType taxQ3,
-		final MonAmntType taxQ4
-	)
-	{
-		final TaxesType taxesType = new TaxesType();
-		taxesType.setTaxQ1(taxQ1);
-		taxesType.setTaxQ2(taxQ2);
-		taxesType.setTaxQ3(taxQ3);
-		taxesType.setTaxQ4(taxQ4);
-		
-		return taxesType;
-	}
-	
-	public static FeesType createFeesType(
-		final MonAmntType feesQ1,
-		final MonAmntType feesQ2,
-		final MonAmntType feesQ3,
-		final MonAmntType feesQ4
-	)
-	{
-		final FeesType feesType = new FeesType();
-		feesType.setFeesQ1(feesQ1);
-		feesType.setFeesQ2(feesQ2);
-		feesType.setFeesQ3(feesQ3);
-		feesType.setFeesQ4(feesQ4);
-		
-		return feesType;
-	}
-	
-	public static ConsiderationType createConsiderationType(
-		final MonAmntType consQ1,
-		final MonAmntType consQ2,
-		final MonAmntType consQ3,
-		final MonAmntType consQ4
-	)
-	{
-		final ConsiderationType considerationType = new ConsiderationType();
-		considerationType.setConsQ1(consQ1);
-		considerationType.setConsQ2(consQ2);
-		considerationType.setConsQ3(consQ3);
-		considerationType.setConsQ4(consQ4);
-		
-		return considerationType;
-	}
-	
-	public static NumberOfActivitiesType createNumberOfActivities(
-		final BigInteger numberOfActivitiesQ1,
-		final BigInteger numberOfActivitiesQ2,
-		final BigInteger numberOfActivitiesQ3,
-		final BigInteger numberOfActivitiesQ4)
-	{
-		final NumberOfActivitiesType numberOfActivitiesType = new NumberOfActivitiesType();
-		numberOfActivitiesType.setNumbQ1(numberOfActivitiesQ1);
-		numberOfActivitiesType.setNumbQ2(numberOfActivitiesQ2);
-		numberOfActivitiesType.setNumbQ3(numberOfActivitiesQ3);
-		numberOfActivitiesType.setNumbQ4(numberOfActivitiesQ4);
-		
-		return numberOfActivitiesType;
 	}
 	
 	private static ReportableSellerType.Identity createIdentity(
@@ -532,14 +468,5 @@ public class ReportableSellerCreator
 		firstNameType.setValue(firstName);
 		
 		return firstNameType;
-	}
-	
-	public static TINType createTIN(final String tin, final CountryCodeType issuedBy)
-	{
-		final TINType tinType = new TINType();
-		tinType.setIssuedBy(issuedBy);
-		tinType.setValue(tin);
-		
-		return tinType;
 	}
 }
