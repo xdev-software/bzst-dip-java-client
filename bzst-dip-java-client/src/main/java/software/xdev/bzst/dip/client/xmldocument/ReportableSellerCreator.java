@@ -107,7 +107,7 @@ public class ReportableSellerCreator
 	
 	private DocSpecType createReportableSellerDocSpec(final String docRefUUID)
 	{
-		final BzstDipOecdDocType docTypeIndic = this.configuration.getDocTypeIndic();
+		final BzstDipOecdDocType docTypeIndic = this.configuration.getDocType();
 		
 		LOGGER.info("Using DocTypeIndic: {}", docTypeIndic);
 		final DocSpecType specType = new DocSpecType();

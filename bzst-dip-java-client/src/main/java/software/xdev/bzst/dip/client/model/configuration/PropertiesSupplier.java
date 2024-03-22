@@ -24,37 +24,38 @@ import java.util.Properties;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class PropertiesSupplier
 {
-	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD = "CertificateKeystorePassword";
-	public static final String PROPERTY_NAME_CLIENT_ID = "ClientId";
-	public static final String PROPERTY_NAME_TAX_ID = "TaxID";
-	public static final String PROPERTY_NAME_TAX_NUMBER = "TaxNumber";
-	public static final String PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL = "RealmEnvironmentBaseUrl";
-	public static final String PROPERTY_NAME_ENVIRONMENT = "Environment";
-	public static final String PROPERTY_NAME_MESSAGE_TYPE_INDIC = "MessageTypeIndic";
-	public static final String PROPERTY_NAME_REPORTING_PERIOD = "ReportingPeriod";
-	public static final String PROPERTY_NAME_DOC_TYPE_INDIC = "DocTypeIndic";
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID = "PlatformOperator_DocRefId";
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_CORR_DOC_REF_ID = "PlatformOperator_CorrDocRefId";
-	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE = "CertificateKeystoreFile";
+	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD = "certificate.keystore.password";
+	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE = "certificate.keystore.file";
+	public static final String PROPERTY_NAME_CLIENT_ID = "client.id";
+	public static final String PROPERTY_NAME_TAX_ID = "tax.id";
+	public static final String PROPERTY_NAME_TAX_NUMBER = "tax.number";
+	public static final String PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL = "base.url";
+	public static final String PROPERTY_NAME_ENVIRONMENT = "environment";
+	public static final String PROPERTY_NAME_MESSAGE_TYPE_INDIC = "message.type";
+	public static final String PROPERTY_NAME_REPORTING_PERIOD = "reporting.period";
+	public static final String PROPERTY_NAME_DOC_TYPE_INDIC = "doc.type";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID = "platform.operator.doc.ref.id";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_CORR_DOC_REF_ID = "platform.operator.corr.doc.ref.id";
 	public static final String PROPERTY_NAME_DELAY_BEFORE_CHECKING_RESULTS_IN_MS =
-		"delayBeforeCheckingResultsInMillis";
-	public static final String PROPERTY_NAME_RETRY_QUERY_RESULTS_AMOUNT = "retryQueryResultsAmount";
+		"delay.before.checking.results.in.millis";
+	public static final String PROPERTY_NAME_RETRY_QUERY_RESULTS_AMOUNT = "retry.query.results.amount";
 	public static final String PROPERTY_NAME_DELAY_IN_BETWEEN_RESULT_CHECKS_IN_MS =
-		"delayInBetweenResultChecksInMillis";
+		"delay.in.between.result.checks.in.millis";
 	
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ORGANIZATION = "PlatformOperatorOrganizationName";
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM = "PlatformOperatorPlatformName";
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_STREET = "PlatformOperatorAddressStreet";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ORGANIZATION = "platform.operator.organization.name";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM = "platform.operator.platform.name";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_STREET = "platform.operator.address.street";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_BUILDING =
-		"PlatformOperatorAddressBuildingIdentifier";
+		"platform.operator.address.building";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_SUITE =
-		"PlatformOperatorAddressSuiteIdentifier";
+		"platform.operator.address.suite";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_FLOOR =
-		"PlatformOperatorAddressFloorIdentifier";
+		"platform.operator.address.floor";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_DISTRICT_NAME =
-		"PlatformOperatorAddressDistrictName";
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_POST_CODE = "PlatformOperatorAddressPostCode";
-	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_CITY = "PlatformOperatorAddressCity";
+		"platform.operator.address.district";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_POST_CODE =
+		"platform.operator.address.post.code";
+	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_CITY = "platform.operator.address.city";
 	
 	private final Properties properties;
 	

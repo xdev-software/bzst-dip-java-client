@@ -40,6 +40,7 @@ public class BzstDipConfiguration
 	 * See
 	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9">Kommunikationshandbuch
 	 * DIP-Standard 1.3</a> - Section 2.6.2
+	 * </p>
 	 */
 	private final String taxNumber;
 	/**
@@ -49,14 +50,28 @@ public class BzstDipConfiguration
 	private final String realmEnvironmentBaseUrl;
 	private final BzstDipEnvironment environment;
 	private final BzstDipDpiMessageType messageTypeIndic;
+	/**
+	 * References the last day of the year that is sent.
+	 * <p>
+	 * E.g. for the year 2023 this would be {@code LocalDate.of(2023,12,31)}
+	 * </p>
+	 */
 	private final LocalDate reportingPeriod;
-	private final BzstDipOecdDocType docTypeIndic;
-	private final String platformOperatorDocRefId;
-	private final String platformOperatorCorrDocRefId;
+	private final BzstDipOecdDocType docType;
 	private final Supplier<InputStream> certificateKeystoreInputStream;
 	private final Duration delayBeforeCheckingResults;
 	private final int retryQueryResultsAmount;
 	private final Duration delayInBetweenResultChecks;
+	/**
+	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/> The id references the xml document
+	 * which is supposed to be overwritten.
+	 */
+	private final String platformOperatorDocRefId;
+	/**
+	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_2} or {@link BzstDipOecdDocType#OECD_3}.<br/>
+	 * The id references the xml document which is supposed to be corrected or deleted.
+	 */
+	private final String platformOperatorCorrDocRefId;
 	private final String platformOperatorOrganizationName;
 	private final String platformOperatorPlatformName;
 	private final BzstDipAddressFix platformOperatorAddress;
@@ -70,7 +85,7 @@ public class BzstDipConfiguration
 		final BzstDipEnvironment environment,
 		final BzstDipDpiMessageType messageTypeIndic,
 		final LocalDate reportingPeriod,
-		final BzstDipOecdDocType docTypeIndic,
+		final BzstDipOecdDocType docType,
 		final String platformOperatorDocRefId,
 		final String platformOperatorCorrDocRefId,
 		final Supplier<InputStream> certificateKeystoreInputStream,
@@ -89,7 +104,7 @@ public class BzstDipConfiguration
 		this.environment = environment;
 		this.messageTypeIndic = messageTypeIndic;
 		this.reportingPeriod = reportingPeriod;
-		this.docTypeIndic = docTypeIndic;
+		this.docType = docType;
 		this.platformOperatorDocRefId = platformOperatorDocRefId;
 		this.platformOperatorCorrDocRefId = platformOperatorCorrDocRefId;
 		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
@@ -141,9 +156,9 @@ public class BzstDipConfiguration
 		return this.reportingPeriod;
 	}
 	
-	public BzstDipOecdDocType getDocTypeIndic()
+	public BzstDipOecdDocType getDocType()
 	{
-		return this.docTypeIndic;
+		return this.docType;
 	}
 	
 	public String getPlatformOperatorDocRefId()

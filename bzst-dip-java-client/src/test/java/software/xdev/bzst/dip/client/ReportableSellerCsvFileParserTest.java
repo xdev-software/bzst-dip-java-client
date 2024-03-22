@@ -38,8 +38,8 @@ class ReportableSellerCsvFileParserTest
 {
 	private final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder()
 		.setClientId("TestClient")
-		.setTaxID("TaxID")
-		.setTaxNumber("TaxNumber")
+		.setTaxID("123")
+		.setTaxNumber("123")
 		.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 		.setReportingPeriod(LocalDate.now())

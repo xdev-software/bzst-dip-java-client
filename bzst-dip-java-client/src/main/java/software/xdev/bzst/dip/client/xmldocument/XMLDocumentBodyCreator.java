@@ -123,7 +123,7 @@ public class XMLDocumentBodyCreator
 	
 	private static DocSpecType createPlatformDocSpec(final BzstDipConfiguration configuration)
 	{
-		final BzstDipOecdDocType docTypeIndic = configuration.getDocTypeIndic();
+		final BzstDipOecdDocType docTypeIndic = configuration.getDocType();
 		
 		LOGGER.debug("Using DocTypeIndic: {}", docTypeIndic);
 		final DocSpecType specType = new DocSpecType();
