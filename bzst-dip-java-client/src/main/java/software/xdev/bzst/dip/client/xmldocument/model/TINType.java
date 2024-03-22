@@ -24,7 +24,9 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 
 /**
- * This is the identification number/identification code for the party in question. As the identifier may be not strictly numeric, it is just defined as a string of characters. Attribute 'issuedBy' is required to designate the issuer of the identifier.
+ * This is the identification number/identification code for the party in question. As the identifier may be not
+ * strictly numeric, it is just defined as a string of characters. Attribute 'issuedBy' is required to designate the
+ * issuer of the identifier.
  *
  * <p>Java class for TIN_Type complex type.
  *
@@ -43,83 +45,76 @@ import jakarta.xml.bind.annotation.XmlValue;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TIN_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder =
-        {
-        "value"
-})
+	{
+		"value"
+	})
 public class TINType
 {
-
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "issuedBy")
-    protected CountryCodeType issuedBy;
-    @XmlAttribute(name = "unknown")
-    protected Boolean unknown;
-
-    /**
-     * Defines a string with minimum length 0 and maximum length of 200.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    public String getValue()
-    {
-        return this.value;
-    }
-
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setValue(final String value)
-    {
-        this.value = value;
-    }
-
-    /**
-     * Gets the value of the issuedBy property.
-     *
-     * @return possible object is
-     * {@link CountryCodeType }
-     */
-    public CountryCodeType getIssuedBy()
-    {
-        return this.issuedBy;
-    }
-
-    /**
-     * Sets the value of the issuedBy property.
-     *
-     * @param value allowed object is
-     *              {@link CountryCodeType }
-     */
-    public void setIssuedBy(final CountryCodeType value)
-    {
-        this.issuedBy = value;
-    }
-
-    /**
-     * Gets the value of the unknown property.
-     *
-     * @return possible object is
-     * {@link Boolean }
-     */
-    public Boolean isUnknown()
-    {
-        return this.unknown;
-    }
-
-    /**
-     * Sets the value of the unknown property.
-     *
-     * @param value allowed object is
-     *              {@link Boolean }
-     */
-    public void setUnknown(final Boolean value)
-    {
-        this.unknown = value;
-    }
-
+	
+	@XmlValue
+	protected String value;
+	@XmlAttribute(name = "issuedBy")
+	protected CountryCodeType issuedBy;
+	@XmlAttribute(name = "unknown")
+	protected Boolean unknown;
+	
+	/**
+	 * Defines a string with minimum length 0 and maximum length of 200.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getValue()
+	{
+		return this.value;
+	}
+	
+	/**
+	 * Sets the value of the value property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setValue(final String value)
+	{
+		this.value = value;
+	}
+	
+	/**
+	 * Gets the value of the issuedBy property.
+	 *
+	 * @return possible object is {@link CountryCodeType }
+	 */
+	public CountryCodeType getIssuedBy()
+	{
+		return this.issuedBy;
+	}
+	
+	/**
+	 * Sets the value of the issuedBy property.
+	 *
+	 * @param value allowed object is {@link CountryCodeType }
+	 */
+	public void setIssuedBy(final CountryCodeType value)
+	{
+		this.issuedBy = value;
+	}
+	
+	/**
+	 * Gets the value of the unknown property.
+	 *
+	 * @return possible object is {@link Boolean }
+	 */
+	public Boolean isUnknown()
+	{
+		return this.unknown;
+	}
+	
+	/**
+	 * Sets the value of the unknown property.
+	 *
+	 * @param value allowed object is {@link Boolean }
+	 */
+	public void setUnknown(final Boolean value)
+	{
+		this.unknown = value;
+	}
 }

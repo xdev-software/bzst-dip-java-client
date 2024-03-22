@@ -20,20 +20,21 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "data")
 public class DataType
 {
-    @XmlElement(name = "DPI_OECD", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected DPIOECD dpioecd;
-
-    public DPIOECD getDpioecd()
-    {
-        return this.dpioecd;
-    }
-
-    public void setDpioecd(final DPIOECD dpioecd)
-    {
-        this.dpioecd = dpioecd;
-    }
+	@XmlElement(name = "DPI_OECD", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected DPIOECD dpioecd;
+	
+	public DPIOECD getDpioecd()
+	{
+		return this.dpioecd;
+	}
+	
+	public void setDpioecd(final DPIOECD dpioecd)
+	{
+		this.dpioecd = dpioecd;
+	}
 }

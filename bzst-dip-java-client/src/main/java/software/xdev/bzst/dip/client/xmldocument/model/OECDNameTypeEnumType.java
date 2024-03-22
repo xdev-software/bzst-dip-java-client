@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for OECDNameType_EnumType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="OECDNameType_EnumType"&gt;
@@ -39,85 +39,80 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "OECDNameType_EnumType", namespace = "urn:oecd:ties:dpistf:v1")
 @XmlEnum
-public enum OECDNameTypeEnumType {
-
-
-    /**
-     * SMFAliasOrOther
-     * 
-     */
-    @XmlEnumValue("OECD201")
-    OECD_201("OECD201"),
-
-    /**
-     * indiv (individual)
-     * 
-     */
-    @XmlEnumValue("OECD202")
-    OECD_202("OECD202"),
-
-    /**
-     * alias (alias)
-     * 
-     */
-    @XmlEnumValue("OECD203")
-    OECD_203("OECD203"),
-
-    /**
-     * nick (nickname)
-     * 
-     */
-    @XmlEnumValue("OECD204")
-    OECD_204("OECD204"),
-
-    /**
-     * aka (also known as)
-     * 
-     */
-    @XmlEnumValue("OECD205")
-    OECD_205("OECD205"),
-
-    /**
-     * dba (doing business as)
-     * 
-     */
-    @XmlEnumValue("OECD206")
-    OECD_206("OECD206"),
-
-    /**
-     * legal (legal name)
-     * 
-     */
-    @XmlEnumValue("OECD207")
-    OECD_207("OECD207"),
-
-    /**
-     * atbirth (name at birth)
-     * 
-     */
-    @XmlEnumValue("OECD208")
-    OECD_208("OECD208");
-    private final String value;
-
-    OECDNameTypeEnumType(final String v) {
+public enum OECDNameTypeEnumType
+{
+	
+	/**
+	 * SMFAliasOrOther
+	 */
+	@XmlEnumValue("OECD201")
+	OECD_201("OECD201"),
+	
+	/**
+	 * indiv (individual)
+	 */
+	@XmlEnumValue("OECD202")
+	OECD_202("OECD202"),
+	
+	/**
+	 * alias (alias)
+	 */
+	@XmlEnumValue("OECD203")
+	OECD_203("OECD203"),
+	
+	/**
+	 * nick (nickname)
+	 */
+	@XmlEnumValue("OECD204")
+	OECD_204("OECD204"),
+	
+	/**
+	 * aka (also known as)
+	 */
+	@XmlEnumValue("OECD205")
+	OECD_205("OECD205"),
+	
+	/**
+	 * dba (doing business as)
+	 */
+	@XmlEnumValue("OECD206")
+	OECD_206("OECD206"),
+	
+	/**
+	 * legal (legal name)
+	 */
+	@XmlEnumValue("OECD207")
+	OECD_207("OECD207"),
+	
+	/**
+	 * atbirth (name at birth)
+	 */
+	@XmlEnumValue("OECD208")
+	OECD_208("OECD208");
+	private final String value;
+	
+	OECDNameTypeEnumType(final String v)
+	{
 		this.value = v;
-    }
-
-    public String value() {
-        return this.value;
-    }
-
-    public static OECDNameTypeEnumType fromValue(final String v) {
-        for (final OECDNameTypeEnumType c: OECDNameTypeEnumType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	}
+	
+	public String value()
+	{
+		return this.value;
+	}
+	
+	public static OECDNameTypeEnumType fromValue(final String v)
+	{
+		for(final OECDNameTypeEnumType c : OECDNameTypeEnumType.values())
+		{
+			if(c.value.equals(v))
+			{
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 }

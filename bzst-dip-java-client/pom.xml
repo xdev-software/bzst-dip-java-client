@@ -281,6 +281,7 @@
 						</dependencies>
 						<configuration>
 							<configLocation>../.config/checkstyle/checkstyle.xml</configLocation>
+							<excludes>**/xmldocument/model/**/*</excludes>
 						</configuration>
 						<executions>
 							<execution>

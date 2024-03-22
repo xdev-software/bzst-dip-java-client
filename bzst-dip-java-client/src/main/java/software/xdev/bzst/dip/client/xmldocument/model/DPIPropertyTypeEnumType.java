@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for DPIPropertyType_EnumType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="DPIPropertyType_EnumType"&gt;
@@ -41,99 +41,92 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "DPIPropertyType_EnumType", namespace = "urn:oecd:ties:dpi:v1")
 @XmlEnum
-public enum DPIPropertyTypeEnumType {
-
-
-    /**
-     * Office
-     * 
-     */
-    @XmlEnumValue("DPI901")
-    DPI_901("DPI901"),
-
-    /**
-     * Hotel room
-     * 
-     */
-    @XmlEnumValue("DPI902")
-    DPI_902("DPI902"),
-
-    /**
-     * Bed and Breakfast room
-     * 
-     */
-    @XmlEnumValue("DPI903")
-    DPI_903("DPI903"),
-
-    /**
-     * House
-     * 
-     */
-    @XmlEnumValue("DPI904")
-    DPI_904("DPI904"),
-
-    /**
-     * Apartment
-     * 
-     */
-    @XmlEnumValue("DPI905")
-    DPI_905("DPI905"),
-
-    /**
-     * Mobile Home
-     * 
-     */
-    @XmlEnumValue("DPI906")
-    DPI_906("DPI906"),
-
-    /**
-     * Campground
-     * 
-     */
-    @XmlEnumValue("DPI907")
-    DPI_907("DPI907"),
-
-    /**
-     * Boat
-     * 
-     */
-    @XmlEnumValue("DPI908")
-    DPI_908("DPI908"),
-
-    /**
-     * Parking Space
-     * 
-     */
-    @XmlEnumValue("DPI909")
-    DPI_909("DPI909"),
-
-    /**
-     * Other
-     * 
-     */
-    @XmlEnumValue("DPI910")
-    DPI_910("DPI910");
-    private final String value;
-
-    DPIPropertyTypeEnumType(final String v) {
+public enum DPIPropertyTypeEnumType
+{
+	
+	/**
+	 * Office
+	 */
+	@XmlEnumValue("DPI901")
+	DPI_901("DPI901"),
+	
+	/**
+	 * Hotel room
+	 */
+	@XmlEnumValue("DPI902")
+	DPI_902("DPI902"),
+	
+	/**
+	 * Bed and Breakfast room
+	 */
+	@XmlEnumValue("DPI903")
+	DPI_903("DPI903"),
+	
+	/**
+	 * House
+	 */
+	@XmlEnumValue("DPI904")
+	DPI_904("DPI904"),
+	
+	/**
+	 * Apartment
+	 */
+	@XmlEnumValue("DPI905")
+	DPI_905("DPI905"),
+	
+	/**
+	 * Mobile Home
+	 */
+	@XmlEnumValue("DPI906")
+	DPI_906("DPI906"),
+	
+	/**
+	 * Campground
+	 */
+	@XmlEnumValue("DPI907")
+	DPI_907("DPI907"),
+	
+	/**
+	 * Boat
+	 */
+	@XmlEnumValue("DPI908")
+	DPI_908("DPI908"),
+	
+	/**
+	 * Parking Space
+	 */
+	@XmlEnumValue("DPI909")
+	DPI_909("DPI909"),
+	
+	/**
+	 * Other
+	 */
+	@XmlEnumValue("DPI910")
+	DPI_910("DPI910");
+	private final String value;
+	
+	DPIPropertyTypeEnumType(final String v)
+	{
 		this.value = v;
-    }
-
-    public String value() {
-        return this.value;
-    }
-
-    public static DPIPropertyTypeEnumType fromValue(final String v) {
-        for (final DPIPropertyTypeEnumType c: DPIPropertyTypeEnumType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	}
+	
+	public String value()
+	{
+		return this.value;
+	}
+	
+	public static DPIPropertyTypeEnumType fromValue(final String v)
+	{
+		for(final DPIPropertyTypeEnumType c : DPIPropertyTypeEnumType.values())
+		{
+			if(c.value.equals(v))
+			{
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 }

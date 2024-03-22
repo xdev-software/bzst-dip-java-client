@@ -23,12 +23,13 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * This correctable extends the information about the Reportable Seller by considering the DocSpec element used to identify the particular report within the DPI message being transmitted.
- * 
+ * This correctable extends the information about the Reportable Seller by considering the DocSpec element used to
+ * identify the particular report within the DPI message being transmitted.
+ *
  * <p>Java class for CorrectableReportableSeller_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="CorrectableReportableSeller_Type"&gt;
  *   &lt;complexContent&gt;
@@ -40,41 +41,34 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CorrectableReportableSeller_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "docSpec"
+	"docSpec"
 })
 public class CorrectableReportableSellerType extends ReportableSellerType
 {
-
-    @XmlElement(name = "DocSpec", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected DocSpecType docSpec;
-
-    /**
-     * Gets the value of the docSpec property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DocSpecType }
-     *     
-     */
-    public DocSpecType getDocSpec() {
-        return this.docSpec;
-    }
-
-    /**
-     * Sets the value of the docSpec property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DocSpecType }
-     *     
-     */
-    public void setDocSpec(final DocSpecType value) {
-        this.docSpec = value;
-    }
-
+	
+	@XmlElement(name = "DocSpec", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected DocSpecType docSpec;
+	
+	/**
+	 * Gets the value of the docSpec property.
+	 *
+	 * @return possible object is {@link DocSpecType }
+	 */
+	public DocSpecType getDocSpec()
+	{
+		return this.docSpec;
+	}
+	
+	/**
+	 * Sets the value of the docSpec property.
+	 *
+	 * @param value allowed object is {@link DocSpecType }
+	 */
+	public void setDocSpec(final DocSpecType value)
+	{
+		this.docSpec = value;
+	}
 }

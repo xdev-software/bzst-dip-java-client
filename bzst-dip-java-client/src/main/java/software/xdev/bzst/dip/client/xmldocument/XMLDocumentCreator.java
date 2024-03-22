@@ -50,7 +50,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.DipType;
 
 public class XMLDocumentCreator
 {
-	private static final Logger logger = LogManager.getLogger(XMLDocumentCreator.class);
+	private static final Logger LOGGER = LogManager.getLogger(XMLDocumentCreator.class);
 	private final BzstDipConfiguration configuration;
 	
 	public XMLDocumentCreator(final BzstDipConfiguration configuration)
@@ -112,10 +112,16 @@ public class XMLDocumentCreator
 		
 		final XMLDocumentHeaderCreator xmlDocumentHeaderCreator = new XMLDocumentHeaderCreator(this.configuration);
 		
-		dipType.setHeader(xmlDocumentHeaderCreator.createHeader(this.configuration.getEnvironment().toEnvironmentType()));
+		dipType.setHeader(
+			xmlDocumentHeaderCreator.createHeader(
+				this.configuration.getEnvironment().toEnvironmentType()
+			)
+		);
 		
 		final XMLDocumentBodyCreator xmlDocumentBodyCreator = new XMLDocumentBodyCreator(this.configuration);
-		dipType.setBody(xmlDocumentBodyCreator.createBody(correctableReportableSellerTypes, correctablePlatformOperatorType));
+		dipType.setBody(
+			xmlDocumentBodyCreator.createBody(correctableReportableSellerTypes, correctablePlatformOperatorType)
+		);
 		dipType.setVersion("1.0");
 		
 		return dipType;
@@ -123,7 +129,7 @@ public class XMLDocumentCreator
 	
 	private void validateXMLDocument(final String xmlString)
 	{
-		logger.info("Starting to validate xml...");
+		LOGGER.info("Starting to validate xml...");
 		
 		try
 		{
@@ -143,7 +149,7 @@ public class XMLDocumentCreator
 			validator.validate(
 				new StreamSource(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8))));
 			
-			logger.info("Finished validating xml.");
+			LOGGER.info("Finished validating xml.");
 		}
 		catch(final IOException | SAXException e)
 		{

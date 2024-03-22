@@ -18,6 +18,7 @@ package software.xdev.bzst.dip.client.model.message;
 import software.xdev.bzst.dip.client.xmldocument.model.CurrCodeType;
 
 
+@SuppressWarnings("checkstyle:MethodLength")
 public enum BzstDipCurrency
 {
 	/**

@@ -25,9 +25,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for DipHeaderType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="DipHeaderType"&gt;
  *   &lt;complexContent&gt;
@@ -41,93 +41,79 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DipHeaderType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
-    "consignment",
-    "application"
+	"consignment",
+	"application"
 })
-public class DipHeaderType {
-
-    @XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
-    protected ConsignmentType consignment;
-    @XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
-    protected ApplicationType application;
-    @XmlAttribute(name = "environment", required = true)
-    protected EnvironmentType environment;
-
-    /**
-     * Gets the value of the consignment property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ConsignmentType }
-     *     
-     */
-    public ConsignmentType getConsignment() {
-        return this.consignment;
-    }
-
-    /**
-     * Sets the value of the consignment property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ConsignmentType }
-     *     
-     */
-    public void setConsignment(final ConsignmentType value) {
-        this.consignment = value;
-    }
-
-    /**
-     * Gets the value of the application property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ApplicationType }
-     *     
-     */
-    public ApplicationType getApplication() {
-        return this.application;
-    }
-
-    /**
-     * Sets the value of the application property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ApplicationType }
-     *     
-     */
-    public void setApplication(final ApplicationType value) {
-        this.application = value;
-    }
-
-    /**
-     * Gets the value of the environment property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EnvironmentType }
-     *     
-     */
-    public EnvironmentType getEnvironment() {
-        return this.environment;
-    }
-
-    /**
-     * Sets the value of the environment property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EnvironmentType }
-     *     
-     */
-    public void setEnvironment(final EnvironmentType value) {
-        this.environment = value;
-    }
-
+public class DipHeaderType
+{
+	
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	protected ConsignmentType consignment;
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	protected ApplicationType application;
+	@XmlAttribute(name = "environment", required = true)
+	protected EnvironmentType environment;
+	
+	/**
+	 * Gets the value of the consignment property.
+	 *
+	 * @return possible object is {@link ConsignmentType }
+	 */
+	public ConsignmentType getConsignment()
+	{
+		return this.consignment;
+	}
+	
+	/**
+	 * Sets the value of the consignment property.
+	 *
+	 * @param value allowed object is {@link ConsignmentType }
+	 */
+	public void setConsignment(final ConsignmentType value)
+	{
+		this.consignment = value;
+	}
+	
+	/**
+	 * Gets the value of the application property.
+	 *
+	 * @return possible object is {@link ApplicationType }
+	 */
+	public ApplicationType getApplication()
+	{
+		return this.application;
+	}
+	
+	/**
+	 * Sets the value of the application property.
+	 *
+	 * @param value allowed object is {@link ApplicationType }
+	 */
+	public void setApplication(final ApplicationType value)
+	{
+		this.application = value;
+	}
+	
+	/**
+	 * Gets the value of the environment property.
+	 *
+	 * @return possible object is {@link EnvironmentType }
+	 */
+	public EnvironmentType getEnvironment()
+	{
+		return this.environment;
+	}
+	
+	/**
+	 * Sets the value of the environment property.
+	 *
+	 * @param value allowed object is {@link EnvironmentType }
+	 */
+	public void setEnvironment(final EnvironmentType value)
+	{
+		this.environment = value;
+	}
 }

@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 // Prefixes
-@XmlSchema(location= "http://itzbund.de/ozg/bzst/post/dip/v1/dip.xsd", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/",
-        xmlns =
-        {
-                @XmlNs(namespaceURI = "http://itzbund.de/ozg/bzst/post/dip/v1/", prefix = "dip"),
-                @XmlNs(namespaceURI = "urn:oecd:ties:dpi:v1", prefix = "dpi"),
-                @XmlNs(namespaceURI = "urn:oecd:ties:isodpitypes:v1", prefix = "iso"),
-                @XmlNs(namespaceURI = "urn:oecd:ties:dpistf:v1", prefix = "stf"),
-                @XmlNs(namespaceURI = "http://www.w3.org/2001/XMLSchema-instance", prefix = "xsi"),
-        },
-        elementFormDefault = XmlNsForm.QUALIFIED)
+@XmlSchema(location = "http://itzbund.de/ozg/bzst/post/dip/v1/dip.xsd", namespace = "http://itzbund"
+	+ ".de/ozg/bzst/post/dip/v1/",
+	xmlns =
+		{
+			@XmlNs(namespaceURI = "http://itzbund.de/ozg/bzst/post/dip/v1/", prefix = "dip"),
+			@XmlNs(namespaceURI = "urn:oecd:ties:dpi:v1", prefix = "dpi"),
+			@XmlNs(namespaceURI = "urn:oecd:ties:isodpitypes:v1", prefix = "iso"),
+			@XmlNs(namespaceURI = "urn:oecd:ties:dpistf:v1", prefix = "stf"),
+			@XmlNs(namespaceURI = "http://www.w3.org/2001/XMLSchema-instance", prefix = "xsi"),
+		},
+	elementFormDefault = XmlNsForm.QUALIFIED)
 
 package software.xdev.bzst.dip.client.xmldocument.model;
 

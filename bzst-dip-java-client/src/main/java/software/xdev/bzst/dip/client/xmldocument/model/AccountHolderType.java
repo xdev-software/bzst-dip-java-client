@@ -24,9 +24,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for AccountHolder_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="AccountHolder_Type"&gt;
  *   &lt;complexContent&gt;
@@ -44,94 +44,80 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AccountHolder_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "individual",
-    "organisation",
-    "acctHolderType"
+	"individual",
+	"organisation",
+	"acctHolderType"
 })
-public class AccountHolderType {
-
-    @XmlElement(name = "Individual", namespace = "urn:oecd:ties:dpi:v1")
-    protected NameReportableSellerType individual;
-    @XmlElement(name = "Organisation", namespace = "urn:oecd:ties:dpi:v1")
-    protected OrganisationPartyType organisation;
-    @XmlElement(name = "AcctHolderType", namespace = "urn:oecd:ties:dpi:v1")
-    protected Object acctHolderType;
-
-    /**
-     * Gets the value of the individual property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link NameReportableSellerType }
-     *     
-     */
-    public NameReportableSellerType getIndividual() {
-        return this.individual;
-    }
-
-    /**
-     * Sets the value of the individual property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link NameReportableSellerType }
-     *     
-     */
-    public void setIndividual(final NameReportableSellerType value) {
-        this.individual = value;
-    }
-
-    /**
-     * Gets the value of the organisation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link OrganisationPartyType }
-     *     
-     */
-    public OrganisationPartyType getOrganisation() {
-        return this.organisation;
-    }
-
-    /**
-     * Sets the value of the organisation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link OrganisationPartyType }
-     *     
-     */
-    public void setOrganisation(final OrganisationPartyType value) {
-        this.organisation = value;
-    }
-
-    /**
-     * Gets the value of the acctHolderType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Object getAcctHolderType() {
-        return this.acctHolderType;
-    }
-
-    /**
-     * Sets the value of the acctHolderType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
-     */
-    public void setAcctHolderType(final Object value) {
-        this.acctHolderType = value;
-    }
-
+public class AccountHolderType
+{
+	
+	@XmlElement(name = "Individual", namespace = "urn:oecd:ties:dpi:v1")
+	protected NameReportableSellerType individual;
+	@XmlElement(name = "Organisation", namespace = "urn:oecd:ties:dpi:v1")
+	protected OrganisationPartyType organisation;
+	@XmlElement(name = "AcctHolderType", namespace = "urn:oecd:ties:dpi:v1")
+	protected Object acctHolderType;
+	
+	/**
+	 * Gets the value of the individual property.
+	 *
+	 * @return possible object is {@link NameReportableSellerType }
+	 */
+	public NameReportableSellerType getIndividual()
+	{
+		return this.individual;
+	}
+	
+	/**
+	 * Sets the value of the individual property.
+	 *
+	 * @param value allowed object is {@link NameReportableSellerType }
+	 */
+	public void setIndividual(final NameReportableSellerType value)
+	{
+		this.individual = value;
+	}
+	
+	/**
+	 * Gets the value of the organisation property.
+	 *
+	 * @return possible object is {@link OrganisationPartyType }
+	 */
+	public OrganisationPartyType getOrganisation()
+	{
+		return this.organisation;
+	}
+	
+	/**
+	 * Sets the value of the organisation property.
+	 *
+	 * @param value allowed object is {@link OrganisationPartyType }
+	 */
+	public void setOrganisation(final OrganisationPartyType value)
+	{
+		this.organisation = value;
+	}
+	
+	/**
+	 * Gets the value of the acctHolderType property.
+	 *
+	 * @return possible object is {@link Object }
+	 */
+	public Object getAcctHolderType()
+	{
+		return this.acctHolderType;
+	}
+	
+	/**
+	 * Sets the value of the acctHolderType property.
+	 *
+	 * @param value allowed object is {@link Object }
+	 */
+	public void setAcctHolderType(final Object value)
+	{
+		this.acctHolderType = value;
+	}
 }

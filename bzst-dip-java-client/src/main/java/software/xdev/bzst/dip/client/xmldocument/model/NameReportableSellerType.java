@@ -24,11 +24,11 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 /**
  * Name of Seller
- * 
+ *
  * <p>Java class for NameReportableSeller_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="NameReportableSeller_Type"&gt;
  *   &lt;simpleContent&gt;
@@ -37,40 +37,34 @@ import jakarta.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NameReportableSeller_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "value"
+	"value"
 })
-public class NameReportableSellerType {
-
-    @XmlValue
-    protected String value;
-
-    /**
-     * Defines a string with minimum length 1 and maximum length of 200.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValue() {
-        return this.value;
-    }
-
-    /**
-     * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setValue(final String value) {
-        this.value = value;
-    }
-
+public class NameReportableSellerType
+{
+	
+	@XmlValue
+	protected String value;
+	
+	/**
+	 * Defines a string with minimum length 1 and maximum length of 200.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getValue()
+	{
+		return this.value;
+	}
+	
+	/**
+	 * Sets the value of the value property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setValue(final String value)
+	{
+		this.value = value;
+	}
 }

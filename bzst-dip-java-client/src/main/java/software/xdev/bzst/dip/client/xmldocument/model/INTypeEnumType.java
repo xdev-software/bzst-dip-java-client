@@ -41,55 +41,53 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum INTypeEnumType
 {
-
-
-    /**
-     * Legal Entity Identifier
-     */
-    LEI("LEI"),
-
-    /**
-     * Entity Identification Number
-     */
-    EIN("EIN"),
-
-    /**
-     * Individual Identification Number
-     */
-    IIN("IIN"),
-
-    /**
-     * Business Registration Number
-     */
-    BRN("BRN"),
-
-    /**
-     * Other
-     */
-    @XmlEnumValue("Other")
-    OTHER("Other");
-    private final String value;
-
-    INTypeEnumType(final String v)
-    {
+	
+	/**
+	 * Legal Entity Identifier
+	 */
+	LEI("LEI"),
+	
+	/**
+	 * Entity Identification Number
+	 */
+	EIN("EIN"),
+	
+	/**
+	 * Individual Identification Number
+	 */
+	IIN("IIN"),
+	
+	/**
+	 * Business Registration Number
+	 */
+	BRN("BRN"),
+	
+	/**
+	 * Other
+	 */
+	@XmlEnumValue("Other")
+	OTHER("Other");
+	private final String value;
+	
+	INTypeEnumType(final String v)
+	{
 		this.value = v;
-    }
-
-    public String value()
-    {
-        return this.value;
-    }
-
-    public static INTypeEnumType fromValue(final String v)
-    {
-        for (final INTypeEnumType c : INTypeEnumType.values())
-        {
-            if (c.value.equals(v))
-            {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	}
+	
+	public String value()
+	{
+		return this.value;
+	}
+	
+	public static INTypeEnumType fromValue(final String v)
+	{
+		for(final INTypeEnumType c : INTypeEnumType.values())
+		{
+			if(c.value.equals(v))
+			{
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 }

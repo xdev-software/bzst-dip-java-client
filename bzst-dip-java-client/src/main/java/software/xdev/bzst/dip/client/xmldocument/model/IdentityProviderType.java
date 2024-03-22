@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for identityProviderType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="identityProviderType"&gt;
@@ -33,32 +33,36 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "identityProviderType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
 @XmlEnum
-public enum IdentityProviderType {
-
-    @XmlEnumValue("BZST-CERT")
-    BZST_CERT("BZST-CERT"),
-    ELSTER("ELSTER");
-    private final String value;
-
-    IdentityProviderType(final String v) {
+public enum IdentityProviderType
+{
+	
+	@XmlEnumValue("BZST-CERT")
+	BZST_CERT("BZST-CERT"),
+	ELSTER("ELSTER");
+	private final String value;
+	
+	IdentityProviderType(final String v)
+	{
 		this.value = v;
-    }
-
-    public String value() {
-        return this.value;
-    }
-
-    public static IdentityProviderType fromValue(final String v) {
-        for (final IdentityProviderType c: IdentityProviderType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	}
+	
+	public String value()
+	{
+		return this.value;
+	}
+	
+	public static IdentityProviderType fromValue(final String v)
+	{
+		for(final IdentityProviderType c : IdentityProviderType.values())
+		{
+			if(c.value.equals(v))
+			{
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 }

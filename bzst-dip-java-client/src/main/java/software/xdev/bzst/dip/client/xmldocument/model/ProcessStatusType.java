@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for processStatusType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="processStatusType"&gt;
@@ -33,22 +33,23 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "processStatusType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
 @XmlEnum
-public enum ProcessStatusType {
-
-    OK,
-    PARTIALLY_REJECTED,
-    ERROR;
-
-    public String value() {
-        return this.name();
-    }
-
-    public static ProcessStatusType fromValue(final String v) {
-        return valueOf(v);
-    }
-
+public enum ProcessStatusType
+{
+	
+	OK,
+	PARTIALLY_REJECTED,
+	ERROR;
+	
+	public String value()
+	{
+		return this.name();
+	}
+	
+	public static ProcessStatusType fromValue(final String v)
+	{
+		return valueOf(v);
+	}
 }

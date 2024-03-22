@@ -57,7 +57,9 @@ public class XMLDocumentHeaderCreator
     {
         final ConsignmentType consignmentType = new ConsignmentType();
         consignmentType.setCustomerIdentifier(this.createCustomerIdentifier());
-        consignmentType.setCreationTime(XMLDocumentCreator.parseLocalDateToXMLGregorianCalendarDateTime(LocalDateTime.now()));
+        consignmentType.setCreationTime(
+            XMLDocumentCreator.parseLocalDateToXMLGregorianCalendarDateTime(LocalDateTime.now())
+        );
         consignmentType.setTransferticketId(UUID.randomUUID().toString());
 
         return consignmentType;

@@ -25,9 +25,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for CustomerIdentifierType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="CustomerIdentifierType"&gt;
  *   &lt;complexContent&gt;
@@ -40,68 +40,58 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CustomerIdentifierType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
-    "identityProvider",
-    "identifier"
+	"identityProvider",
+	"identifier"
 })
-public class CustomerIdentifierType {
-
-    @XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
-    @XmlSchemaType(name = "string")
-    protected IdentityProviderType identityProvider;
-    @XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
-    protected String identifier;
-
-    /**
-     * Gets the value of the identityProvider property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link IdentityProviderType }
-     *     
-     */
-    public IdentityProviderType getIdentityProvider() {
-        return this.identityProvider;
-    }
-
-    /**
-     * Sets the value of the identityProvider property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link IdentityProviderType }
-     *     
-     */
-    public void setIdentityProvider(final IdentityProviderType value) {
-        this.identityProvider = value;
-    }
-
-    /**
-     * Gets the value of the identifier property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIdentifier() {
-        return this.identifier;
-    }
-
-    /**
-     * Sets the value of the identifier property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIdentifier(final String value) {
-        this.identifier = value;
-    }
-
+public class CustomerIdentifierType
+{
+	
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlSchemaType(name = "string")
+	protected IdentityProviderType identityProvider;
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	protected String identifier;
+	
+	/**
+	 * Gets the value of the identityProvider property.
+	 *
+	 * @return possible object is {@link IdentityProviderType }
+	 */
+	public IdentityProviderType getIdentityProvider()
+	{
+		return this.identityProvider;
+	}
+	
+	/**
+	 * Sets the value of the identityProvider property.
+	 *
+	 * @param value allowed object is {@link IdentityProviderType }
+	 */
+	public void setIdentityProvider(final IdentityProviderType value)
+	{
+		this.identityProvider = value;
+	}
+	
+	/**
+	 * Gets the value of the identifier property.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getIdentifier()
+	{
+		return this.identifier;
+	}
+	
+	/**
+	 * Sets the value of the identifier property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setIdentifier(final String value)
+	{
+		this.identifier = value;
+	}
 }

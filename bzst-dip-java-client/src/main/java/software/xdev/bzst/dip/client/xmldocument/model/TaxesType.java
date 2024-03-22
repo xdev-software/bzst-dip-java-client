@@ -23,13 +23,15 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * The Taxes element is further split into four elements, representing the quarters in respect of which reporting takes place.
- * 			Each quarter element is further comprised of the MonAmnt_Type, used to communicate taxes withheld in respect of Sellers. Such amounts shall be given in full units, i.e. without decimals. The code for the currency, in which the value is expressed has to be taken from the ISO code list 4217 and added in attribute currCode.
- * 
+ * The Taxes element is further split into four elements, representing the quarters in respect of which reporting takes
+ * place. Each quarter element is further comprised of the MonAmnt_Type, used to communicate taxes withheld in respect
+ * of Sellers. Such amounts shall be given in full units, i.e. without decimals. The code for the currency, in which the
+ * value is expressed has to be taken from the ISO code list 4217 and added in attribute currCode.
+ *
  * <p>Java class for TaxesType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="TaxesType"&gt;
  *   &lt;complexContent&gt;
@@ -44,121 +46,103 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TaxesType", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "taxQ1",
-    "taxQ2",
-    "taxQ3",
-    "taxQ4"
+	"taxQ1",
+	"taxQ2",
+	"taxQ3",
+	"taxQ4"
 })
-public class TaxesType {
-
-    @XmlElement(name = "TaxQ1", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType taxQ1;
-    @XmlElement(name = "TaxQ2", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType taxQ2;
-    @XmlElement(name = "TaxQ3", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType taxQ3;
-    @XmlElement(name = "TaxQ4", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType taxQ4;
-
-    /**
-     * Gets the value of the taxQ1 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getTaxQ1() {
-        return this.taxQ1;
-    }
-
-    /**
-     * Sets the value of the taxQ1 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setTaxQ1(final MonAmntType value) {
-        this.taxQ1 = value;
-    }
-
-    /**
-     * Gets the value of the taxQ2 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getTaxQ2() {
-        return this.taxQ2;
-    }
-
-    /**
-     * Sets the value of the taxQ2 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setTaxQ2(final MonAmntType value) {
-        this.taxQ2 = value;
-    }
-
-    /**
-     * Gets the value of the taxQ3 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getTaxQ3() {
-        return this.taxQ3;
-    }
-
-    /**
-     * Sets the value of the taxQ3 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setTaxQ3(final MonAmntType value) {
-        this.taxQ3 = value;
-    }
-
-    /**
-     * Gets the value of the taxQ4 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getTaxQ4() {
-        return this.taxQ4;
-    }
-
-    /**
-     * Sets the value of the taxQ4 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setTaxQ4(final MonAmntType value) {
-        this.taxQ4 = value;
-    }
-
+public class TaxesType
+{
+	
+	@XmlElement(name = "TaxQ1", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType taxQ1;
+	@XmlElement(name = "TaxQ2", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType taxQ2;
+	@XmlElement(name = "TaxQ3", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType taxQ3;
+	@XmlElement(name = "TaxQ4", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType taxQ4;
+	
+	/**
+	 * Gets the value of the taxQ1 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getTaxQ1()
+	{
+		return this.taxQ1;
+	}
+	
+	/**
+	 * Sets the value of the taxQ1 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setTaxQ1(final MonAmntType value)
+	{
+		this.taxQ1 = value;
+	}
+	
+	/**
+	 * Gets the value of the taxQ2 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getTaxQ2()
+	{
+		return this.taxQ2;
+	}
+	
+	/**
+	 * Sets the value of the taxQ2 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setTaxQ2(final MonAmntType value)
+	{
+		this.taxQ2 = value;
+	}
+	
+	/**
+	 * Gets the value of the taxQ3 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getTaxQ3()
+	{
+		return this.taxQ3;
+	}
+	
+	/**
+	 * Sets the value of the taxQ3 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setTaxQ3(final MonAmntType value)
+	{
+		this.taxQ3 = value;
+	}
+	
+	/**
+	 * Gets the value of the taxQ4 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getTaxQ4()
+	{
+		return this.taxQ4;
+	}
+	
+	/**
+	 * Sets the value of the taxQ4 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setTaxQ4(final MonAmntType value)
+	{
+		this.taxQ4 = value;
+	}
 }

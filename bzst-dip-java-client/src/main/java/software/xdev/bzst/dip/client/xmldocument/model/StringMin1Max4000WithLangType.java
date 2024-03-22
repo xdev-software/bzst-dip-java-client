@@ -25,11 +25,11 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 /**
  * Defines a string with minimum length 1 and maximum length of 4000, with the Language attribute.
- * 
+ *
  * <p>Java class for StringMin1Max4000WithLang_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="StringMin1Max4000WithLang_Type"&gt;
  *   &lt;simpleContent&gt;
@@ -39,66 +39,56 @@ import jakarta.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StringMin1Max4000WithLang_Type", namespace = "urn:oecd:ties:dpistf:v1", propOrder = {
-    "value"
+	"value"
 })
-public class StringMin1Max4000WithLangType {
-
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "language")
-    protected LanguageCodeType language;
-
-    /**
-     * Defines a string with minimum length 1 and maximum length of 4000.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValue() {
-        return this.value;
-    }
-
-    /**
-     * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setValue(final String value) {
-        this.value = value;
-    }
-
-    /**
-     * Gets the value of the language property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LanguageCodeType }
-     *     
-     */
-    public LanguageCodeType getLanguage() {
-        return this.language;
-    }
-
-    /**
-     * Sets the value of the language property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LanguageCodeType }
-     *     
-     */
-    public void setLanguage(final LanguageCodeType value) {
-        this.language = value;
-    }
-
+public class StringMin1Max4000WithLangType
+{
+	
+	@XmlValue
+	protected String value;
+	@XmlAttribute(name = "language")
+	protected LanguageCodeType language;
+	
+	/**
+	 * Defines a string with minimum length 1 and maximum length of 4000.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getValue()
+	{
+		return this.value;
+	}
+	
+	/**
+	 * Sets the value of the value property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setValue(final String value)
+	{
+		this.value = value;
+	}
+	
+	/**
+	 * Gets the value of the language property.
+	 *
+	 * @return possible object is {@link LanguageCodeType }
+	 */
+	public LanguageCodeType getLanguage()
+	{
+		return this.language;
+	}
+	
+	/**
+	 * Sets the value of the language property.
+	 *
+	 * @param value allowed object is {@link LanguageCodeType }
+	 */
+	public void setLanguage(final LanguageCodeType value)
+	{
+		this.language = value;
+	}
 }

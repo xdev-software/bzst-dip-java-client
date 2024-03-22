@@ -26,13 +26,15 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 
 /**
- * This data type is to be used whenever monetary amounts are to be communicated. Such amounts shall be given in full units, i.e. without decimals.  The code for the currency in which the value is expressed has to be taken from the ISO codelist 4217 and added in attribute currCode.
- * 
- * 
+ * This data type is to be used whenever monetary amounts are to be communicated. Such amounts shall be given in full
+ * units, i.e. without decimals.  The code for the currency in which the value is expressed has to be taken from the ISO
+ * codelist 4217 and added in attribute currCode.
+ *
+ *
  * <p>Java class for MonAmnt_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="MonAmnt_Type"&gt;
  *   &lt;simpleContent&gt;
@@ -42,66 +44,56 @@ import jakarta.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MonAmnt_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "value"
+	"value"
 })
-public class MonAmntType {
-
-    @XmlValue
-    protected BigInteger value;
-    @XmlAttribute(name = "currCode", required = true)
-    protected CurrCodeType currCode;
-
-    /**
-     * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getValue() {
-        return this.value;
-    }
-
-    /**
-     * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setValue(final BigInteger value) {
-        this.value = value;
-    }
-
-    /**
-     * Gets the value of the currCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CurrCodeType }
-     *     
-     */
-    public CurrCodeType getCurrCode() {
-        return this.currCode;
-    }
-
-    /**
-     * Sets the value of the currCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CurrCodeType }
-     *     
-     */
-    public void setCurrCode(final CurrCodeType value) {
-        this.currCode = value;
-    }
-
+public class MonAmntType
+{
+	
+	@XmlValue
+	protected BigInteger value;
+	@XmlAttribute(name = "currCode", required = true)
+	protected CurrCodeType currCode;
+	
+	/**
+	 * Gets the value of the value property.
+	 *
+	 * @return possible object is {@link BigInteger }
+	 */
+	public BigInteger getValue()
+	{
+		return this.value;
+	}
+	
+	/**
+	 * Sets the value of the value property.
+	 *
+	 * @param value allowed object is {@link BigInteger }
+	 */
+	public void setValue(final BigInteger value)
+	{
+		this.value = value;
+	}
+	
+	/**
+	 * Gets the value of the currCode property.
+	 *
+	 * @return possible object is {@link CurrCodeType }
+	 */
+	public CurrCodeType getCurrCode()
+	{
+		return this.currCode;
+	}
+	
+	/**
+	 * Sets the value of the currCode property.
+	 *
+	 * @param value allowed object is {@link CurrCodeType }
+	 */
+	public void setCurrCode(final CurrCodeType value)
+	{
+		this.currCode = value;
+	}
 }

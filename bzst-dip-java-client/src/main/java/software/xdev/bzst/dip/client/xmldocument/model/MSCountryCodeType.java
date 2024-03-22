@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for MSCountryCode_Type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="MSCountryCode_Type"&gt;
@@ -57,46 +57,47 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "MSCountryCode_Type", namespace = "urn:oecd:ties:isodpitypes:v1")
 @XmlEnum
-public enum MSCountryCodeType {
-
-    AT,
-    BE,
-    BG,
-    CY,
-    CZ,
-    DK,
-    EE,
-    FI,
-    FR,
-    DE,
-    GR,
-    HU,
-    HR,
-    IE,
-    IT,
-    LV,
-    LT,
-    LU,
-    MT,
-    NL,
-    PL,
-    PT,
-    RO,
-    SK,
-    SI,
-    ES,
-    SE;
-
-    public String value() {
-        return this.name();
-    }
-
-    public static MSCountryCodeType fromValue(final String v) {
-        return valueOf(v);
-    }
-
+public enum MSCountryCodeType
+{
+	
+	AT,
+	BE,
+	BG,
+	CY,
+	CZ,
+	DK,
+	EE,
+	FI,
+	FR,
+	DE,
+	GR,
+	HU,
+	HR,
+	IE,
+	IT,
+	LV,
+	LT,
+	LU,
+	MT,
+	NL,
+	PL,
+	PT,
+	RO,
+	SK,
+	SI,
+	ES,
+	SE;
+	
+	public String value()
+	{
+		return this.name();
+	}
+	
+	public static MSCountryCodeType fromValue(final String v)
+	{
+		return valueOf(v);
+	}
 }

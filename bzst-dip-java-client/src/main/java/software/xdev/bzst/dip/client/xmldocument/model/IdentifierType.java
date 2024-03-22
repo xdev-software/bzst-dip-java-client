@@ -24,12 +24,15 @@ import jakarta.xml.bind.annotation.XmlValue;
 
 
 /**
- * The Identifier field is a required element which contains the Financial Account Identifier pertaining to the Reportable Seller should be reflected. Financial Account Identifiers can include the IBAN number, sort code and account number and any other payment account identifier that the Reporting Platform Operator used for transferring the Consideration in respect to a Reportable Seller.
- * 
+ * The Identifier field is a required element which contains the Financial Account Identifier pertaining to the
+ * Reportable Seller should be reflected. Financial Account Identifiers can include the IBAN number, sort code and
+ * account number and any other payment account identifier that the Reporting Platform Operator used for transferring
+ * the Consideration in respect to a Reportable Seller.
+ *
  * <p>Java class for Identifier_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="Identifier_Type"&gt;
  *   &lt;simpleContent&gt;
@@ -39,66 +42,56 @@ import jakarta.xml.bind.annotation.XmlValue;
  *   &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Identifier_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "value"
+	"value"
 })
-public class IdentifierType {
-
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "AccountNumberType")
-    protected String accountNumberType;
-
-    /**
-     * Defines a string with minimum length 1 and maximum length of 200.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValue() {
-        return this.value;
-    }
-
-    /**
-     * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setValue(final String value) {
-        this.value = value;
-    }
-
-    /**
-     * Gets the value of the accountNumberType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAccountNumberType() {
-        return this.accountNumberType;
-    }
-
-    /**
-     * Sets the value of the accountNumberType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAccountNumberType(final String value) {
-        this.accountNumberType = value;
-    }
-
+public class IdentifierType
+{
+	
+	@XmlValue
+	protected String value;
+	@XmlAttribute(name = "AccountNumberType")
+	protected String accountNumberType;
+	
+	/**
+	 * Defines a string with minimum length 1 and maximum length of 200.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getValue()
+	{
+		return this.value;
+	}
+	
+	/**
+	 * Sets the value of the value property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setValue(final String value)
+	{
+		this.value = value;
+	}
+	
+	/**
+	 * Gets the value of the accountNumberType property.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getAccountNumberType()
+	{
+		return this.accountNumberType;
+	}
+	
+	/**
+	 * Sets the value of the accountNumberType property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setAccountNumberType(final String value)
+	{
+		this.accountNumberType = value;
+	}
 }

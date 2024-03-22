@@ -48,91 +48,85 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "messageSpec",
-        "dpiBody"
+	"messageSpec",
+	"dpiBody"
 })
 @XmlRootElement(name = "DPI_OECD", namespace = "urn:oecd:ties:dpi:v1")
 public class DPIOECD
 {
-
-    @XmlElement(name = "MessageSpec", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MessageSpecType messageSpec;
-    @XmlElement(name = "DPIBody", namespace = "urn:oecd:ties:dpi:v1")
-    protected List<DPIBodyType> dpiBody;
-    @XmlAttribute(name = "version")
-    protected String version;
-
-    /**
-     * Gets the value of the messageSpec property.
-     *
-     * @return possible object is
-     * {@link MessageSpecType }
-     */
-    public MessageSpecType getMessageSpec()
-    {
-        return this.messageSpec;
-    }
-
-    /**
-     * Sets the value of the messageSpec property.
-     *
-     * @param value allowed object is
-     *              {@link MessageSpecType }
-     */
-    public void setMessageSpec(final MessageSpecType value)
-    {
-        this.messageSpec = value;
-    }
-
-    /**
-     * Gets the value of the dpiBody property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the dpiBody property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getDPIBody().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link DPIBodyType }
-     */
-    public List<DPIBodyType> getDPIBody()
-    {
-        if (this.dpiBody == null)
-        {
+	
+	@XmlElement(name = "MessageSpec", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MessageSpecType messageSpec;
+	@XmlElement(name = "DPIBody", namespace = "urn:oecd:ties:dpi:v1")
+	protected List<DPIBodyType> dpiBody;
+	@XmlAttribute(name = "version")
+	protected String version;
+	
+	/**
+	 * Gets the value of the messageSpec property.
+	 *
+	 * @return possible object is {@link MessageSpecType }
+	 */
+	public MessageSpecType getMessageSpec()
+	{
+		return this.messageSpec;
+	}
+	
+	/**
+	 * Sets the value of the messageSpec property.
+	 *
+	 * @param value allowed object is {@link MessageSpecType }
+	 */
+	public void setMessageSpec(final MessageSpecType value)
+	{
+		this.messageSpec = value;
+	}
+	
+	/**
+	 * Gets the value of the dpiBody property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you
+	 * make to
+	 * the returned list will be present inside the Jakarta XML Binding object. This is why there is not a
+	 * <CODE>set</CODE> method for the dpiBody property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getDPIBody().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link DPIBodyType }
+	 */
+	public List<DPIBodyType> getDPIBody()
+	{
+		if(this.dpiBody == null)
+		{
 			this.dpiBody = new ArrayList<>();
-        }
-        return this.dpiBody;
-    }
-
-    /**
-     * Gets the value of the version property.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    public String getVersion()
-    {
-        return this.version;
-    }
-
-    /**
-     * Sets the value of the version property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setVersion(final String value)
-    {
-        this.version = value;
-    }
-
+		}
+		return this.dpiBody;
+	}
+	
+	/**
+	 * Gets the value of the version property.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getVersion()
+	{
+		return this.version;
+	}
+	
+	/**
+	 * Sets the value of the version property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setVersion(final String value)
+	{
+		this.version = value;
+	}
 }

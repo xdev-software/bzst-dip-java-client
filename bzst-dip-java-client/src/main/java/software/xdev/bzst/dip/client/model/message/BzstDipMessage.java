@@ -21,8 +21,7 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
-public record BzstDipMessage
-	(List<BzstDipCorrectableReportableSellerType> correctableReportableSellerTypes)
+public record BzstDipMessage(List<BzstDipCorrectableReportableSellerType> correctableReportableSellerTypes)
 {
 	public List<CorrectableReportableSellerType> toXmlType(final BzstDipConfiguration configuration)
 	{

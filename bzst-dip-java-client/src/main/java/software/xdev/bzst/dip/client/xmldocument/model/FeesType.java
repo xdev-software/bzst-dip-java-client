@@ -24,9 +24,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for FeesType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="FeesType"&gt;
  *   &lt;complexContent&gt;
@@ -41,121 +41,103 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FeesType", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "feesQ1",
-    "feesQ2",
-    "feesQ3",
-    "feesQ4"
+	"feesQ1",
+	"feesQ2",
+	"feesQ3",
+	"feesQ4"
 })
-public class FeesType {
-
-    @XmlElement(name = "FeesQ1", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType feesQ1;
-    @XmlElement(name = "FeesQ2", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType feesQ2;
-    @XmlElement(name = "FeesQ3", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType feesQ3;
-    @XmlElement(name = "FeesQ4", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected MonAmntType feesQ4;
-
-    /**
-     * Gets the value of the feesQ1 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getFeesQ1() {
-        return this.feesQ1;
-    }
-
-    /**
-     * Sets the value of the feesQ1 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setFeesQ1(final MonAmntType value) {
-        this.feesQ1 = value;
-    }
-
-    /**
-     * Gets the value of the feesQ2 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getFeesQ2() {
-        return this.feesQ2;
-    }
-
-    /**
-     * Sets the value of the feesQ2 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setFeesQ2(final MonAmntType value) {
-        this.feesQ2 = value;
-    }
-
-    /**
-     * Gets the value of the feesQ3 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getFeesQ3() {
-        return this.feesQ3;
-    }
-
-    /**
-     * Sets the value of the feesQ3 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setFeesQ3(final MonAmntType value) {
-        this.feesQ3 = value;
-    }
-
-    /**
-     * Gets the value of the feesQ4 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public MonAmntType getFeesQ4() {
-        return this.feesQ4;
-    }
-
-    /**
-     * Sets the value of the feesQ4 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MonAmntType }
-     *     
-     */
-    public void setFeesQ4(final MonAmntType value) {
-        this.feesQ4 = value;
-    }
-
+public class FeesType
+{
+	
+	@XmlElement(name = "FeesQ1", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType feesQ1;
+	@XmlElement(name = "FeesQ2", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType feesQ2;
+	@XmlElement(name = "FeesQ3", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType feesQ3;
+	@XmlElement(name = "FeesQ4", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected MonAmntType feesQ4;
+	
+	/**
+	 * Gets the value of the feesQ1 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getFeesQ1()
+	{
+		return this.feesQ1;
+	}
+	
+	/**
+	 * Sets the value of the feesQ1 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setFeesQ1(final MonAmntType value)
+	{
+		this.feesQ1 = value;
+	}
+	
+	/**
+	 * Gets the value of the feesQ2 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getFeesQ2()
+	{
+		return this.feesQ2;
+	}
+	
+	/**
+	 * Sets the value of the feesQ2 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setFeesQ2(final MonAmntType value)
+	{
+		this.feesQ2 = value;
+	}
+	
+	/**
+	 * Gets the value of the feesQ3 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getFeesQ3()
+	{
+		return this.feesQ3;
+	}
+	
+	/**
+	 * Sets the value of the feesQ3 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setFeesQ3(final MonAmntType value)
+	{
+		this.feesQ3 = value;
+	}
+	
+	/**
+	 * Gets the value of the feesQ4 property.
+	 *
+	 * @return possible object is {@link MonAmntType }
+	 */
+	public MonAmntType getFeesQ4()
+	{
+		return this.feesQ4;
+	}
+	
+	/**
+	 * Sets the value of the feesQ4 property.
+	 *
+	 * @param value allowed object is {@link MonAmntType }
+	 */
+	public void setFeesQ4(final MonAmntType value)
+	{
+		this.feesQ4 = value;
+	}
 }

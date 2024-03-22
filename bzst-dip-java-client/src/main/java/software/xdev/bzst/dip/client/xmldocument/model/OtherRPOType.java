@@ -29,9 +29,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for OtherRPO_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="OtherRPO_Type"&gt;
  *   &lt;complexContent&gt;
@@ -46,135 +46,123 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OtherRPO_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "resCountryCode",
-    "tin",
-    "name",
-    "address"
+	"resCountryCode",
+	"tin",
+	"name",
+	"address"
 })
 @XmlSeeAlso({
-    CorrectableOtherRPOType.class
+	CorrectableOtherRPOType.class
 })
-public class OtherRPOType {
-
-    @XmlElement(name = "ResCountryCode", namespace = "urn:oecd:ties:dpi:v1")
-    @XmlSchemaType(name = "string")
-    protected List<CountryCodeType> resCountryCode;
-    @XmlElement(name = "TIN", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected List<TINType> tin;
-    @XmlElement(name = "Name", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected NameOrganisationType name;
-    @XmlElement(name = "Address", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected AddressType address;
-
-    /**
-     * Gets the value of the resCountryCode property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the resCountryCode property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getResCountryCode().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CountryCodeType }
-     * 
-     * 
-     */
-    public List<CountryCodeType> getResCountryCode() {
-        if (this.resCountryCode == null) {
+public class OtherRPOType
+{
+	
+	@XmlElement(name = "ResCountryCode", namespace = "urn:oecd:ties:dpi:v1")
+	@XmlSchemaType(name = "string")
+	protected List<CountryCodeType> resCountryCode;
+	@XmlElement(name = "TIN", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected List<TINType> tin;
+	@XmlElement(name = "Name", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected NameOrganisationType name;
+	@XmlElement(name = "Address", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected AddressType address;
+	
+	/**
+	 * Gets the value of the resCountryCode property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you
+	 * make to
+	 * the returned list will be present inside the Jakarta XML Binding object. This is why there is not a
+	 * <CODE>set</CODE> method for the resCountryCode property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getResCountryCode().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link CountryCodeType }
+	 */
+	public List<CountryCodeType> getResCountryCode()
+	{
+		if(this.resCountryCode == null)
+		{
 			this.resCountryCode = new ArrayList<>();
-        }
-        return this.resCountryCode;
-    }
-
-    /**
-     * Gets the value of the tin property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the tin property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getTIN().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link TINType }
-     * 
-     * 
-     */
-    public List<TINType> getTIN() {
-        if (this.tin == null) {
+		}
+		return this.resCountryCode;
+	}
+	
+	/**
+	 * Gets the value of the tin property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you
+	 * make to
+	 * the returned list will be present inside the Jakarta XML Binding object. This is why there is not a
+	 * <CODE>set</CODE> method for the tin property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getTIN().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link TINType }
+	 */
+	public List<TINType> getTIN()
+	{
+		if(this.tin == null)
+		{
 			this.tin = new ArrayList<>();
-        }
-        return this.tin;
-    }
-
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link NameOrganisationType }
-     *     
-     */
-    public NameOrganisationType getName() {
-        return this.name;
-    }
-
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link NameOrganisationType }
-     *     
-     */
-    public void setName(final NameOrganisationType value) {
-        this.name = value;
-    }
-
-    /**
-     * Gets the value of the address property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AddressType }
-     *     
-     */
-    public AddressType getAddress() {
-        return this.address;
-    }
-
-    /**
-     * Sets the value of the address property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AddressType }
-     *     
-     */
-    public void setAddress(final AddressType value) {
-        this.address = value;
-    }
-
+		}
+		return this.tin;
+	}
+	
+	/**
+	 * Gets the value of the name property.
+	 *
+	 * @return possible object is {@link NameOrganisationType }
+	 */
+	public NameOrganisationType getName()
+	{
+		return this.name;
+	}
+	
+	/**
+	 * Sets the value of the name property.
+	 *
+	 * @param value allowed object is {@link NameOrganisationType }
+	 */
+	public void setName(final NameOrganisationType value)
+	{
+		this.name = value;
+	}
+	
+	/**
+	 * Gets the value of the address property.
+	 *
+	 * @return possible object is {@link AddressType }
+	 */
+	public AddressType getAddress()
+	{
+		return this.address;
+	}
+	
+	/**
+	 * Sets the value of the address property.
+	 *
+	 * @param value allowed object is {@link AddressType }
+	 */
+	public void setAddress(final AddressType value)
+	{
+		this.address = value;
+	}
 }

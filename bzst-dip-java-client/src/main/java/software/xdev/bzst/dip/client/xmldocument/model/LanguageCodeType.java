@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for LanguageCode_Type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="LanguageCode_Type"&gt;
@@ -214,1123 +214,939 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "LanguageCode_Type", namespace = "urn:oecd:ties:isodpitypes:v1")
 @XmlEnum
-public enum LanguageCodeType {
-
-
-    /**
-     * Afar
-     * 
-     */
-    AA,
-
-    /**
-     * Abkhazian
-     * 
-     */
-    AB,
-
-    /**
-     * Afrikaans
-     * 
-     */
-    AF,
-
-    /**
-     * Akan
-     * 
-     */
-    AK,
-
-    /**
-     * Albanian
-     * 
-     */
-    SQ,
-
-    /**
-     * Amharic
-     * 
-     */
-    AM,
-
-    /**
-     * Arabic
-     * 
-     */
-    AR,
-
-    /**
-     * Aragonese
-     * 
-     */
-    AN,
-
-    /**
-     * Armenian
-     * 
-     */
-    HY,
-
-    /**
-     * Assamese
-     * 
-     */
-    AS,
-
-    /**
-     * Avaric
-     * 
-     */
-    AV,
-
-    /**
-     * Avestan
-     * 
-     */
-    AE,
-
-    /**
-     * Aymara
-     * 
-     */
-    AY,
-
-    /**
-     * Azerbaijani
-     * 
-     */
-    AZ,
-
-    /**
-     * Bashkir
-     * 
-     */
-    BA,
-
-    /**
-     * Bambara
-     * 
-     */
-    BM,
-
-    /**
-     * Basque
-     * 
-     */
-    EU,
-
-    /**
-     * Belarusian
-     * 
-     */
-    BE,
-
-    /**
-     * Bengali
-     * 
-     */
-    BN,
-
-    /**
-     * Bihari languages
-     * 
-     */
-    BH,
-
-    /**
-     * Bislama
-     * 
-     */
-    BI,
-
-    /**
-     * Bosnian
-     * 
-     */
-    BS,
-
-    /**
-     * Breton
-     * 
-     */
-    BR,
-
-    /**
-     * Bulgarian
-     * 
-     */
-    BG,
-
-    /**
-     * Burmese
-     * 
-     */
-    MY,
-
-    /**
-     * Catalan; Valencian
-     * 
-     */
-    CA,
-
-    /**
-     * Chamorro
-     * 
-     */
-    CH,
-
-    /**
-     * Chechen
-     * 
-     */
-    CE,
-
-    /**
-     * Chinese
-     * 
-     */
-    ZH,
-
-    /**
-     * Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic
-     * 
-     */
-    CU,
-
-    /**
-     * Chuvash
-     * 
-     */
-    CV,
-
-    /**
-     * Cornish
-     * 
-     */
-    KW,
-
-    /**
-     * Corsican
-     * 
-     */
-    CO,
-
-    /**
-     * Cree
-     * 
-     */
-    CR,
-
-    /**
-     * Czech
-     * 
-     */
-    CS,
-
-    /**
-     * Danish
-     * 
-     */
-    DA,
-
-    /**
-     * Divehi; Dhivehi; Maldivian
-     * 
-     */
-    DV,
-
-    /**
-     * Dutch; Flemish
-     * 
-     */
-    NL,
-
-    /**
-     * Dzongkha
-     * 
-     */
-    DZ,
-
-    /**
-     * English
-     * 
-     */
-    EN,
-
-    /**
-     * Esperanto
-     * 
-     */
-    EO,
-
-    /**
-     * Estonian
-     * 
-     */
-    ET,
-
-    /**
-     * Ewe
-     * 
-     */
-    EE,
-
-    /**
-     * Faroese
-     * 
-     */
-    FO,
-
-    /**
-     * Fijian
-     * 
-     */
-    FJ,
-
-    /**
-     * Finnish
-     * 
-     */
-    FI,
-
-    /**
-     * French
-     * 
-     */
-    FR,
-
-    /**
-     * Western Frisian
-     * 
-     */
-    FY,
-
-    /**
-     * Fulah
-     * 
-     */
-    FF,
-
-    /**
-     * Georgian
-     * 
-     */
-    KA,
-
-    /**
-     * German
-     * 
-     */
-    DE,
-
-    /**
-     * Gaelic; Scottish Gaelic
-     * 
-     */
-    GD,
-
-    /**
-     * Irish
-     * 
-     */
-    GA,
-
-    /**
-     * Galician
-     * 
-     */
-    GL,
-
-    /**
-     * Manx
-     * 
-     */
-    GV,
-
-    /**
-     * Greek
-     * 
-     */
-    EL,
-
-    /**
-     * Guarani
-     * 
-     */
-    GN,
-
-    /**
-     * Gujarati
-     * 
-     */
-    GU,
-
-    /**
-     * Haitian; Haitian Creole
-     * 
-     */
-    HT,
-
-    /**
-     * Hausa
-     * 
-     */
-    HA,
-
-    /**
-     * Hebrew
-     * 
-     */
-    HE,
-
-    /**
-     * Herero
-     * 
-     */
-    HZ,
-
-    /**
-     * Hindi
-     * 
-     */
-    HI,
-
-    /**
-     * Hiri Motu
-     * 
-     */
-    HO,
-
-    /**
-     * Croatian
-     * 
-     */
-    HR,
-
-    /**
-     * Hungarian
-     * 
-     */
-    HU,
-
-    /**
-     * Igbo
-     * 
-     */
-    IG,
-
-    /**
-     * Icelandic
-     * 
-     */
-    IS,
-
-    /**
-     * Ido
-     * 
-     */
-    IO,
-
-    /**
-     * Sichuan Yi; Nuosu
-     * 
-     */
-    II,
-
-    /**
-     * Inuktitut
-     * 
-     */
-    IU,
-
-    /**
-     * Interlingue; Occidental
-     * 
-     */
-    IE,
-
-    /**
-     * Interlingua (International Auxiliary Language Association)
-     * 
-     */
-    IA,
-
-    /**
-     * Indonesian
-     * 
-     */
-    ID,
-
-    /**
-     * Inupiaq
-     * 
-     */
-    IK,
-
-    /**
-     * Italian
-     * 
-     */
-    IT,
-
-    /**
-     * Javanese
-     * 
-     */
-    JV,
-
-    /**
-     * Japanese
-     * 
-     */
-    JA,
-
-    /**
-     * Kalaallisut; Greenlandic
-     * 
-     */
-    KL,
-
-    /**
-     * Kannada
-     * 
-     */
-    KN,
-
-    /**
-     * Kashmiri
-     * 
-     */
-    KS,
-
-    /**
-     * Kanuri
-     * 
-     */
-    KR,
-
-    /**
-     * Kazakh
-     * 
-     */
-    KK,
-
-    /**
-     * Central Khmer
-     * 
-     */
-    KM,
-
-    /**
-     * Kikuyu; Gikuyu
-     * 
-     */
-    KI,
-
-    /**
-     * Kinyarwanda
-     * 
-     */
-    RW,
-
-    /**
-     * Kirghiz; Kyrgyz
-     * 
-     */
-    KY,
-
-    /**
-     * Komi
-     * 
-     */
-    KV,
-
-    /**
-     * Kongo
-     * 
-     */
-    KG,
-
-    /**
-     * Korean
-     * 
-     */
-    KO,
-
-    /**
-     * Kuanyama; Kwanyama
-     * 
-     */
-    KJ,
-
-    /**
-     * Kurdish
-     * 
-     */
-    KU,
-
-    /**
-     * Lao
-     * 
-     */
-    LO,
-
-    /**
-     * Latin
-     * 
-     */
-    LA,
-
-    /**
-     * Latvian
-     * 
-     */
-    LV,
-
-    /**
-     * Limburgan; Limburger; Limburgish
-     * 
-     */
-    LI,
-
-    /**
-     * Lingala
-     * 
-     */
-    LN,
-
-    /**
-     * Lithuanian
-     * 
-     */
-    LT,
-
-    /**
-     * Luxembourgish; Letzeburgesch
-     * 
-     */
-    LB,
-
-    /**
-     * Luba-Katanga
-     * 
-     */
-    LU,
-
-    /**
-     * Ganda
-     * 
-     */
-    LG,
-
-    /**
-     * Macedonian
-     * 
-     */
-    MK,
-
-    /**
-     * Marshallese
-     * 
-     */
-    MH,
-
-    /**
-     * Malayalam
-     * 
-     */
-    ML,
-
-    /**
-     * Maori
-     * 
-     */
-    MI,
-
-    /**
-     * Marathi
-     * 
-     */
-    MR,
-
-    /**
-     * Malay
-     * 
-     */
-    MS,
-
-    /**
-     * Malagasy
-     * 
-     */
-    MG,
-
-    /**
-     * Maltese
-     * 
-     */
-    MT,
-
-    /**
-     * Mongolian
-     * 
-     */
-    MN,
-
-    /**
-     * Nauru
-     * 
-     */
-    NA,
-
-    /**
-     * Navajo; Navaho
-     * 
-     */
-    NV,
-
-    /**
-     * Ndebele, South; South Ndebele
-     * 
-     */
-    NR,
-
-    /**
-     * Ndebele, North; North Ndebele
-     * 
-     */
-    ND,
-
-    /**
-     * Ndonga
-     * 
-     */
-    NG,
-
-    /**
-     * Nepali
-     * 
-     */
-    NE,
-
-    /**
-     * Norwegian Nynorsk; Nynorsk, Norwegian
-     * 
-     */
-    NN,
-
-    /**
-     * Bokmål, Norwegian; Norwegian Bokmål
-     * 
-     */
-    NB,
-
-    /**
-     * Norwegian
-     * 
-     */
-    NO,
-
-    /**
-     * Chichewa; Chewa; Nyanja
-     * 
-     */
-    NY,
-
-    /**
-     * Occitan; Provençal
-     * 
-     */
-    OC,
-
-    /**
-     * Ojibwa
-     * 
-     */
-    OJ,
-
-    /**
-     * Oriya
-     * 
-     */
-    OR,
-
-    /**
-     * Oromo
-     * 
-     */
-    OM,
-
-    /**
-     * Ossetian; Ossetic
-     * 
-     */
-    OS,
-
-    /**
-     * Panjabi; Punjabi
-     * 
-     */
-    PA,
-
-    /**
-     * Persian
-     * 
-     */
-    FA,
-
-    /**
-     * Pali
-     * 
-     */
-    PI,
-
-    /**
-     * Polish
-     * 
-     */
-    PL,
-
-    /**
-     * Portuguese
-     * 
-     */
-    PT,
-
-    /**
-     * Pushto; Pashto
-     * 
-     */
-    PS,
-
-    /**
-     * Quechua
-     * 
-     */
-    QU,
-
-    /**
-     * Romansh
-     * 
-     */
-    RM,
-
-    /**
-     * Romanian; Moldavian; Moldovan
-     * 
-     */
-    RO,
-
-    /**
-     * Rundi
-     * 
-     */
-    RN,
-
-    /**
-     * Russian
-     * 
-     */
-    RU,
-
-    /**
-     * Sango
-     * 
-     */
-    SG,
-
-    /**
-     * Sanskrit
-     * 
-     */
-    SA,
-
-    /**
-     * Sinhala; Sinhalese
-     * 
-     */
-    SI,
-
-    /**
-     * Slovak
-     * 
-     */
-    SK,
-
-    /**
-     * Slovenian
-     * 
-     */
-    SL,
-
-    /**
-     * Northern Sami
-     * 
-     */
-    SE,
-
-    /**
-     * Samoan
-     * 
-     */
-    SM,
-
-    /**
-     * Shona
-     * 
-     */
-    SN,
-
-    /**
-     * Sindhi
-     * 
-     */
-    SD,
-
-    /**
-     * Somali
-     * 
-     */
-    SO,
-
-    /**
-     * Sotho, Southern
-     * 
-     */
-    ST,
-
-    /**
-     * Spanish; Castilian
-     * 
-     */
-    ES,
-
-    /**
-     * Sardinian
-     * 
-     */
-    SC,
-
-    /**
-     * Serbian
-     * 
-     */
-    SR,
-
-    /**
-     * Swati
-     * 
-     */
-    SS,
-
-    /**
-     * Sundanese
-     * 
-     */
-    SU,
-
-    /**
-     * Swahili
-     * 
-     */
-    SW,
-
-    /**
-     * Swedish
-     * 
-     */
-    SV,
-
-    /**
-     * Tahitian
-     * 
-     */
-    TY,
-
-    /**
-     * Tamil
-     * 
-     */
-    TA,
-
-    /**
-     * Tatar
-     * 
-     */
-    TT,
-
-    /**
-     * Telugu
-     * 
-     */
-    TE,
-
-    /**
-     * Tajik
-     * 
-     */
-    TG,
-
-    /**
-     * Tagalog
-     * 
-     */
-    TL,
-
-    /**
-     * Thai
-     * 
-     */
-    TH,
-
-    /**
-     * Tibetan
-     * 
-     */
-    BO,
-
-    /**
-     * Tigrinya
-     * 
-     */
-    TI,
-
-    /**
-     * Tonga (Tonga Islands)
-     * 
-     */
-    TO,
-
-    /**
-     * Tswana
-     * 
-     */
-    TN,
-
-    /**
-     * Tsonga
-     * 
-     */
-    TS,
-
-    /**
-     * Turkmen
-     * 
-     */
-    TK,
-
-    /**
-     * Turkish
-     * 
-     */
-    TR,
-
-    /**
-     * Twi
-     * 
-     */
-    TW,
-
-    /**
-     * Uighur; Uyghur
-     * 
-     */
-    UG,
-
-    /**
-     * Ukrainian
-     * 
-     */
-    UK,
-
-    /**
-     * Urdu
-     * 
-     */
-    UR,
-
-    /**
-     * Uzbek
-     * 
-     */
-    UZ,
-
-    /**
-     * Venda
-     * 
-     */
-    VE,
-
-    /**
-     * Vietnamese
-     * 
-     */
-    VI,
-
-    /**
-     * Volapük
-     * 
-     */
-    VO,
-
-    /**
-     * Welsh
-     * 
-     */
-    CY,
-
-    /**
-     * Walloon
-     * 
-     */
-    WA,
-
-    /**
-     * Wolof
-     * 
-     */
-    WO,
-
-    /**
-     * Xhosa
-     * 
-     */
-    XH,
-
-    /**
-     * Yiddish
-     * 
-     */
-    YI,
-
-    /**
-     * Yoruba
-     * 
-     */
-    YO,
-
-    /**
-     * Zhuang; Chuang
-     * 
-     */
-    ZA,
-
-    /**
-     * Zulu
-     * 
-     */
-    ZU;
-
-    public String value() {
-        return this.name();
-    }
-
-    public static LanguageCodeType fromValue(final String v) {
-        return valueOf(v);
-    }
-
+public enum LanguageCodeType
+{
+	
+	/**
+	 * Afar
+	 */
+	AA,
+	
+	/**
+	 * Abkhazian
+	 */
+	AB,
+	
+	/**
+	 * Afrikaans
+	 */
+	AF,
+	
+	/**
+	 * Akan
+	 */
+	AK,
+	
+	/**
+	 * Albanian
+	 */
+	SQ,
+	
+	/**
+	 * Amharic
+	 */
+	AM,
+	
+	/**
+	 * Arabic
+	 */
+	AR,
+	
+	/**
+	 * Aragonese
+	 */
+	AN,
+	
+	/**
+	 * Armenian
+	 */
+	HY,
+	
+	/**
+	 * Assamese
+	 */
+	AS,
+	
+	/**
+	 * Avaric
+	 */
+	AV,
+	
+	/**
+	 * Avestan
+	 */
+	AE,
+	
+	/**
+	 * Aymara
+	 */
+	AY,
+	
+	/**
+	 * Azerbaijani
+	 */
+	AZ,
+	
+	/**
+	 * Bashkir
+	 */
+	BA,
+	
+	/**
+	 * Bambara
+	 */
+	BM,
+	
+	/**
+	 * Basque
+	 */
+	EU,
+	
+	/**
+	 * Belarusian
+	 */
+	BE,
+	
+	/**
+	 * Bengali
+	 */
+	BN,
+	
+	/**
+	 * Bihari languages
+	 */
+	BH,
+	
+	/**
+	 * Bislama
+	 */
+	BI,
+	
+	/**
+	 * Bosnian
+	 */
+	BS,
+	
+	/**
+	 * Breton
+	 */
+	BR,
+	
+	/**
+	 * Bulgarian
+	 */
+	BG,
+	
+	/**
+	 * Burmese
+	 */
+	MY,
+	
+	/**
+	 * Catalan; Valencian
+	 */
+	CA,
+	
+	/**
+	 * Chamorro
+	 */
+	CH,
+	
+	/**
+	 * Chechen
+	 */
+	CE,
+	
+	/**
+	 * Chinese
+	 */
+	ZH,
+	
+	/**
+	 * Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic
+	 */
+	CU,
+	
+	/**
+	 * Chuvash
+	 */
+	CV,
+	
+	/**
+	 * Cornish
+	 */
+	KW,
+	
+	/**
+	 * Corsican
+	 */
+	CO,
+	
+	/**
+	 * Cree
+	 */
+	CR,
+	
+	/**
+	 * Czech
+	 */
+	CS,
+	
+	/**
+	 * Danish
+	 */
+	DA,
+	
+	/**
+	 * Divehi; Dhivehi; Maldivian
+	 */
+	DV,
+	
+	/**
+	 * Dutch; Flemish
+	 */
+	NL,
+	
+	/**
+	 * Dzongkha
+	 */
+	DZ,
+	
+	/**
+	 * English
+	 */
+	EN,
+	
+	/**
+	 * Esperanto
+	 */
+	EO,
+	
+	/**
+	 * Estonian
+	 */
+	ET,
+	
+	/**
+	 * Ewe
+	 */
+	EE,
+	
+	/**
+	 * Faroese
+	 */
+	FO,
+	
+	/**
+	 * Fijian
+	 */
+	FJ,
+	
+	/**
+	 * Finnish
+	 */
+	FI,
+	
+	/**
+	 * French
+	 */
+	FR,
+	
+	/**
+	 * Western Frisian
+	 */
+	FY,
+	
+	/**
+	 * Fulah
+	 */
+	FF,
+	
+	/**
+	 * Georgian
+	 */
+	KA,
+	
+	/**
+	 * German
+	 */
+	DE,
+	
+	/**
+	 * Gaelic; Scottish Gaelic
+	 */
+	GD,
+	
+	/**
+	 * Irish
+	 */
+	GA,
+	
+	/**
+	 * Galician
+	 */
+	GL,
+	
+	/**
+	 * Manx
+	 */
+	GV,
+	
+	/**
+	 * Greek
+	 */
+	EL,
+	
+	/**
+	 * Guarani
+	 */
+	GN,
+	
+	/**
+	 * Gujarati
+	 */
+	GU,
+	
+	/**
+	 * Haitian; Haitian Creole
+	 */
+	HT,
+	
+	/**
+	 * Hausa
+	 */
+	HA,
+	
+	/**
+	 * Hebrew
+	 */
+	HE,
+	
+	/**
+	 * Herero
+	 */
+	HZ,
+	
+	/**
+	 * Hindi
+	 */
+	HI,
+	
+	/**
+	 * Hiri Motu
+	 */
+	HO,
+	
+	/**
+	 * Croatian
+	 */
+	HR,
+	
+	/**
+	 * Hungarian
+	 */
+	HU,
+	
+	/**
+	 * Igbo
+	 */
+	IG,
+	
+	/**
+	 * Icelandic
+	 */
+	IS,
+	
+	/**
+	 * Ido
+	 */
+	IO,
+	
+	/**
+	 * Sichuan Yi; Nuosu
+	 */
+	II,
+	
+	/**
+	 * Inuktitut
+	 */
+	IU,
+	
+	/**
+	 * Interlingue; Occidental
+	 */
+	IE,
+	
+	/**
+	 * Interlingua (International Auxiliary Language Association)
+	 */
+	IA,
+	
+	/**
+	 * Indonesian
+	 */
+	ID,
+	
+	/**
+	 * Inupiaq
+	 */
+	IK,
+	
+	/**
+	 * Italian
+	 */
+	IT,
+	
+	/**
+	 * Javanese
+	 */
+	JV,
+	
+	/**
+	 * Japanese
+	 */
+	JA,
+	
+	/**
+	 * Kalaallisut; Greenlandic
+	 */
+	KL,
+	
+	/**
+	 * Kannada
+	 */
+	KN,
+	
+	/**
+	 * Kashmiri
+	 */
+	KS,
+	
+	/**
+	 * Kanuri
+	 */
+	KR,
+	
+	/**
+	 * Kazakh
+	 */
+	KK,
+	
+	/**
+	 * Central Khmer
+	 */
+	KM,
+	
+	/**
+	 * Kikuyu; Gikuyu
+	 */
+	KI,
+	
+	/**
+	 * Kinyarwanda
+	 */
+	RW,
+	
+	/**
+	 * Kirghiz; Kyrgyz
+	 */
+	KY,
+	
+	/**
+	 * Komi
+	 */
+	KV,
+	
+	/**
+	 * Kongo
+	 */
+	KG,
+	
+	/**
+	 * Korean
+	 */
+	KO,
+	
+	/**
+	 * Kuanyama; Kwanyama
+	 */
+	KJ,
+	
+	/**
+	 * Kurdish
+	 */
+	KU,
+	
+	/**
+	 * Lao
+	 */
+	LO,
+	
+	/**
+	 * Latin
+	 */
+	LA,
+	
+	/**
+	 * Latvian
+	 */
+	LV,
+	
+	/**
+	 * Limburgan; Limburger; Limburgish
+	 */
+	LI,
+	
+	/**
+	 * Lingala
+	 */
+	LN,
+	
+	/**
+	 * Lithuanian
+	 */
+	LT,
+	
+	/**
+	 * Luxembourgish; Letzeburgesch
+	 */
+	LB,
+	
+	/**
+	 * Luba-Katanga
+	 */
+	LU,
+	
+	/**
+	 * Ganda
+	 */
+	LG,
+	
+	/**
+	 * Macedonian
+	 */
+	MK,
+	
+	/**
+	 * Marshallese
+	 */
+	MH,
+	
+	/**
+	 * Malayalam
+	 */
+	ML,
+	
+	/**
+	 * Maori
+	 */
+	MI,
+	
+	/**
+	 * Marathi
+	 */
+	MR,
+	
+	/**
+	 * Malay
+	 */
+	MS,
+	
+	/**
+	 * Malagasy
+	 */
+	MG,
+	
+	/**
+	 * Maltese
+	 */
+	MT,
+	
+	/**
+	 * Mongolian
+	 */
+	MN,
+	
+	/**
+	 * Nauru
+	 */
+	NA,
+	
+	/**
+	 * Navajo; Navaho
+	 */
+	NV,
+	
+	/**
+	 * Ndebele, South; South Ndebele
+	 */
+	NR,
+	
+	/**
+	 * Ndebele, North; North Ndebele
+	 */
+	ND,
+	
+	/**
+	 * Ndonga
+	 */
+	NG,
+	
+	/**
+	 * Nepali
+	 */
+	NE,
+	
+	/**
+	 * Norwegian Nynorsk; Nynorsk, Norwegian
+	 */
+	NN,
+	
+	/**
+	 * Bokmål, Norwegian; Norwegian Bokmål
+	 */
+	NB,
+	
+	/**
+	 * Norwegian
+	 */
+	NO,
+	
+	/**
+	 * Chichewa; Chewa; Nyanja
+	 */
+	NY,
+	
+	/**
+	 * Occitan; Provençal
+	 */
+	OC,
+	
+	/**
+	 * Ojibwa
+	 */
+	OJ,
+	
+	/**
+	 * Oriya
+	 */
+	OR,
+	
+	/**
+	 * Oromo
+	 */
+	OM,
+	
+	/**
+	 * Ossetian; Ossetic
+	 */
+	OS,
+	
+	/**
+	 * Panjabi; Punjabi
+	 */
+	PA,
+	
+	/**
+	 * Persian
+	 */
+	FA,
+	
+	/**
+	 * Pali
+	 */
+	PI,
+	
+	/**
+	 * Polish
+	 */
+	PL,
+	
+	/**
+	 * Portuguese
+	 */
+	PT,
+	
+	/**
+	 * Pushto; Pashto
+	 */
+	PS,
+	
+	/**
+	 * Quechua
+	 */
+	QU,
+	
+	/**
+	 * Romansh
+	 */
+	RM,
+	
+	/**
+	 * Romanian; Moldavian; Moldovan
+	 */
+	RO,
+	
+	/**
+	 * Rundi
+	 */
+	RN,
+	
+	/**
+	 * Russian
+	 */
+	RU,
+	
+	/**
+	 * Sango
+	 */
+	SG,
+	
+	/**
+	 * Sanskrit
+	 */
+	SA,
+	
+	/**
+	 * Sinhala; Sinhalese
+	 */
+	SI,
+	
+	/**
+	 * Slovak
+	 */
+	SK,
+	
+	/**
+	 * Slovenian
+	 */
+	SL,
+	
+	/**
+	 * Northern Sami
+	 */
+	SE,
+	
+	/**
+	 * Samoan
+	 */
+	SM,
+	
+	/**
+	 * Shona
+	 */
+	SN,
+	
+	/**
+	 * Sindhi
+	 */
+	SD,
+	
+	/**
+	 * Somali
+	 */
+	SO,
+	
+	/**
+	 * Sotho, Southern
+	 */
+	ST,
+	
+	/**
+	 * Spanish; Castilian
+	 */
+	ES,
+	
+	/**
+	 * Sardinian
+	 */
+	SC,
+	
+	/**
+	 * Serbian
+	 */
+	SR,
+	
+	/**
+	 * Swati
+	 */
+	SS,
+	
+	/**
+	 * Sundanese
+	 */
+	SU,
+	
+	/**
+	 * Swahili
+	 */
+	SW,
+	
+	/**
+	 * Swedish
+	 */
+	SV,
+	
+	/**
+	 * Tahitian
+	 */
+	TY,
+	
+	/**
+	 * Tamil
+	 */
+	TA,
+	
+	/**
+	 * Tatar
+	 */
+	TT,
+	
+	/**
+	 * Telugu
+	 */
+	TE,
+	
+	/**
+	 * Tajik
+	 */
+	TG,
+	
+	/**
+	 * Tagalog
+	 */
+	TL,
+	
+	/**
+	 * Thai
+	 */
+	TH,
+	
+	/**
+	 * Tibetan
+	 */
+	BO,
+	
+	/**
+	 * Tigrinya
+	 */
+	TI,
+	
+	/**
+	 * Tonga (Tonga Islands)
+	 */
+	TO,
+	
+	/**
+	 * Tswana
+	 */
+	TN,
+	
+	/**
+	 * Tsonga
+	 */
+	TS,
+	
+	/**
+	 * Turkmen
+	 */
+	TK,
+	
+	/**
+	 * Turkish
+	 */
+	TR,
+	
+	/**
+	 * Twi
+	 */
+	TW,
+	
+	/**
+	 * Uighur; Uyghur
+	 */
+	UG,
+	
+	/**
+	 * Ukrainian
+	 */
+	UK,
+	
+	/**
+	 * Urdu
+	 */
+	UR,
+	
+	/**
+	 * Uzbek
+	 */
+	UZ,
+	
+	/**
+	 * Venda
+	 */
+	VE,
+	
+	/**
+	 * Vietnamese
+	 */
+	VI,
+	
+	/**
+	 * Volapük
+	 */
+	VO,
+	
+	/**
+	 * Welsh
+	 */
+	CY,
+	
+	/**
+	 * Walloon
+	 */
+	WA,
+	
+	/**
+	 * Wolof
+	 */
+	WO,
+	
+	/**
+	 * Xhosa
+	 */
+	XH,
+	
+	/**
+	 * Yiddish
+	 */
+	YI,
+	
+	/**
+	 * Yoruba
+	 */
+	YO,
+	
+	/**
+	 * Zhuang; Chuang
+	 */
+	ZA,
+	
+	/**
+	 * Zulu
+	 */
+	ZU;
+	
+	public String value()
+	{
+		return this.name();
+	}
+	
+	public static LanguageCodeType fromValue(final String v)
+	{
+		return valueOf(v);
+	}
 }

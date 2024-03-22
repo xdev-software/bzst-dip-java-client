@@ -28,9 +28,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for PermanentEstablishments_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="PermanentEstablishments_Type"&gt;
  *   &lt;complexContent&gt;
@@ -42,46 +42,43 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PermanentEstablishments_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "permanentEstablishment"
+	"permanentEstablishment"
 })
-public class PermanentEstablishmentsType {
-
-    @XmlElement(name = "PermanentEstablishment", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    @XmlSchemaType(name = "string")
-    protected List<MSCountryCodeType> permanentEstablishment;
-
-    /**
-     * Gets the value of the permanentEstablishment property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the permanentEstablishment property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPermanentEstablishment().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MSCountryCodeType }
-     * 
-     * 
-     */
-    public List<MSCountryCodeType> getPermanentEstablishment() {
-        if (this.permanentEstablishment == null) {
+public class PermanentEstablishmentsType
+{
+	
+	@XmlElement(name = "PermanentEstablishment", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	@XmlSchemaType(name = "string")
+	protected List<MSCountryCodeType> permanentEstablishment;
+	
+	/**
+	 * Gets the value of the permanentEstablishment property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you
+	 * make to
+	 * the returned list will be present inside the Jakarta XML Binding object. This is why there is not a
+	 * <CODE>set</CODE> method for the permanentEstablishment property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <pre>
+	 *    getPermanentEstablishment().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MSCountryCodeType }
+	 */
+	public List<MSCountryCodeType> getPermanentEstablishment()
+	{
+		if(this.permanentEstablishment == null)
+		{
 			this.permanentEstablishment = new ArrayList<>();
-        }
-        return this.permanentEstablishment;
-    }
-
+		}
+		return this.permanentEstablishment;
+	}
 }

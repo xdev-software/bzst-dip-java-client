@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for MessageType_EnumType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="MessageType_EnumType"&gt;
@@ -31,25 +31,24 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "MessageType_EnumType", namespace = "urn:oecd:ties:dpi:v1")
 @XmlEnum
-public enum MessageTypeEnumType {
-
-
-    /**
-     * This type defines the messages to be exchanged under the OECD Model Rules and [EU Specific] [EU DIR2021/514].
-     * 
-     */
-    DPI;
-
-    public String value() {
-        return this.name();
-    }
-
-    public static MessageTypeEnumType fromValue(final String v) {
-        return valueOf(v);
-    }
-
+public enum MessageTypeEnumType
+{
+	
+	/**
+	 * This type defines the messages to be exchanged under the OECD Model Rules and [EU Specific] [EU DIR2021/514].
+	 */
+	DPI;
+	
+	public String value()
+	{
+		return this.name();
+	}
+	
+	public static MessageTypeEnumType fromValue(final String v)
+	{
+		return valueOf(v);
+	}
 }

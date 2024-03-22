@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for environmentType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="environmentType"&gt;
@@ -32,21 +32,22 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "environmentType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
 @XmlEnum
-public enum EnvironmentType {
-
-    TEST,
-    PROD;
-
-    public String value() {
-        return this.name();
-    }
-
-    public static EnvironmentType fromValue(final String v) {
-        return valueOf(v);
-    }
-
+public enum EnvironmentType
+{
+	
+	TEST,
+	PROD;
+	
+	public String value()
+	{
+		return this.name();
+	}
+	
+	public static EnvironmentType fromValue(final String v)
+	{
+		return valueOf(v);
+	}
 }

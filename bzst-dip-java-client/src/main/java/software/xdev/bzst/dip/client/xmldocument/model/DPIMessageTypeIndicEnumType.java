@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for DPIMessageTypeIndic_EnumType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="DPIMessageTypeIndic_EnumType"&gt;
@@ -34,50 +34,50 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "DPIMessageTypeIndic_EnumType", namespace = "urn:oecd:ties:dpi:v1")
 @XmlEnum
-public enum DPIMessageTypeIndicEnumType {
-
-
-    /**
-     * The message contains new (including additional) information.
-     * 
-     */
-    @XmlEnumValue("DPI401")
-    DPI_401("DPI401"),
-
-    /**
-     * The message contains corrections for previously sent information.
-     * 
-     */
-    @XmlEnumValue("DPI402")
-    DPI_402("DPI402"),
-
-    /**
-     * The message advises that there is no data to report.
-     * 
-     */
-    @XmlEnumValue("DPI403")
-    DPI_403("DPI403");
-    private final String value;
-
-    DPIMessageTypeIndicEnumType(final String v) {
+public enum DPIMessageTypeIndicEnumType
+{
+	
+	/**
+	 * The message contains new (including additional) information.
+	 */
+	@XmlEnumValue("DPI401")
+	DPI_401("DPI401"),
+	
+	/**
+	 * The message contains corrections for previously sent information.
+	 */
+	@XmlEnumValue("DPI402")
+	DPI_402("DPI402"),
+	
+	/**
+	 * The message advises that there is no data to report.
+	 */
+	@XmlEnumValue("DPI403")
+	DPI_403("DPI403");
+	private final String value;
+	
+	DPIMessageTypeIndicEnumType(final String v)
+	{
 		this.value = v;
-    }
-
-    public String value() {
-        return this.value;
-    }
-
-    public static DPIMessageTypeIndicEnumType fromValue(final String v) {
-        for (final DPIMessageTypeIndicEnumType c: DPIMessageTypeIndicEnumType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	}
+	
+	public String value()
+	{
+		return this.value;
+	}
+	
+	public static DPIMessageTypeIndicEnumType fromValue(final String v)
+	{
+		for(final DPIMessageTypeIndicEnumType c : DPIMessageTypeIndicEnumType.values())
+		{
+			if(c.value.equals(v))
+			{
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 }

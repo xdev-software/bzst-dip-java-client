@@ -24,9 +24,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for CorrectableOtherRPO_Type complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="CorrectableOtherRPO_Type"&gt;
  *   &lt;complexContent&gt;
@@ -38,42 +38,35 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CorrectableOtherRPO_Type", namespace = "urn:oecd:ties:dpi:v1", propOrder = {
-    "docSpec"
+	"docSpec"
 })
 public class CorrectableOtherRPOType
-    extends OtherRPOType
+	extends OtherRPOType
 {
-
-    @XmlElement(name = "DocSpec", namespace = "urn:oecd:ties:dpi:v1", required = true)
-    protected DocSpecType docSpec;
-
-    /**
-     * Gets the value of the docSpec property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DocSpecType }
-     *     
-     */
-    public DocSpecType getDocSpec() {
-        return this.docSpec;
-    }
-
-    /**
-     * Sets the value of the docSpec property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DocSpecType }
-     *     
-     */
-    public void setDocSpec(final DocSpecType value) {
-        this.docSpec = value;
-    }
-
+	
+	@XmlElement(name = "DocSpec", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	protected DocSpecType docSpec;
+	
+	/**
+	 * Gets the value of the docSpec property.
+	 *
+	 * @return possible object is {@link DocSpecType }
+	 */
+	public DocSpecType getDocSpec()
+	{
+		return this.docSpec;
+	}
+	
+	/**
+	 * Sets the value of the docSpec property.
+	 *
+	 * @param value allowed object is {@link DocSpecType }
+	 */
+	public void setDocSpec(final DocSpecType value)
+	{
+		this.docSpec = value;
+	}
 }

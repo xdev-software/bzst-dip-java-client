@@ -26,9 +26,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for ConsignmentItemType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="ConsignmentItemType"&gt;
  *   &lt;complexContent&gt;
@@ -41,69 +41,59 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ConsignmentItemType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
-    "bopAccountId",
-    "data"
+	"bopAccountId",
+	"data"
 })
 @XmlSeeAlso(DataType.class)
-public class ConsignmentItemType {
-
-    @XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
-    protected String bopAccountId;
-
-    @XmlAnyElement(lax = true)
-    protected Object data;
-
-    /**
-     * Gets the value of the bopAccountId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getBopAccountId() {
-        return this.bopAccountId;
-    }
-
-    /**
-     * Sets the value of the bopAccountId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBopAccountId(final String value) {
-        this.bopAccountId = value;
-    }
-
-    /**
-     * Gets the value of the data property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Object getData() {
-        return this.data;
-    }
-
-    /**
-     * Sets the value of the data property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
-     */
-    public void setData(final Object value) {
-        this.data = value;
-    }
-
+public class ConsignmentItemType
+{
+	
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
+	protected String bopAccountId;
+	
+	@XmlAnyElement(lax = true)
+	protected Object data;
+	
+	/**
+	 * Gets the value of the bopAccountId property.
+	 *
+	 * @return possible object is {@link String }
+	 */
+	public String getBopAccountId()
+	{
+		return this.bopAccountId;
+	}
+	
+	/**
+	 * Sets the value of the bopAccountId property.
+	 *
+	 * @param value allowed object is {@link String }
+	 */
+	public void setBopAccountId(final String value)
+	{
+		this.bopAccountId = value;
+	}
+	
+	/**
+	 * Gets the value of the data property.
+	 *
+	 * @return possible object is {@link Object }
+	 */
+	public Object getData()
+	{
+		return this.data;
+	}
+	
+	/**
+	 * Sets the value of the data property.
+	 *
+	 * @param value allowed object is {@link Object }
+	 */
+	public void setData(final Object value)
+	{
+		this.data = value;
+	}
 }

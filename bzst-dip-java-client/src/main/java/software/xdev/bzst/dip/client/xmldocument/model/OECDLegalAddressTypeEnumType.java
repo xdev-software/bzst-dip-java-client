@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for OECDLegalAddressType_EnumType.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="OECDLegalAddressType_EnumType"&gt;
@@ -36,64 +36,62 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "OECDLegalAddressType_EnumType", namespace = "urn:oecd:ties:dpistf:v1")
 @XmlEnum
-public enum OECDLegalAddressTypeEnumType {
-
-
-    /**
-     * residentialOrBusiness
-     * 
-     */
-    @XmlEnumValue("OECD301")
-    OECD_301("OECD301"),
-
-    /**
-     * residential
-     * 
-     */
-    @XmlEnumValue("OECD302")
-    OECD_302("OECD302"),
-
-    /**
-     * business
-     * 
-     */
-    @XmlEnumValue("OECD303")
-    OECD_303("OECD303"),
-
-    /**
-     * registeredOffice
-     * 
-     */
-    @XmlEnumValue("OECD304")
-    OECD_304("OECD304"),
-
-    /**
-     * unspecified
-     * 
-     */
-    @XmlEnumValue("OECD305")
-    OECD_305("OECD305");
-    private final String value;
-
-    OECDLegalAddressTypeEnumType(final String v) {
+public enum OECDLegalAddressTypeEnumType
+{
+	
+	/**
+	 * residentialOrBusiness
+	 */
+	@XmlEnumValue("OECD301")
+	OECD_301("OECD301"),
+	
+	/**
+	 * residential
+	 */
+	@XmlEnumValue("OECD302")
+	OECD_302("OECD302"),
+	
+	/**
+	 * business
+	 */
+	@XmlEnumValue("OECD303")
+	OECD_303("OECD303"),
+	
+	/**
+	 * registeredOffice
+	 */
+	@XmlEnumValue("OECD304")
+	OECD_304("OECD304"),
+	
+	/**
+	 * unspecified
+	 */
+	@XmlEnumValue("OECD305")
+	OECD_305("OECD305");
+	private final String value;
+	
+	OECDLegalAddressTypeEnumType(final String v)
+	{
 		this.value = v;
-    }
-
-    public String value() {
-        return this.value;
-    }
-
-    public static OECDLegalAddressTypeEnumType fromValue(final String v) {
-        for (final OECDLegalAddressTypeEnumType c: OECDLegalAddressTypeEnumType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	}
+	
+	public String value()
+	{
+		return this.value;
+	}
+	
+	public static OECDLegalAddressTypeEnumType fromValue(final String v)
+	{
+		for(final OECDLegalAddressTypeEnumType c : OECDLegalAddressTypeEnumType.values())
+		{
+			if(c.value.equals(v))
+			{
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 }

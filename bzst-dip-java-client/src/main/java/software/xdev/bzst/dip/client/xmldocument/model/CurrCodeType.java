@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for currCode_Type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
  * &lt;simpleType name="currCode_Type"&gt;
@@ -216,1135 +216,960 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "currCode_Type", namespace = "urn:oecd:ties:isodpitypes:v1")
 @XmlEnum
-public enum CurrCodeType {
-
-
-    /**
-     * UAE Dirham: UNITED ARAB EMIRATES
-     * 
-     */
-    AED,
-
-    /**
-     * Afghani: AFGHANISTAN
-     * 
-     */
-    AFN,
-
-    /**
-     * Lek: ALBANIA
-     * 
-     */
-    ALL,
-
-    /**
-     * Armenian Dram: ARMENIA	
-     * 
-     */
-    AMD,
-
-    /**
-     * Netherlands Antillean Guilder: CURACAO; SINT MAARTEN (DUTCH PART)
-     * 
-     */
-    ANG,
-
-    /**
-     * Kwanza: ANGOLA
-     * 
-     */
-    AOA,
-
-    /**
-     * Argentine Peso: ARGENTINA
-     * 
-     */
-    ARS,
-
-    /**
-     * Australian Dollar: AUSTRALIA; CHRISTMAS ISLAND; COCOS (KEELING) ISLANDS; HEARD ISLAND AND McDONALD ISLANDS; KIRIBATI; NAURU; NORFOLK ISLAND; TUVALU
-     * 
-     */
-    AUD,
-
-    /**
-     * Aruban Florin: ARUBA
-     * 
-     */
-    AWG,
-
-    /**
-     * Azerbaijan Manat: AZERBAIJAN
-     * 
-     */
-    AZN,
-
-    /**
-     * Convertible Mark: BOSNIA AND HERZEGOVINA
-     * 
-     */
-    BAM,
-
-    /**
-     * Barbados Dollar: BARBADOS
-     * 
-     */
-    BBD,
-
-    /**
-     * Taka: BANGLADESH
-     * 
-     */
-    BDT,
-
-    /**
-     * Bulgarian Lev: BULGARIA
-     * 
-     */
-    BGN,
-
-    /**
-     * Bahraini Dinar: BAHRAIN
-     * 
-     */
-    BHD,
-
-    /**
-     * Burundi Franc: BURUNDI
-     * 
-     */
-    BIF,
-
-    /**
-     * Bermudian Dollar: BERMUDA
-     * 
-     */
-    BMD,
-
-    /**
-     * Brunei Dollar: BRUNEI DARUSSALAM
-     * 
-     */
-    BND,
-
-    /**
-     * Boliviano: BOLIVIA, PLURINATIONAL STATE OF
-     * 
-     */
-    BOB,
-
-    /**
-     * Mvdol: BOLIVIA, PLURINATIONAL STATE OF
-     * 
-     */
-    BOV,
-
-    /**
-     * Brazilian Real: BRAZIL
-     * 
-     */
-    BRL,
-
-    /**
-     * Bahamian Dollar: BAHAMAS
-     * 
-     */
-    BSD,
-
-    /**
-     * Ngultrum: BHUTAN
-     * 
-     */
-    BTN,
-
-    /**
-     * Pula: BOTSWANA
-     * 
-     */
-    BWP,
-
-    /**
-     * Belarusian Ruble: BELARUS
-     * 
-     */
-    BYN,
-
-    /**
-     * Historic use: Belarussian Ruble: BELARUS
-     * 
-     */
-    BYR,
-
-    /**
-     * Belize Dollar: BELIZE
-     * 
-     */
-    BZD,
-
-    /**
-     * Canadian Dollar: CANADA
-     * 
-     */
-    CAD,
-
-    /**
-     * Congolese Franc: CONGO, THE DEMOCRATIC REPUBLIC OF
-     * 
-     */
-    CDF,
-
-    /**
-     * WIR Euro: SWITZERLAND
-     * 
-     */
-    CHE,
-
-    /**
-     * Swiss Franc: LIECHTENSTEIN; SWITZERLAND
-     * 
-     */
-    CHF,
-
-    /**
-     * WIR Franc: SWITZERLAND
-     * 
-     */
-    CHW,
-
-    /**
-     * Unidad de Fomento: CHILE
-     * 
-     */
-    CLF,
-
-    /**
-     * Chilean Peso: CHILE
-     * 
-     */
-    CLP,
-
-    /**
-     * Yuan Renminbi: CHINA
-     * 
-     */
-    CNY,
-
-    /**
-     * Colombian Peso: COLOMBIA
-     * 
-     */
-    COP,
-
-    /**
-     * Unidad de Valor Real: COLOMBIA
-     * 
-     */
-    COU,
-
-    /**
-     * Costa Rican Colon: COSTA RICA
-     * 
-     */
-    CRC,
-
-    /**
-     * Peso Convertible: CUBA
-     * 
-     */
-    CUC,
-
-    /**
-     * Cuban Peso: CUBA
-     * 
-     */
-    CUP,
-
-    /**
-     * Cabo Verde Escudo: CABO VERDE
-     * 
-     */
-    CVE,
-
-    /**
-     * Czech Koruna: CZECHIA
-     * 
-     */
-    CZK,
-
-    /**
-     * Djibouti Franc: DJIBOUTI
-     * 
-     */
-    DJF,
-
-    /**
-     * Danish Krone: DENMARK; FAROE ISLANDS; GREENLAND
-     * 
-     */
-    DKK,
-
-    /**
-     * Dominican Peso: DOMINICAN REPUBLIC
-     * 
-     */
-    DOP,
-
-    /**
-     * Algerian Dinar: ALGERIA
-     * 
-     */
-    DZD,
-
-    /**
-     * Egyptian Pound: EGYPT
-     * 
-     */
-    EGP,
-
-    /**
-     * Nakfa: ERITREA
-     * 
-     */
-    ERN,
-
-    /**
-     * Ethiopian Birr: ETHIOPIA
-     * 
-     */
-    ETB,
-
-    /**
-     * Euro: ALAND ISLANDS; ANDORRA; AUSTRIA; BELGIUM; CYPRUS; ESTONIA; EUROPEAN UNION; FINLAND; FRANCE; FRENCH GUIANA; FRENCH SOUTHERN TERRITORIES; GERMANY; GREECE; GUADELOUPE; HOLY SEE (VATICAN CITY STATE); IRELAND; ITALY; LATVIA; LITHUANIA; LUXEMBOURG; MALTA; MARTINIQUE; MAYOTTE; MONACO; MONTENEGRO; NETHERLANDS; PORTUGAL; REUNION; SAINT BARTHELEMY; SAINT MARTIN (FRENCH PART); SAINT PIERRE AND MIQUELON; SAN MARINO; SLOVAKIA; SLOVENIA; SPAIN; Vatican City State (HOLY SEE)
-     * 
-     */
-    EUR,
-
-    /**
-     * Fiji Dollar: FIJI
-     * 
-     */
-    FJD,
-
-    /**
-     * Falkland Islands Pound: FALKLAND ISLANDS (MALVINAS)
-     * 
-     */
-    FKP,
-
-    /**
-     * Pound Sterling: GUERNSEY; ISLE OF MAN; JERSEY; UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
-     * 
-     */
-    GBP,
-
-    /**
-     * Lari: GEORGIA
-     * 
-     */
-    GEL,
-
-    /**
-     * Ghana Cedi: GHANA
-     * 
-     */
-    GHS,
-
-    /**
-     * Gibraltar Pound: GIBRALTAR
-     * 
-     */
-    GIP,
-
-    /**
-     * Dalasi: GAMBIA
-     * 
-     */
-    GMD,
-
-    /**
-     * Guinean Franc: GUINEA
-     * 
-     */
-    GNF,
-
-    /**
-     * Quetzal: GUATEMALA
-     * 
-     */
-    GTQ,
-
-    /**
-     * Guyana Dollar: GUYANA
-     * 
-     */
-    GYD,
-
-    /**
-     * Hong Kong Dollar: HONG KONG
-     * 
-     */
-    HKD,
-
-    /**
-     * Lempira: HONDURAS
-     * 
-     */
-    HNL,
-
-    /**
-     * Kuna: CROATIA
-     * 
-     */
-    HRK,
-
-    /**
-     * Gourde: HAITI
-     * 
-     */
-    HTG,
-
-    /**
-     * Forint: HUNGARY
-     * 
-     */
-    HUF,
-
-    /**
-     * Rupiah: INDONESIA
-     * 
-     */
-    IDR,
-
-    /**
-     * New Israeli Sheqel: ISRAEL
-     * 
-     */
-    ILS,
-
-    /**
-     * Indian Rupee: BHUTAN; INDIA
-     * 
-     */
-    INR,
-
-    /**
-     * Iraqi Dinar: IRAQ
-     * 
-     */
-    IQD,
-
-    /**
-     * Iranian Rial: IRAN, ISLAMIC REPUBLIC OF
-     * 
-     */
-    IRR,
-
-    /**
-     * Iceland Krona: ICELAND
-     * 
-     */
-    ISK,
-
-    /**
-     * Jamaican Dollar: JAMAICA
-     * 
-     */
-    JMD,
-
-    /**
-     * Jordanian Dinar: JORDAN
-     * 
-     */
-    JOD,
-
-    /**
-     * Yen: JAPAN
-     * 
-     */
-    JPY,
-
-    /**
-     * Kenyan Shilling: KENYA
-     * 
-     */
-    KES,
-
-    /**
-     * Som: KYRGYZSTAN
-     * 
-     */
-    KGS,
-
-    /**
-     * Riel: CAMBODIA
-     * 
-     */
-    KHR,
-
-    /**
-     * Comorian Franc : COMOROS
-     * 
-     */
-    KMF,
-
-    /**
-     * North Korean Won: KOREA, DEMOCRATIC PEOPLE’S REPUBLIC OF
-     * 
-     */
-    KPW,
-
-    /**
-     * Won: KOREA, REPUBLIC OF
-     * 
-     */
-    KRW,
-
-    /**
-     * Kuwaiti Dinar: KUWAIT
-     * 
-     */
-    KWD,
-
-    /**
-     * Cayman Islands Dollar: CAYMAN ISLANDS
-     * 
-     */
-    KYD,
-
-    /**
-     * Tenge: KAZAKHSTAN
-     * 
-     */
-    KZT,
-
-    /**
-     * Lao Kip: LAO PEOPLE’S DEMOCRATIC REPUBLIC
-     * 
-     */
-    LAK,
-
-    /**
-     * Lebanese Pound: LEBANON
-     * 
-     */
-    LBP,
-
-    /**
-     * Sri Lanka Rupee: SRI LANKA
-     * 
-     */
-    LKR,
-
-    /**
-     * Liberian Dollar: LIBERIA
-     * 
-     */
-    LRD,
-
-    /**
-     * Loti: LESOTHO
-     * 
-     */
-    LSL,
-
-    /**
-     * Historic use: Lithuanian Litas: LITHUANIA
-     * 
-     */
-    LTL,
-
-    /**
-     * Historic use: Latvian Lats: LATVIA
-     * 
-     */
-    LVL,
-
-    /**
-     * Libyan Dinar: LIBYA
-     * 
-     */
-    LYD,
-
-    /**
-     * Moroccan Dirham: MOROCCO; WESTERN SAHARA
-     * 
-     */
-    MAD,
-
-    /**
-     * Moldovan Leu: MOLDOVA, REPUBLIC OF
-     * 
-     */
-    MDL,
-
-    /**
-     * Malagasy Ariary: MADAGASCAR
-     * 
-     */
-    MGA,
-
-    /**
-     * Denar: MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
-     * 
-     */
-    MKD,
-
-    /**
-     * Kyat: MYANMAR
-     * 
-     */
-    MMK,
-
-    /**
-     * Tugrik: MONGOLIA
-     * 
-     */
-    MNT,
-
-    /**
-     * Pataca: MACAO
-     * 
-     */
-    MOP,
-
-    /**
-     * Historic use: Ouguiya: MAURITANIA
-     * 
-     */
-    MRO,
-
-    /**
-     * Ouguiya: MAURITANIA
-     * 
-     */
-    MRU,
-
-    /**
-     * Mauritius Rupee: MAURITIUS
-     * 
-     */
-    MUR,
-
-    /**
-     * Rufiyaa: MALDIVES
-     * 
-     */
-    MVR,
-
-    /**
-     * Malawi Kwacha: MALAWI
-     * 
-     */
-    MWK,
-
-    /**
-     * Mexican Peso: MEXICO
-     * 
-     */
-    MXN,
-
-    /**
-     * Mexican Unidad de Inversion (UDI): MEXICO
-     * 
-     */
-    MXV,
-
-    /**
-     * Malaysian Ringgit: MALAYSIA
-     * 
-     */
-    MYR,
-
-    /**
-     * Mozambique Metical: MOZAMBIQUE
-     * 
-     */
-    MZN,
-
-    /**
-     * Namibia Dollar: NAMIBIA
-     * 
-     */
-    NAD,
-
-    /**
-     * Naira: NIGERIA
-     * 
-     */
-    NGN,
-
-    /**
-     * Cordoba Oro: NICARAGUA
-     * 
-     */
-    NIO,
-
-    /**
-     * Norwegian Krone: BOUVET ISLAND; NORWAY; SVALBARD AND JAN MAYEN
-     * 
-     */
-    NOK,
-
-    /**
-     * Nepalese Rupee: NEPAL
-     * 
-     */
-    NPR,
-
-    /**
-     * New Zealand Dollar: COOK ISLANDS; NEW ZEALAND; NIUE; PITCAIRN; TOKELAU
-     * 
-     */
-    NZD,
-
-    /**
-     * Rial Omani: OMAN
-     * 
-     */
-    OMR,
-
-    /**
-     * Balboa: PANAMA
-     * 
-     */
-    PAB,
-
-    /**
-     * Sol: PERU
-     * 
-     */
-    PEN,
-
-    /**
-     * Kina: PAPUA NEW GUINEA
-     * 
-     */
-    PGK,
-
-    /**
-     * Philippine Peso: PHILIPPINES
-     * 
-     */
-    PHP,
-
-    /**
-     * Pakistan Rupee: PAKISTAN
-     * 
-     */
-    PKR,
-
-    /**
-     * Zloty: POLAND
-     * 
-     */
-    PLN,
-
-    /**
-     * Guarani: PARAGUAY
-     * 
-     */
-    PYG,
-
-    /**
-     * Qatari Rial: QATAR
-     * 
-     */
-    QAR,
-
-    /**
-     * Romanian Leu: ROMANIA
-     * 
-     */
-    RON,
-
-    /**
-     * Serbian Dinar: SERBIA
-     * 
-     */
-    RSD,
-
-    /**
-     * Russian Ruble: RUSSIAN FEDERATION
-     * 
-     */
-    RUB,
-
-    /**
-     * Rwanda Franc: RWANDA
-     * 
-     */
-    RWF,
-
-    /**
-     * Saudi Riyal: SAUDI ARABIA
-     * 
-     */
-    SAR,
-
-    /**
-     * Solomon Islands Dollar: SOLOMON ISLANDS
-     * 
-     */
-    SBD,
-
-    /**
-     * Seychelles Rupee: SEYCHELLES
-     * 
-     */
-    SCR,
-
-    /**
-     * Sudanese Pound: SUDAN
-     * 
-     */
-    SDG,
-
-    /**
-     * Swedish Krona: SWEDEN
-     * 
-     */
-    SEK,
-
-    /**
-     * Singapore Dollar: SINGAPORE
-     * 
-     */
-    SGD,
-
-    /**
-     * Saint Helena Pound: SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA
-     * 
-     */
-    SHP,
-
-    /**
-     * Leone: SIERRA LEONE
-     * 
-     */
-    SLL,
-
-    /**
-     * Somali Shilling: SOMALIA
-     * 
-     */
-    SOS,
-
-    /**
-     * Surinam Dollar: SURINAME
-     * 
-     */
-    SRD,
-
-    /**
-     * South Sudanese Pound: SOUTH SUDAN
-     * 
-     */
-    SSP,
-
-    /**
-     * Historic use: Dobra: SAO TOME AND PRINCIPE
-     * 
-     */
-    STD,
-
-    /**
-     * Dobra: SAO TOME AND PRINCIPE
-     * 
-     */
-    STN,
-
-    /**
-     * El Salvador Colon: EL SALVADOR
-     * 
-     */
-    SVC,
-
-    /**
-     * Syrian Pound: SYRIAN ARAB REPUBLIC
-     * 
-     */
-    SYP,
-
-    /**
-     * Lilangeni: ESWATINI
-     * 
-     */
-    SZL,
-
-    /**
-     * Baht: THAILAND
-     * 
-     */
-    THB,
-
-    /**
-     * Somoni: TAJIKISTAN
-     * 
-     */
-    TJS,
-
-    /**
-     * Turkmenistan New Manat: TURKMENISTAN
-     * 
-     */
-    TMT,
-
-    /**
-     * Tunisian Dinar: TUNISIA
-     * 
-     */
-    TND,
-
-    /**
-     * Pa’anga: TONGA
-     * 
-     */
-    TOP,
-
-    /**
-     * Turkish Lira: TURKEY
-     * 
-     */
-    TRY,
-
-    /**
-     * Trinidad and Tobago Dollar: TRINIDAD AND TOBAGO
-     * 
-     */
-    TTD,
-
-    /**
-     * New Taiwan Dollar: TAIWAN, PROVINCE OF CHINA
-     * 
-     */
-    TWD,
-
-    /**
-     * Tanzanian Shilling: TANZANIA, UNITED REPUBLIC OF
-     * 
-     */
-    TZS,
-
-    /**
-     * Hryvnia: UKRAINE
-     * 
-     */
-    UAH,
-
-    /**
-     * Uganda Shilling: UGANDA
-     * 
-     */
-    UGX,
-
-    /**
-     * US Dollar: AMERICAN SAMOA; BONAIRE; SINT EUSTATIUS AND SABA; BRITISH INDIAN OCEAN TERRITORY; ECUADOR; EL SALVADOR; GUAM; HAITI; MARSHALL ISLANDS; MICRONESIA, FEDERATED STATES OF; NORTHERN MARIANA ISLANDS; PALAU; PANAMA; PUERTO RICO; TIMOR-LESTE; TURKS AND CAICOS ISLANDS; UNITED STATES; UNITED STATES MINOR OUTLYING ISLANDS; VIRGIN ISLANDS (BRITISH); VIRGIN ISLANDS (US)
-     * 
-     */
-    USD,
-
-    /**
-     * US Dollar (Next day): UNITED STATES
-     * 
-     */
-    USN,
-
-    /**
-     * Historic use: US Dollar (Same day): UNITED STATES
-     * 
-     */
-    USS,
-
-    /**
-     * Uruguay Peso en Unidades Indexadas (UI): URUGUAY
-     * 
-     */
-    UYI,
-
-    /**
-     * Peso Uruguayo: URUGUAY
-     * 
-     */
-    UYU,
-
-    /**
-     * Unidad Previsional: URUGUAY
-     * 
-     */
-    UYW,
-
-    /**
-     * Uzbekistan Sum: UZBEKISTAN
-     * 
-     */
-    UZS,
-
-    /**
-     * Historic use: Bolivar: VENEZUELA, BOLIVARIAN REPUBLIC OF
-     * 
-     */
-    VEF,
-
-    /**
-     * Bolívar Soberano: VENEZUELA, BOLIVARIAN REPUBLIC OF
-     * 
-     */
-    VES,
-
-    /**
-     * Dong: VIET NAM
-     * 
-     */
-    VND,
-
-    /**
-     * Vatu: VANUATU
-     * 
-     */
-    VUV,
-
-    /**
-     * Tala: SAMOA
-     * 
-     */
-    WST,
-
-    /**
-     * CFA Franc BEAC: CAMEROON; CENTRAL AFRICAN REPUBLIC; CHAD; CONGO; EQUATORIAL GUINEA; GABON
-     * 
-     */
-    XAF,
-
-    /**
-     * Silver: ZZ11_Silver
-     * 
-     */
-    XAG,
-
-    /**
-     * Gold: ZZ08_Gold
-     * 
-     */
-    XAU,
-
-    /**
-     * Bond Markets Unit European Composite Unit (EURCO):  ZZ01_Bond Markets Unit European_EURCO
-     * 
-     */
-    XBA,
-
-    /**
-     * Bond Markets Unit European Monetary Unit (E.M.U.-6): ZZ02_Bond Markets Unit European_EMU-6
-     * 
-     */
-    XBB,
-
-    /**
-     * Bond Markets Unit European Unit of Account 9 (E.U.A.-9): ZZ03_Bond Markets Unit European_EUA-9
-     * 
-     */
-    XBC,
-
-    /**
-     * Bond Markets Unit European Unit of Account 17 (E.U.A.-17): ZZ04_Bond Markets Unit European_EUA-17
-     * 
-     */
-    XBD,
-
-    /**
-     * East Caribbean Dollar: ANGUILLA; ANTIGUA AND BARBUDA; DOMINICA; GRENADA; MONTSERRAT; SAINT KITTS AND NEVIS; SAINT LUCIA; SAINT VINCENT AND THE GRENADINES
-     * 
-     */
-    XCD,
-
-    /**
-     * SDR (Special Drawing Right): INTERNATIONAL MONETARY FUND (IMF)
-     * 
-     */
-    XDR,
-
-    /**
-     * Historic use: UIC-Franc: ZZ05_UIC-Franc
-     * 
-     */
-    XFU,
-
-    /**
-     * CFA Franc BCEAO: BENIN; BURKINA FASO; COTE D'IVOIRE; GUINEA-BISSAU; MALI; NIGER; SENEGAL; TOGO
-     * 
-     */
-    XOF,
-
-    /**
-     * Palladium: ZZ09_Palladium
-     * 
-     */
-    XPD,
-
-    /**
-     * CFP Franc: FRENCH POLYNESIA; NEW CALEDONIA; WALLIS AND FUTUNA
-     * 
-     */
-    XPF,
-
-    /**
-     * Platinum: ZZ10_Platinum
-     * 
-     */
-    XPT,
-
-    /**
-     * Sucre: SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS "SUCRE"
-     * 
-     */
-    XSU,
-
-    /**
-     * ADB Unit of Account: MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP
-     * 
-     */
-    XUA,
-
-    /**
-     * The codes assigned for transactions where no currency is involved: ZZ07_No_Currency
-     * 
-     */
-    XXX,
-
-    /**
-     * Yemeni Rial: YEMEN
-     * 
-     */
-    YER,
-
-    /**
-     * Rand: LESOTHO; NAMIBIA; SOUTH AFRICA
-     * 
-     */
-    ZAR,
-
-    /**
-     * Zambian Kwacha: ZAMBIA
-     * 
-     */
-    ZMW,
-
-    /**
-     * Zimbabwe Dollar: ZIMBABWE
-     * 
-     */
-    ZWL;
-
-    public String value() {
-        return this.name();
-    }
-
-    public static CurrCodeType fromValue(final String v) {
-        return valueOf(v);
-    }
-
+public enum CurrCodeType
+{
+	
+	/**
+	 * UAE Dirham: UNITED ARAB EMIRATES
+	 */
+	AED,
+	
+	/**
+	 * Afghani: AFGHANISTAN
+	 */
+	AFN,
+	
+	/**
+	 * Lek: ALBANIA
+	 */
+	ALL,
+	
+	/**
+	 * Armenian Dram: ARMENIA
+	 */
+	AMD,
+	
+	/**
+	 * Netherlands Antillean Guilder: CURACAO; SINT MAARTEN (DUTCH PART)
+	 */
+	ANG,
+	
+	/**
+	 * Kwanza: ANGOLA
+	 */
+	AOA,
+	
+	/**
+	 * Argentine Peso: ARGENTINA
+	 */
+	ARS,
+	
+	/**
+	 * Australian Dollar: AUSTRALIA; CHRISTMAS ISLAND; COCOS (KEELING) ISLANDS; HEARD ISLAND AND McDONALD ISLANDS;
+	 * KIRIBATI; NAURU; NORFOLK ISLAND; TUVALU
+	 */
+	AUD,
+	
+	/**
+	 * Aruban Florin: ARUBA
+	 */
+	AWG,
+	
+	/**
+	 * Azerbaijan Manat: AZERBAIJAN
+	 */
+	AZN,
+	
+	/**
+	 * Convertible Mark: BOSNIA AND HERZEGOVINA
+	 */
+	BAM,
+	
+	/**
+	 * Barbados Dollar: BARBADOS
+	 */
+	BBD,
+	
+	/**
+	 * Taka: BANGLADESH
+	 */
+	BDT,
+	
+	/**
+	 * Bulgarian Lev: BULGARIA
+	 */
+	BGN,
+	
+	/**
+	 * Bahraini Dinar: BAHRAIN
+	 */
+	BHD,
+	
+	/**
+	 * Burundi Franc: BURUNDI
+	 */
+	BIF,
+	
+	/**
+	 * Bermudian Dollar: BERMUDA
+	 */
+	BMD,
+	
+	/**
+	 * Brunei Dollar: BRUNEI DARUSSALAM
+	 */
+	BND,
+	
+	/**
+	 * Boliviano: BOLIVIA, PLURINATIONAL STATE OF
+	 */
+	BOB,
+	
+	/**
+	 * Mvdol: BOLIVIA, PLURINATIONAL STATE OF
+	 */
+	BOV,
+	
+	/**
+	 * Brazilian Real: BRAZIL
+	 */
+	BRL,
+	
+	/**
+	 * Bahamian Dollar: BAHAMAS
+	 */
+	BSD,
+	
+	/**
+	 * Ngultrum: BHUTAN
+	 */
+	BTN,
+	
+	/**
+	 * Pula: BOTSWANA
+	 */
+	BWP,
+	
+	/**
+	 * Belarusian Ruble: BELARUS
+	 */
+	BYN,
+	
+	/**
+	 * Historic use: Belarussian Ruble: BELARUS
+	 */
+	BYR,
+	
+	/**
+	 * Belize Dollar: BELIZE
+	 */
+	BZD,
+	
+	/**
+	 * Canadian Dollar: CANADA
+	 */
+	CAD,
+	
+	/**
+	 * Congolese Franc: CONGO, THE DEMOCRATIC REPUBLIC OF
+	 */
+	CDF,
+	
+	/**
+	 * WIR Euro: SWITZERLAND
+	 */
+	CHE,
+	
+	/**
+	 * Swiss Franc: LIECHTENSTEIN; SWITZERLAND
+	 */
+	CHF,
+	
+	/**
+	 * WIR Franc: SWITZERLAND
+	 */
+	CHW,
+	
+	/**
+	 * Unidad de Fomento: CHILE
+	 */
+	CLF,
+	
+	/**
+	 * Chilean Peso: CHILE
+	 */
+	CLP,
+	
+	/**
+	 * Yuan Renminbi: CHINA
+	 */
+	CNY,
+	
+	/**
+	 * Colombian Peso: COLOMBIA
+	 */
+	COP,
+	
+	/**
+	 * Unidad de Valor Real: COLOMBIA
+	 */
+	COU,
+	
+	/**
+	 * Costa Rican Colon: COSTA RICA
+	 */
+	CRC,
+	
+	/**
+	 * Peso Convertible: CUBA
+	 */
+	CUC,
+	
+	/**
+	 * Cuban Peso: CUBA
+	 */
+	CUP,
+	
+	/**
+	 * Cabo Verde Escudo: CABO VERDE
+	 */
+	CVE,
+	
+	/**
+	 * Czech Koruna: CZECHIA
+	 */
+	CZK,
+	
+	/**
+	 * Djibouti Franc: DJIBOUTI
+	 */
+	DJF,
+	
+	/**
+	 * Danish Krone: DENMARK; FAROE ISLANDS; GREENLAND
+	 */
+	DKK,
+	
+	/**
+	 * Dominican Peso: DOMINICAN REPUBLIC
+	 */
+	DOP,
+	
+	/**
+	 * Algerian Dinar: ALGERIA
+	 */
+	DZD,
+	
+	/**
+	 * Egyptian Pound: EGYPT
+	 */
+	EGP,
+	
+	/**
+	 * Nakfa: ERITREA
+	 */
+	ERN,
+	
+	/**
+	 * Ethiopian Birr: ETHIOPIA
+	 */
+	ETB,
+	
+	/**
+	 * Euro: ALAND ISLANDS; ANDORRA; AUSTRIA; BELGIUM; CYPRUS; ESTONIA; EUROPEAN UNION; FINLAND; FRANCE; FRENCH GUIANA;
+	 * FRENCH SOUTHERN TERRITORIES; GERMANY; GREECE; GUADELOUPE; HOLY SEE (VATICAN CITY STATE); IRELAND; ITALY; LATVIA;
+	 * LITHUANIA; LUXEMBOURG; MALTA; MARTINIQUE; MAYOTTE; MONACO; MONTENEGRO; NETHERLANDS; PORTUGAL; REUNION; SAINT
+	 * BARTHELEMY; SAINT MARTIN (FRENCH PART); SAINT PIERRE AND MIQUELON; SAN MARINO; SLOVAKIA; SLOVENIA; SPAIN;
+	 * Vatican
+	 * City State (HOLY SEE)
+	 */
+	EUR,
+	
+	/**
+	 * Fiji Dollar: FIJI
+	 */
+	FJD,
+	
+	/**
+	 * Falkland Islands Pound: FALKLAND ISLANDS (MALVINAS)
+	 */
+	FKP,
+	
+	/**
+	 * Pound Sterling: GUERNSEY; ISLE OF MAN; JERSEY; UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+	 */
+	GBP,
+	
+	/**
+	 * Lari: GEORGIA
+	 */
+	GEL,
+	
+	/**
+	 * Ghana Cedi: GHANA
+	 */
+	GHS,
+	
+	/**
+	 * Gibraltar Pound: GIBRALTAR
+	 */
+	GIP,
+	
+	/**
+	 * Dalasi: GAMBIA
+	 */
+	GMD,
+	
+	/**
+	 * Guinean Franc: GUINEA
+	 */
+	GNF,
+	
+	/**
+	 * Quetzal: GUATEMALA
+	 */
+	GTQ,
+	
+	/**
+	 * Guyana Dollar: GUYANA
+	 */
+	GYD,
+	
+	/**
+	 * Hong Kong Dollar: HONG KONG
+	 */
+	HKD,
+	
+	/**
+	 * Lempira: HONDURAS
+	 */
+	HNL,
+	
+	/**
+	 * Kuna: CROATIA
+	 */
+	HRK,
+	
+	/**
+	 * Gourde: HAITI
+	 */
+	HTG,
+	
+	/**
+	 * Forint: HUNGARY
+	 */
+	HUF,
+	
+	/**
+	 * Rupiah: INDONESIA
+	 */
+	IDR,
+	
+	/**
+	 * New Israeli Sheqel: ISRAEL
+	 */
+	ILS,
+	
+	/**
+	 * Indian Rupee: BHUTAN; INDIA
+	 */
+	INR,
+	
+	/**
+	 * Iraqi Dinar: IRAQ
+	 */
+	IQD,
+	
+	/**
+	 * Iranian Rial: IRAN, ISLAMIC REPUBLIC OF
+	 */
+	IRR,
+	
+	/**
+	 * Iceland Krona: ICELAND
+	 */
+	ISK,
+	
+	/**
+	 * Jamaican Dollar: JAMAICA
+	 */
+	JMD,
+	
+	/**
+	 * Jordanian Dinar: JORDAN
+	 */
+	JOD,
+	
+	/**
+	 * Yen: JAPAN
+	 */
+	JPY,
+	
+	/**
+	 * Kenyan Shilling: KENYA
+	 */
+	KES,
+	
+	/**
+	 * Som: KYRGYZSTAN
+	 */
+	KGS,
+	
+	/**
+	 * Riel: CAMBODIA
+	 */
+	KHR,
+	
+	/**
+	 * Comorian Franc : COMOROS
+	 */
+	KMF,
+	
+	/**
+	 * North Korean Won: KOREA, DEMOCRATIC PEOPLE’S REPUBLIC OF
+	 */
+	KPW,
+	
+	/**
+	 * Won: KOREA, REPUBLIC OF
+	 */
+	KRW,
+	
+	/**
+	 * Kuwaiti Dinar: KUWAIT
+	 */
+	KWD,
+	
+	/**
+	 * Cayman Islands Dollar: CAYMAN ISLANDS
+	 */
+	KYD,
+	
+	/**
+	 * Tenge: KAZAKHSTAN
+	 */
+	KZT,
+	
+	/**
+	 * Lao Kip: LAO PEOPLE’S DEMOCRATIC REPUBLIC
+	 */
+	LAK,
+	
+	/**
+	 * Lebanese Pound: LEBANON
+	 */
+	LBP,
+	
+	/**
+	 * Sri Lanka Rupee: SRI LANKA
+	 */
+	LKR,
+	
+	/**
+	 * Liberian Dollar: LIBERIA
+	 */
+	LRD,
+	
+	/**
+	 * Loti: LESOTHO
+	 */
+	LSL,
+	
+	/**
+	 * Historic use: Lithuanian Litas: LITHUANIA
+	 */
+	LTL,
+	
+	/**
+	 * Historic use: Latvian Lats: LATVIA
+	 */
+	LVL,
+	
+	/**
+	 * Libyan Dinar: LIBYA
+	 */
+	LYD,
+	
+	/**
+	 * Moroccan Dirham: MOROCCO; WESTERN SAHARA
+	 */
+	MAD,
+	
+	/**
+	 * Moldovan Leu: MOLDOVA, REPUBLIC OF
+	 */
+	MDL,
+	
+	/**
+	 * Malagasy Ariary: MADAGASCAR
+	 */
+	MGA,
+	
+	/**
+	 * Denar: MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+	 */
+	MKD,
+	
+	/**
+	 * Kyat: MYANMAR
+	 */
+	MMK,
+	
+	/**
+	 * Tugrik: MONGOLIA
+	 */
+	MNT,
+	
+	/**
+	 * Pataca: MACAO
+	 */
+	MOP,
+	
+	/**
+	 * Historic use: Ouguiya: MAURITANIA
+	 */
+	MRO,
+	
+	/**
+	 * Ouguiya: MAURITANIA
+	 */
+	MRU,
+	
+	/**
+	 * Mauritius Rupee: MAURITIUS
+	 */
+	MUR,
+	
+	/**
+	 * Rufiyaa: MALDIVES
+	 */
+	MVR,
+	
+	/**
+	 * Malawi Kwacha: MALAWI
+	 */
+	MWK,
+	
+	/**
+	 * Mexican Peso: MEXICO
+	 */
+	MXN,
+	
+	/**
+	 * Mexican Unidad de Inversion (UDI): MEXICO
+	 */
+	MXV,
+	
+	/**
+	 * Malaysian Ringgit: MALAYSIA
+	 */
+	MYR,
+	
+	/**
+	 * Mozambique Metical: MOZAMBIQUE
+	 */
+	MZN,
+	
+	/**
+	 * Namibia Dollar: NAMIBIA
+	 */
+	NAD,
+	
+	/**
+	 * Naira: NIGERIA
+	 */
+	NGN,
+	
+	/**
+	 * Cordoba Oro: NICARAGUA
+	 */
+	NIO,
+	
+	/**
+	 * Norwegian Krone: BOUVET ISLAND; NORWAY; SVALBARD AND JAN MAYEN
+	 */
+	NOK,
+	
+	/**
+	 * Nepalese Rupee: NEPAL
+	 */
+	NPR,
+	
+	/**
+	 * New Zealand Dollar: COOK ISLANDS; NEW ZEALAND; NIUE; PITCAIRN; TOKELAU
+	 */
+	NZD,
+	
+	/**
+	 * Rial Omani: OMAN
+	 */
+	OMR,
+	
+	/**
+	 * Balboa: PANAMA
+	 */
+	PAB,
+	
+	/**
+	 * Sol: PERU
+	 */
+	PEN,
+	
+	/**
+	 * Kina: PAPUA NEW GUINEA
+	 */
+	PGK,
+	
+	/**
+	 * Philippine Peso: PHILIPPINES
+	 */
+	PHP,
+	
+	/**
+	 * Pakistan Rupee: PAKISTAN
+	 */
+	PKR,
+	
+	/**
+	 * Zloty: POLAND
+	 */
+	PLN,
+	
+	/**
+	 * Guarani: PARAGUAY
+	 */
+	PYG,
+	
+	/**
+	 * Qatari Rial: QATAR
+	 */
+	QAR,
+	
+	/**
+	 * Romanian Leu: ROMANIA
+	 */
+	RON,
+	
+	/**
+	 * Serbian Dinar: SERBIA
+	 */
+	RSD,
+	
+	/**
+	 * Russian Ruble: RUSSIAN FEDERATION
+	 */
+	RUB,
+	
+	/**
+	 * Rwanda Franc: RWANDA
+	 */
+	RWF,
+	
+	/**
+	 * Saudi Riyal: SAUDI ARABIA
+	 */
+	SAR,
+	
+	/**
+	 * Solomon Islands Dollar: SOLOMON ISLANDS
+	 */
+	SBD,
+	
+	/**
+	 * Seychelles Rupee: SEYCHELLES
+	 */
+	SCR,
+	
+	/**
+	 * Sudanese Pound: SUDAN
+	 */
+	SDG,
+	
+	/**
+	 * Swedish Krona: SWEDEN
+	 */
+	SEK,
+	
+	/**
+	 * Singapore Dollar: SINGAPORE
+	 */
+	SGD,
+	
+	/**
+	 * Saint Helena Pound: SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA
+	 */
+	SHP,
+	
+	/**
+	 * Leone: SIERRA LEONE
+	 */
+	SLL,
+	
+	/**
+	 * Somali Shilling: SOMALIA
+	 */
+	SOS,
+	
+	/**
+	 * Surinam Dollar: SURINAME
+	 */
+	SRD,
+	
+	/**
+	 * South Sudanese Pound: SOUTH SUDAN
+	 */
+	SSP,
+	
+	/**
+	 * Historic use: Dobra: SAO TOME AND PRINCIPE
+	 */
+	STD,
+	
+	/**
+	 * Dobra: SAO TOME AND PRINCIPE
+	 */
+	STN,
+	
+	/**
+	 * El Salvador Colon: EL SALVADOR
+	 */
+	SVC,
+	
+	/**
+	 * Syrian Pound: SYRIAN ARAB REPUBLIC
+	 */
+	SYP,
+	
+	/**
+	 * Lilangeni: ESWATINI
+	 */
+	SZL,
+	
+	/**
+	 * Baht: THAILAND
+	 */
+	THB,
+	
+	/**
+	 * Somoni: TAJIKISTAN
+	 */
+	TJS,
+	
+	/**
+	 * Turkmenistan New Manat: TURKMENISTAN
+	 */
+	TMT,
+	
+	/**
+	 * Tunisian Dinar: TUNISIA
+	 */
+	TND,
+	
+	/**
+	 * Pa’anga: TONGA
+	 */
+	TOP,
+	
+	/**
+	 * Turkish Lira: TURKEY
+	 */
+	TRY,
+	
+	/**
+	 * Trinidad and Tobago Dollar: TRINIDAD AND TOBAGO
+	 */
+	TTD,
+	
+	/**
+	 * New Taiwan Dollar: TAIWAN, PROVINCE OF CHINA
+	 */
+	TWD,
+	
+	/**
+	 * Tanzanian Shilling: TANZANIA, UNITED REPUBLIC OF
+	 */
+	TZS,
+	
+	/**
+	 * Hryvnia: UKRAINE
+	 */
+	UAH,
+	
+	/**
+	 * Uganda Shilling: UGANDA
+	 */
+	UGX,
+	
+	/**
+	 * US Dollar: AMERICAN SAMOA; BONAIRE; SINT EUSTATIUS AND SABA; BRITISH INDIAN OCEAN TERRITORY; ECUADOR; EL
+	 * SALVADOR; GUAM; HAITI; MARSHALL ISLANDS; MICRONESIA, FEDERATED STATES OF; NORTHERN MARIANA ISLANDS; PALAU;
+	 * PANAMA; PUERTO RICO; TIMOR-LESTE; TURKS AND CAICOS ISLANDS; UNITED STATES; UNITED STATES MINOR OUTLYING ISLANDS;
+	 * VIRGIN ISLANDS (BRITISH); VIRGIN ISLANDS (US)
+	 */
+	USD,
+	
+	/**
+	 * US Dollar (Next day): UNITED STATES
+	 */
+	USN,
+	
+	/**
+	 * Historic use: US Dollar (Same day): UNITED STATES
+	 */
+	USS,
+	
+	/**
+	 * Uruguay Peso en Unidades Indexadas (UI): URUGUAY
+	 */
+	UYI,
+	
+	/**
+	 * Peso Uruguayo: URUGUAY
+	 */
+	UYU,
+	
+	/**
+	 * Unidad Previsional: URUGUAY
+	 */
+	UYW,
+	
+	/**
+	 * Uzbekistan Sum: UZBEKISTAN
+	 */
+	UZS,
+	
+	/**
+	 * Historic use: Bolivar: VENEZUELA, BOLIVARIAN REPUBLIC OF
+	 */
+	VEF,
+	
+	/**
+	 * Bolívar Soberano: VENEZUELA, BOLIVARIAN REPUBLIC OF
+	 */
+	VES,
+	
+	/**
+	 * Dong: VIET NAM
+	 */
+	VND,
+	
+	/**
+	 * Vatu: VANUATU
+	 */
+	VUV,
+	
+	/**
+	 * Tala: SAMOA
+	 */
+	WST,
+	
+	/**
+	 * CFA Franc BEAC: CAMEROON; CENTRAL AFRICAN REPUBLIC; CHAD; CONGO; EQUATORIAL GUINEA; GABON
+	 */
+	XAF,
+	
+	/**
+	 * Silver: ZZ11_Silver
+	 */
+	XAG,
+	
+	/**
+	 * Gold: ZZ08_Gold
+	 */
+	XAU,
+	
+	/**
+	 * Bond Markets Unit European Composite Unit (EURCO):  ZZ01_Bond Markets Unit European_EURCO
+	 */
+	XBA,
+	
+	/**
+	 * Bond Markets Unit European Monetary Unit (E.M.U.-6): ZZ02_Bond Markets Unit European_EMU-6
+	 */
+	XBB,
+	
+	/**
+	 * Bond Markets Unit European Unit of Account 9 (E.U.A.-9): ZZ03_Bond Markets Unit European_EUA-9
+	 */
+	XBC,
+	
+	/**
+	 * Bond Markets Unit European Unit of Account 17 (E.U.A.-17): ZZ04_Bond Markets Unit European_EUA-17
+	 */
+	XBD,
+	
+	/**
+	 * East Caribbean Dollar: ANGUILLA; ANTIGUA AND BARBUDA; DOMINICA; GRENADA; MONTSERRAT; SAINT KITTS AND NEVIS;
+	 * SAINT
+	 * LUCIA; SAINT VINCENT AND THE GRENADINES
+	 */
+	XCD,
+	
+	/**
+	 * SDR (Special Drawing Right): INTERNATIONAL MONETARY FUND (IMF)
+	 */
+	XDR,
+	
+	/**
+	 * Historic use: UIC-Franc: ZZ05_UIC-Franc
+	 */
+	XFU,
+	
+	/**
+	 * CFA Franc BCEAO: BENIN; BURKINA FASO; COTE D'IVOIRE; GUINEA-BISSAU; MALI; NIGER; SENEGAL; TOGO
+	 */
+	XOF,
+	
+	/**
+	 * Palladium: ZZ09_Palladium
+	 */
+	XPD,
+	
+	/**
+	 * CFP Franc: FRENCH POLYNESIA; NEW CALEDONIA; WALLIS AND FUTUNA
+	 */
+	XPF,
+	
+	/**
+	 * Platinum: ZZ10_Platinum
+	 */
+	XPT,
+	
+	/**
+	 * Sucre: SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS "SUCRE"
+	 */
+	XSU,
+	
+	/**
+	 * ADB Unit of Account: MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP
+	 */
+	XUA,
+	
+	/**
+	 * The codes assigned for transactions where no currency is involved: ZZ07_No_Currency
+	 */
+	XXX,
+	
+	/**
+	 * Yemeni Rial: YEMEN
+	 */
+	YER,
+	
+	/**
+	 * Rand: LESOTHO; NAMIBIA; SOUTH AFRICA
+	 */
+	ZAR,
+	
+	/**
+	 * Zambian Kwacha: ZAMBIA
+	 */
+	ZMW,
+	
+	/**
+	 * Zimbabwe Dollar: ZIMBABWE
+	 */
+	ZWL;
+	
+	public String value()
+	{
+		return this.name();
+	}
+	
+	public static CurrCodeType fromValue(final String v)
+	{
+		return valueOf(v);
+	}
 }
