@@ -44,7 +44,7 @@ public final class Application
 			String.format(
 				"Sending dip message with transfer number %s %s",
 				bzstDipCompleteResult.getDataTransferNumber(),
-				bzstDipCompleteResult.wasSuccessfull() ? "was successful." : "has failed!"
+				bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
 			)
 		);
 	}
@@ -55,6 +55,7 @@ public final class Application
 			.setClientId("TestClient")
 			.setTaxID("TaxID")
 			.setTaxNumber("TaxNumber")
+			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 			.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 			.setReportingPeriod(LocalDate.now())
 			.setDocTypeIndic(BzstDipOecdDocType.OECD_0)
@@ -86,10 +87,10 @@ public final class Application
 					),
 					new BzstDipNumberOfActivities(1, 2, 3, 4),
 					new BzstDipConsiderations(
-						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR),
-						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR),
-						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR),
-						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR)
+						new BzstDipMonetaryAmount(10, BzstDipCurrency.EUR),
+						new BzstDipMonetaryAmount(10, BzstDipCurrency.EUR),
+						new BzstDipMonetaryAmount(10, BzstDipCurrency.EUR),
+						new BzstDipMonetaryAmount(10, BzstDipCurrency.EUR)
 					),
 					new BzstDipFees(
 						new BzstDipMonetaryAmount(1, BzstDipCurrency.EUR),

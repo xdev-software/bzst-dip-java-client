@@ -41,7 +41,7 @@ public class BzstDipCompleteResult
 		return this.singleTransferResults;
 	}
 	
-	public boolean wasSuccessfull()
+	public boolean isSuccessful()
 	{
 		return this.singleTransferResults.stream().anyMatch(
 			result -> result.transferNumber().equals(this.dataTransferNumber)

@@ -18,8 +18,9 @@ package software.xdev.bzst.dip.client.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.security.Key;
 import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import software.xdev.bzst.dip.client.exception.EncryptionException;
 import software.xdev.bzst.dip.client.exception.SigningException;
 import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryExtension;
@@ -72,7 +72,7 @@ public final class WebClientUtil
 				throw new SigningException("The private key entry in the keystore is null.");
 			}
 			
-			final Key privateKey = privateKeyEntry.getPrivateKey();
+			final PrivateKey privateKey = privateKeyEntry.getPrivateKey();
 			final String clientId = configuration.getClientId();
 			LOGGER.debug("Using client id: {}", clientId);
 			
@@ -83,10 +83,11 @@ public final class WebClientUtil
 					configuration.getRealmEnvironmentBaseUrl() + MDS_POSTFIX)
 				.and()
 				.issuedAt(new Date())
-				.expiration(new Date(System.currentTimeMillis() + (5 * 60 * 1000L)))
+				.expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()))
 				.id(UUID.randomUUID().toString())
-				.notBefore(new Date(System.currentTimeMillis() - 60 * 1000L))
-				.signWith(privateKey, SignatureAlgorithm.RS256)
+				.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
+				.signWith(privateKey, Jwts.SIG.RS256)
+				.signWith(privateKey)
 				.compact();
 		}
 		catch(final IOException ioException)

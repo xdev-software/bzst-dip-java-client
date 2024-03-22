@@ -40,6 +40,7 @@ class ReportableSellerCsvFileParserTest
 		.setClientId("TestClient")
 		.setTaxID("TaxID")
 		.setTaxNumber("TaxNumber")
+		.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 		.setReportingPeriod(LocalDate.now())
 		.setDocTypeIndic(BzstDipOecdDocType.OECD_1)

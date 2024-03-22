@@ -38,7 +38,7 @@ public final class ApplicationWithCsvInput
 			String.format(
 				"Sending dip message with transfer number %s %s",
 				bzstDipCompleteResult.getDataTransferNumber(),
-				bzstDipCompleteResult.wasSuccessfull() ? "was successful." : "has failed!"
+				bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
 			)
 		);
 	}

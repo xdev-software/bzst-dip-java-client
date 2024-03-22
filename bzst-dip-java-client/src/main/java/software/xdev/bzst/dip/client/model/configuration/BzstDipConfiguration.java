@@ -25,6 +25,9 @@ import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 public class BzstDipConfiguration
 {
+	public static final String ENDPOINT_URL_PRODUCTION = "https://mds.bzst.bund.de/";
+	public static final String ENDPOINT_URL_TEST = "https://mds-ktst.bzst.bund.de/";
+	
 	private final String certificateKeystorePassword;
 	private final String clientId;
 	/**
@@ -40,7 +43,8 @@ public class BzstDipConfiguration
 	 */
 	private final String taxNumber;
 	/**
-	 * Default: <a href="https://mds-ktst.bzst.bund.de">https://mds-ktst.bzst.bund.de</a>
+	 * For production: {@link #ENDPOINT_URL_PRODUCTION}
+	 * For test (default):  {@link #ENDPOINT_URL_TEST}
 	 */
 	private final String realmEnvironmentBaseUrl;
 	private final BzstDipEnvironment environment;

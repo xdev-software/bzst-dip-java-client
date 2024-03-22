@@ -29,7 +29,6 @@ import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BzstDipConfigurationBuilder
 {
-	private static final String BASE_URL_DEFAULT_VALUE = "https://mds-ktst.bzst.bund.de";
 	private final PropertiesSupplier propertiesSupplier;
 	private String certificateKeystorePassword;
 	private String clientId;
@@ -183,7 +182,7 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFile(
 				this.realmEnvironmentBaseUrl,
 				PropertiesSupplier.PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL,
-				BASE_URL_DEFAULT_VALUE),
+				BzstDipConfiguration.ENDPOINT_URL_PRODUCTION),
 			this.getSetPropertyOrReadFromFileEnv(
 				this.environment,
 				PropertiesSupplier.PROPERTY_NAME_ENVIRONMENT,
