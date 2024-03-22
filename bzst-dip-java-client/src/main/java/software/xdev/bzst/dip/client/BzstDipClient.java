@@ -17,9 +17,6 @@ package software.xdev.bzst.dip.client;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,22 +66,10 @@ public class BzstDipClient
 		return this.sendDipAndQueryResult(message.toXmlType(this.configuration));
 	}
 	
-	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(final BzstDipMessage message)
-	{
-		return this.sendDipAndQueryResultAsync(message.toXmlType(this.configuration));
-	}
-	
 	public BzstDipCompleteResult sendDipAndQueryResult(final String csvData)
 		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(ReportableSellerCsvFileParser.parseCsvData(csvData, this.configuration));
-	}
-	
-	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(final String csvData)
-	{
-		return this.sendDipAndQueryResultAsync(ReportableSellerCsvFileParser.parseCsvData(
-			csvData,
-			this.configuration));
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(
@@ -115,14 +100,6 @@ public class BzstDipClient
 			
 			return new BzstDipCompleteResult(sendingResult, requestStatusResult);
 		}
-	}
-	
-	public Future<BzstDipCompleteResult> sendDipAndQueryResultAsync(
-		final List<CorrectableReportableSellerType> correctableReportableSellerTypes
-	)
-	{
-		final ExecutorService executor = Executors.newSingleThreadExecutor();
-		return executor.submit(() -> this.sendDipAndQueryResult(correctableReportableSellerTypes));
 	}
 	
 	public BzstDipSendingResult sendDipOnly(

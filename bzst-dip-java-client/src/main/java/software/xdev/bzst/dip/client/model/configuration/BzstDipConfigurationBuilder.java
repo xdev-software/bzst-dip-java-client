@@ -30,6 +30,7 @@ import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 public class BzstDipConfigurationBuilder
 {
 	private static final String BASE_URL_DEFAULT_VALUE = "https://mds-ktst.bzst.bund.de";
+	private final PropertiesSupplier propertiesSupplier;
 	private String certificateKeystorePassword;
 	private String clientId;
 	private String taxID;
@@ -42,13 +43,22 @@ public class BzstDipConfigurationBuilder
 	private String platformOperatorDocRefId;
 	private String platformOperatorCorrDocRefId;
 	private Supplier<InputStream> certificateKeystoreInputStream;
-	private PropertiesSupplier propertiesSupplier;
 	private Duration delayBeforeCheckingResults;
 	private Integer retryQueryResultsAmount;
 	private Duration delayInBetweenResultChecks;
 	private String platformOperatorOrganizationName;
 	private String platformOperatorPlatformName;
 	private BzstDipAddressFix platformOperatorAddress;
+	
+	public BzstDipConfigurationBuilder(final PropertiesSupplier propertiesSupplier)
+	{
+		this.propertiesSupplier = propertiesSupplier;
+	}
+	
+	public BzstDipConfigurationBuilder()
+	{
+		this(new PropertiesSupplier());
+	}
 	
 	public BzstDipConfigurationBuilder setCertificateKeystorePassword(final String certificateKeystorePassword)
 	{
@@ -116,12 +126,6 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
-	public BzstDipConfigurationBuilder setPropertiesSupplier(final PropertiesSupplier propertiesSupplier)
-	{
-		this.propertiesSupplier = propertiesSupplier;
-		return this;
-	}
-	
 	public BzstDipConfigurationBuilder setDelayBeforeCheckingResults(final Duration delayBeforeCheckingResults)
 	{
 		this.delayBeforeCheckingResults = delayBeforeCheckingResults;
@@ -137,6 +141,32 @@ public class BzstDipConfigurationBuilder
 	public BzstDipConfigurationBuilder setDelayInBetweenResultChecks(final Duration delayInBetweenResultChecks)
 	{
 		this.delayInBetweenResultChecks = delayInBetweenResultChecks;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(
+		final Supplier<InputStream> certificateKeystoreInputStream)
+	{
+		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setPlatformOperatorOrganizationName(
+		final String platformOperatorOrganizationName)
+	{
+		this.platformOperatorOrganizationName = platformOperatorOrganizationName;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setPlatformOperatorPlatformName(final String platformOperatorPlatformName)
+	{
+		this.platformOperatorPlatformName = platformOperatorPlatformName;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setPlatformOperatorAddress(final BzstDipAddressFix platformOperatorAddress)
+	{
+		this.platformOperatorAddress = platformOperatorAddress;
 		return this;
 	}
 	
@@ -344,11 +374,6 @@ public class BzstDipConfigurationBuilder
 	
 	private String getSetPropertyOrReadFromFile(final String builderProperty, final String propertyNameInFile)
 	{
-		if(this.propertiesSupplier == null)
-		{
-			this.propertiesSupplier = new PropertiesSupplier();
-		}
-		
 		if(builderProperty != null)
 		{
 			return builderProperty;
@@ -366,10 +391,6 @@ public class BzstDipConfigurationBuilder
 		final String propertyNameInFile,
 		final String defaultValue)
 	{
-		if(this.propertiesSupplier == null)
-		{
-			this.propertiesSupplier = new PropertiesSupplier();
-		}
 		
 		if(builderProperty != null)
 		{
@@ -381,31 +402,5 @@ public class BzstDipConfigurationBuilder
 			return defaultValue;
 		}
 		return propertyFromFile;
-	}
-	
-	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(
-		final Supplier<InputStream> certificateKeystoreInputStream)
-	{
-		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
-		return this;
-	}
-	
-	public BzstDipConfigurationBuilder setPlatformOperatorOrganizationName(
-		final String platformOperatorOrganizationName)
-	{
-		this.platformOperatorOrganizationName = platformOperatorOrganizationName;
-		return this;
-	}
-	
-	public BzstDipConfigurationBuilder setPlatformOperatorPlatformName(final String platformOperatorPlatformName)
-	{
-		this.platformOperatorPlatformName = platformOperatorPlatformName;
-		return this;
-	}
-	
-	public BzstDipConfigurationBuilder setPlatformOperatorAddress(final BzstDipAddressFix platformOperatorAddress)
-	{
-		this.platformOperatorAddress = platformOperatorAddress;
-		return this;
 	}
 }

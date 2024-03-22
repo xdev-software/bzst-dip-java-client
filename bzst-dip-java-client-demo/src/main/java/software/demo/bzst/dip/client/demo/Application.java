@@ -49,7 +49,7 @@ public final class Application
 		);
 	}
 	
-	private static BzstDipConfiguration createConfiguration()
+	public static BzstDipConfiguration createConfiguration()
 	{
 		return new BzstDipConfigurationBuilder()
 			.setClientId("TestClient")
@@ -64,7 +64,7 @@ public final class Application
 			.build();
 	}
 	
-	private static BzstDipMessage createMessage()
+	public static BzstDipMessage createMessage()
 	{
 		return new BzstDipMessage(
 			List.of(
