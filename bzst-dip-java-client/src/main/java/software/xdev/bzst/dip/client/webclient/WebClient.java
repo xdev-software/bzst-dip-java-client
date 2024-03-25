@@ -71,8 +71,6 @@ public class WebClient implements AutoCloseable
 	{
 		try
 		{
-			LOGGER.error(this.httpServletRequestToString(httpRequest));
-			
 			final HttpResponse<String> httpResponse = this.httpClient.send(
 				httpRequest,
 				HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
@@ -82,20 +80,6 @@ public class WebClient implements AutoCloseable
 		{
 			throw new RuntimeException("An error occurred while getting the access token.", e);
 		}
-	}
-	
-	private String httpServletRequestToString(final HttpRequest request)
-	{
-		final StringBuilder sb = new StringBuilder();
-		
-		sb.append("Request Method = [" + request.method() + "], ");
-		sb.append("Request URL Path = [" + request.uri().toString() + "], ");
-		
-		request.headers().map().forEach(
-			(key, value) -> sb.append("Header: " + key + " value: " + value.stream().collect(Collectors.joining(",")))
-		);
-		
-		return sb.toString();
 	}
 	
 	private HttpRequest createGetAccessTokenRequest()
@@ -122,8 +106,7 @@ public class WebClient implements AutoCloseable
 	 */
 	public String getAccessToken()
 	{
-		LOGGER.info("Getting access token...");
-		
+		LOGGER.debug("Getting access token...");
 		try
 		{
 			final HttpRequest httpRequest = this.createGetAccessTokenRequest();
@@ -159,7 +142,7 @@ public class WebClient implements AutoCloseable
 	 */
 	public String getDataTransferNumber() throws HttpStatusCodeNotExceptedException
 	{
-		LOGGER.info("Getting data transfer number...");
+		LOGGER.debug("Getting data transfer number...");
 		final HttpResponse<String> httpResponse = this.executeRequest(this.createGetDataTransferNumberRequest(), 201);
 		
 		return httpResponse.body();
@@ -180,12 +163,12 @@ public class WebClient implements AutoCloseable
 	public String uploadMassData(final String dataTransferNumber, final String xmlString)
 		throws HttpStatusCodeNotExceptedException
 	{
-		LOGGER.info("Uploading the xml data...");
+		LOGGER.debug("Uploading the xml data...");
 		
 		final HttpResponse<String> httpResponse = this.executeRequest(
 			this.createUploadMassDataRequest(dataTransferNumber, xmlString), OK_HTTP_STATUS_CODE);
 		
-		LOGGER.info("Uploaded data successfully!");
+		LOGGER.debug("Uploaded data successfully!");
 		return httpResponse.body();
 	}
 	
@@ -203,10 +186,10 @@ public class WebClient implements AutoCloseable
 	 */
 	public String closeSubmission(final String dataTransferNumber) throws HttpStatusCodeNotExceptedException
 	{
-		LOGGER.info("Closing submission...");
+		LOGGER.debug("Closing submission...");
 		final HttpResponse<String> httpResponse = this.executeRequest(
 			this.createCloseSubmissionRequest(dataTransferNumber), OK_HTTP_STATUS_CODE);
-		LOGGER.info("Closed submission successfully!");
+		LOGGER.debug("Closed submission successfully!");
 		
 		return httpResponse.body();
 	}
@@ -293,7 +276,7 @@ public class WebClient implements AutoCloseable
 		LOGGER.error("Aborting submission...");
 		final HttpResponse<String> httpResponse = this.executeRequest(
 			this.createAbortSubmissionRequest(dataTransferNumber), OK_HTTP_STATUS_CODE);
-		LOGGER.info("Aborted successfully.");
+		LOGGER.debug("Aborted successfully.");
 		
 		return httpResponse.body();
 	}
@@ -323,7 +306,7 @@ public class WebClient implements AutoCloseable
 		throws HttpStatusCodeNotExceptedException
 	{
 		final BzstDipSingleTransferResult singleTransferResult = this.requestTransferResult(transferNumber);
-		LOGGER.info(
+		LOGGER.debug(
 			"Transfer number {} with result protocol:\n{}",
 			transferNumber,
 			singleTransferResult.httpStatusCode());

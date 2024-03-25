@@ -256,10 +256,11 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
+		final String inputFile = this.getSetPropertyOrReadFromFile(null, propertyNameInFile);
 		return () -> {
 			try
 			{
-				return new FileInputStream(this.getSetPropertyOrReadFromFile(null, propertyNameInFile));
+				return new FileInputStream(inputFile);
 			}
 			catch(final FileNotFoundException e)
 			{
