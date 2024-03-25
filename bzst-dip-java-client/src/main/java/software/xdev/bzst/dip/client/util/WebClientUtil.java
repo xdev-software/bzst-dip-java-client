@@ -87,7 +87,6 @@ public final class WebClientUtil
 				.id(UUID.randomUUID().toString())
 				.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
 				.signWith(privateKey, Jwts.SIG.RS256)
-				.signWith(privateKey)
 				.compact();
 		}
 		catch(final IOException ioException)
