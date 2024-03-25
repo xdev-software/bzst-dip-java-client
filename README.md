@@ -17,7 +17,7 @@ the [BZST-Website](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustaus
 
 ## Usage
 
-See the [examples in the demo package](/src/main/java/software/demo/bzst/dip/client/demo).
+See the [examples in the demo package](./src/main/java/software/demo/bzst/dip/client/demo).
 
 ### Create keystore file
 
@@ -46,10 +46,29 @@ installation.
 keytool -importkeystore -srckeystore certificate.p12 -srcstoretype pkcs12 -destkeystore cert.jks
 ```
 
-The password you insert here, must be set in the client configuration.
+The password you insert here, along with the file itself must be set in the client configuration. See example
+at [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties):
+
+```
+certificate.keystore.password=SECRET_PASSWORD
+certificate.keystore.file=cert.jks
+```
+
+You also have to set the public key in the [BZST online.portal](https://online.portal.bzst.de/).
+Exporting the public key with OpenSSL is easy:
 
 ```
 openssl rsa -in key.pem -pubout > publicKey.pub
+```
+
+### Client ID
+
+It's also important to use the client id provided by [BZST online.portal](https://online.portal.bzst.de/)
+in the client configuration. See example
+at [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties):
+
+```
+client.id=abcd1234-ab12-ab12-ab12-abcdef123456
 ```
 
 ## Support
