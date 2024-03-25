@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,8 +13,6 @@ import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
-import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
-import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -29,11 +26,9 @@ public final class ApplicationWithCsvInput
 		final BzstDipConfiguration configuration = Application.createConfiguration();
 		
 		final String csvData = getResourceFileAsString("DemoCsvData.csv");
-		final List<CorrectableReportableSellerType> itemsToSend =
-			ReportableSellerCsvFileParser.parseCsvData(csvData, configuration);
 		
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
-		final BzstDipCompleteResult bzstDipCompleteResult = bzstDipClient.sendDipAndQueryResult(itemsToSend);
+		final BzstDipCompleteResult bzstDipCompleteResult = bzstDipClient.sendDipAndQueryResult(csvData);
 		LOGGER.info(
 			String.format(
 				"Sending dip message with transfer number %s %s",
