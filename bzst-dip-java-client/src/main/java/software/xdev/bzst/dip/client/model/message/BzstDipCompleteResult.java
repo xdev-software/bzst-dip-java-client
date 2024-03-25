@@ -18,27 +18,17 @@ package software.xdev.bzst.dip.client.model.message;
 import java.util.List;
 
 
-public class BzstDipCompleteResult
+public record BzstDipCompleteResult(String dataTransferNumber, List<BzstDipSingleTransferResult> singleTransferResults)
 {
-	private final String dataTransferNumber;
-	private final List<BzstDipSingleTransferResult> singleTransferResults;
 	
-	public BzstDipCompleteResult(
+	public static BzstDipCompleteResult fromResult(
 		final BzstDipSendingResult sendingResult,
 		final BzstDipRequestStatusResult requestStatusResult)
 	{
-		this.dataTransferNumber = sendingResult.dataTransferNumber();
-		this.singleTransferResults = requestStatusResult.singleTransferResults();
-	}
-	
-	public String getDataTransferNumber()
-	{
-		return this.dataTransferNumber;
-	}
-	
-	public List<BzstDipSingleTransferResult> getSingleTransferResults()
-	{
-		return this.singleTransferResults;
+		return new BzstDipCompleteResult(
+			sendingResult.dataTransferNumber(),
+			requestStatusResult.singleTransferResults()
+		);
 	}
 	
 	public boolean isSuccessful()

@@ -25,8 +25,8 @@ import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 public class BzstDipConfiguration
 {
-	public static final String ENDPOINT_URL_PRODUCTION = "https://mds.bzst.bund.de/";
-	public static final String ENDPOINT_URL_TEST = "https://mds-ktst.bzst.bund.de/";
+	public static final String ENDPOINT_URL_PRODUCTION = "https://mds.bzst.bund.de";
+	public static final String ENDPOINT_URL_TEST = "https://mds-ktst.bzst.bund.de";
 	
 	private final String certificateKeystorePassword;
 	private final String clientId;

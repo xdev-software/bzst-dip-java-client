@@ -28,7 +28,7 @@ public final class ApplicationWithConfigurationFromProperties
 		LOGGER.info(
 			String.format(
 				"Sending dip message with transfer number %s %s",
-				bzstDipCompleteResult.getDataTransferNumber(),
+				bzstDipCompleteResult.dataTransferNumber(),
 				bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
 			)
 		);

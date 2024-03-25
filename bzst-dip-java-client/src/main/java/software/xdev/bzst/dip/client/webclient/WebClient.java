@@ -104,7 +104,7 @@ public class WebClient implements AutoCloseable
 	 *
 	 * @return Access Token as string
 	 */
-	public String getAccessToken()
+	public String getAccessToken() throws HttpStatusCodeNotExceptedException
 	{
 		LOGGER.debug("Getting access token...");
 		try
@@ -122,13 +122,9 @@ public class WebClient implements AutoCloseable
 		{
 			throw new RuntimeException("An error occurred while getting the access token.", e);
 		}
-		catch(final HttpStatusCodeNotExceptedException e)
-		{
-			throw new RuntimeException(e);
-		}
 	}
 	
-	private HttpRequest createGetDataTransferNumberRequest()
+	private HttpRequest createGetDataTransferNumberRequest() throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.POST(HttpRequest.BodyPublishers.noBody())
@@ -149,6 +145,7 @@ public class WebClient implements AutoCloseable
 	}
 	
 	private HttpRequest createUploadMassDataRequest(final String dataTransferNumber, final String xmlString)
+		throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.PUT(HttpRequest.BodyPublishers.ofString(xmlString))
@@ -173,6 +170,7 @@ public class WebClient implements AutoCloseable
 	}
 	
 	private HttpRequest createCloseSubmissionRequest(final String dataTransferNumber)
+		throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/finish"))
@@ -194,7 +192,7 @@ public class WebClient implements AutoCloseable
 		return httpResponse.body();
 	}
 	
-	private HttpRequest createGetResultLogsRequest()
+	private HttpRequest createGetResultLogsRequest() throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + "protocolnumbers"))
@@ -217,6 +215,7 @@ public class WebClient implements AutoCloseable
 	}
 	
 	public HttpRequest createGetResultProtocolRequest(final String dataTransferNumber)
+		throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.uri(
@@ -233,6 +232,7 @@ public class WebClient implements AutoCloseable
 	 * @return Returns complete HttpResponse
 	 */
 	public BzstDipSingleTransferResult requestTransferResult(final String dataTransferNumber)
+		throws HttpStatusCodeNotExceptedException
 	{
 		final HttpResponse<String> httpResponse =
 			this.executeRequest(this.createGetResultProtocolRequest(dataTransferNumber));
@@ -240,6 +240,7 @@ public class WebClient implements AutoCloseable
 	}
 	
 	private HttpRequest createConfirmResultProtocolRequest(final String transferNumber)
+		throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + transferNumber + "/protocol"))
@@ -260,6 +261,7 @@ public class WebClient implements AutoCloseable
 	}
 	
 	public HttpRequest createAbortSubmissionRequest(final String dataTransferNumber)
+		throws HttpStatusCodeNotExceptedException
 	{
 		return HttpRequest.newBuilder()
 			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/abort"))

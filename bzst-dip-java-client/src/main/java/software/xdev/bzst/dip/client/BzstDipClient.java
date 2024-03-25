@@ -98,7 +98,7 @@ public class BzstDipClient
 			
 			final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(client, sendingResult);
 			
-			return new BzstDipCompleteResult(sendingResult, requestStatusResult);
+			return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
 		}
 	}
 	
