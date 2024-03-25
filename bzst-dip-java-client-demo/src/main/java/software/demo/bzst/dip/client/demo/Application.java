@@ -52,7 +52,7 @@ public final class Application
 	public static BzstDipConfiguration createConfiguration()
 	{
 		return new BzstDipConfigurationBuilder()
-			.setClientId("TestClient")
+			.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 			.setTaxID("123")
 			.setTaxNumber("123")
 			.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()

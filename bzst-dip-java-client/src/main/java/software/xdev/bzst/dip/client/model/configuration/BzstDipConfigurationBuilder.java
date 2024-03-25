@@ -15,8 +15,6 @@
  */
 package software.xdev.bzst.dip.client.model.configuration;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -257,16 +255,7 @@ public class BzstDipConfigurationBuilder
 			return builderProperty;
 		}
 		final String inputFile = this.getSetPropertyOrReadFromFile(null, propertyNameInFile);
-		return () -> {
-			try
-			{
-				return new FileInputStream(inputFile);
-			}
-			catch(final FileNotFoundException e)
-			{
-				throw new RuntimeException(e);
-			}
-		};
+		return () -> ClassLoader.getSystemClassLoader().getResourceAsStream(inputFile);
 	}
 	
 	private BzstDipAddressFix getSetPropertyOrReadFromFileAddress(final BzstDipAddressFix builderProperty)
