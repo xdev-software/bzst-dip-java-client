@@ -109,7 +109,7 @@ public class ReportableSellerCreator
 	{
 		final BzstDipOecdDocType docTypeIndic = this.configuration.getDocType();
 		
-		LOGGER.info("Using DocTypeIndic: {}", docTypeIndic);
+		LOGGER.debug("Using DocTypeIndic: {}", docTypeIndic);
 		final DocSpecType specType = new DocSpecType();
 		
 		final LocalDate reportingPeriod = this.configuration.getReportingPeriod();

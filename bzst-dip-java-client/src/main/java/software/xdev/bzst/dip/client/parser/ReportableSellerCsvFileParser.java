@@ -98,7 +98,7 @@ public final class ReportableSellerCsvFileParser
 		final ReportableSellerCreator xmlDocBodyReportableSeller = new ReportableSellerCreator(
 			configuration);
 		
-		LOGGER.info("Looping through data now...");
+		LOGGER.debug("Looping through data now...");
 		for(final List<String> list : data.stream().skip(1).toList())
 		{
 			reportableSeller.add(xmlDocBodyReportableSeller.createReportableSeller(

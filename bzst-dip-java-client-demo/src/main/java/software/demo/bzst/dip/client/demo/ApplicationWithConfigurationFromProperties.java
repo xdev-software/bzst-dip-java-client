@@ -40,7 +40,7 @@ public final class ApplicationWithConfigurationFromProperties
 			new PropertiesSupplier(
 				ClassLoader.getSystemClassLoader().getResourceAsStream("app.properties")
 			))
-			.build();
+			.buildAndValidate();
 	}
 	
 	private ApplicationWithConfigurationFromProperties()

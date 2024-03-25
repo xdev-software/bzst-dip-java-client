@@ -189,7 +189,7 @@ public final class SigningUtil
 		final KeyStore.PrivateKeyEntry privateKeyEntry)
 		throws MarshalException, XMLSignatureException
 	{
-		LOGGER.info("Validating xml signature...");
+		LOGGER.debug("Validating xml signature...");
 		
 		// Find Signature element.
 		final NodeList nl = doc.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature");
@@ -207,7 +207,7 @@ public final class SigningUtil
 		// Unmarshal the XMLSignature.
 		final XMLSignature s = fac.unmarshalXMLSignature(valContext);
 		
-		LOGGER.info("Finished validating xml signature.");
+		LOGGER.debug("Finished validating xml signature.");
 		// Validate the XMLSignature.
 		return s.validate(valContext);
 	}
@@ -219,7 +219,7 @@ public final class SigningUtil
 	{
 		try
 		{
-			LOGGER.info("Loading keystore file...");
+			LOGGER.debug("Loading keystore file...");
 			final KeyStore ks = KeyStore.getInstance(type);
 			ks.load(keyStoreInputStream, keyStorePassword.toCharArray());
 			

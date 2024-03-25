@@ -58,11 +58,11 @@ public final class Application
 			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 			.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 			.setReportingPeriod(LocalDate.now())
-			.setDocTypeIndic(BzstDipOecdDocType.OECD_0)
+			.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
 			.setPlatformOperatorOrganizationName("TestOrg")
 			.setPlatformOperatorPlatformName("TestApp")
 			.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
-			.build();
+			.buildAndValidate();
 	}
 	
 	public static BzstDipMessage createMessage()

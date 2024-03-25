@@ -71,16 +71,31 @@ public class WebClient implements AutoCloseable
 	{
 		try
 		{
+			LOGGER.error(this.httpServletRequestToString(httpRequest));
+			
 			final HttpResponse<String> httpResponse = this.httpClient.send(
 				httpRequest,
 				HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-			
 			return httpResponse;
 		}
 		catch(final IOException | InterruptedException e)
 		{
 			throw new RuntimeException("An error occurred while getting the access token.", e);
 		}
+	}
+	
+	private String httpServletRequestToString(final HttpRequest request)
+	{
+		final StringBuilder sb = new StringBuilder();
+		
+		sb.append("Request Method = [" + request.method() + "], ");
+		sb.append("Request URL Path = [" + request.uri().toString() + "], ");
+		
+		request.headers().map().forEach(
+			(key, value) -> sb.append("Header: " + key + " value: " + value.stream().collect(Collectors.joining(",")))
+		);
+		
+		return sb.toString();
 	}
 	
 	private HttpRequest createGetAccessTokenRequest()

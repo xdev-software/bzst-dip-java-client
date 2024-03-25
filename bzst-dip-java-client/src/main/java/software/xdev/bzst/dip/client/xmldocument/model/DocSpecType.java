@@ -56,7 +56,7 @@ import jakarta.xml.bind.annotation.XmlType;
 public class DocSpecType
 {
 	
-	@XmlElement(name = "doc.type", namespace = "urn:oecd:ties:dpistf:v1", required = true)
+	@XmlElement(name = "DocTypeIndic", namespace = "urn:oecd:ties:dpistf:v1", required = true)
 	@XmlSchemaType(name = "string")
 	protected OECDDocTypeIndicEnumType docTypeIndic;
 	@XmlElement(name = "DocRefId", namespace = "urn:oecd:ties:dpistf:v1", required = true)

@@ -15,12 +15,13 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
-public class PropertyNotSetException extends RuntimeException
+public class PropertyNotSetException extends ConfigurationException
 {
 	public PropertyNotSetException(final String propertyName)
 	{
 		super(String.format(
-			"Property %s must be defined but is not set in a properties file AND not set in the configuration object!",
+			"Property \"%s\" must be defined but is not set in a properties file AND not set in the configuration "
+				+ "object!",
 			propertyName));
 	}
 }

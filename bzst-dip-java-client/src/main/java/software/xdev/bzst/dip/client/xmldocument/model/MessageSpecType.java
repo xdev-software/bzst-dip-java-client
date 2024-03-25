@@ -88,10 +88,10 @@ public class MessageSpecType
 	protected String contact;
 	@XmlElement(name = "MessageRefId", namespace = "urn:oecd:ties:dpi:v1", required = true)
 	protected String messageRefId;
-	@XmlElement(name = "message.type", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	@XmlElement(name = "MessageTypeIndic", namespace = "urn:oecd:ties:dpi:v1", required = true)
 	@XmlSchemaType(name = "string")
 	protected DPIMessageTypeIndicEnumType messageTypeIndic;
-	@XmlElement(name = "reporting.period", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	@XmlElement(name = "ReportingPeriod", namespace = "urn:oecd:ties:dpi:v1", required = true)
 	@XmlSchemaType(name = "date")
 	protected XMLGregorianCalendar reportingPeriod;
 	@XmlElement(name = "Timestamp", namespace = "urn:oecd:ties:dpi:v1", required = true)

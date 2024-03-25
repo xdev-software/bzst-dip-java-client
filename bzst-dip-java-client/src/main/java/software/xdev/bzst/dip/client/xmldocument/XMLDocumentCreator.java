@@ -51,6 +51,43 @@ import software.xdev.bzst.dip.client.xmldocument.model.DipType;
 public class XMLDocumentCreator
 {
 	private static final Logger LOGGER = LogManager.getLogger(XMLDocumentCreator.class);
+	private static final String XSD_SUBDIRECTORY = "xsd";
+	/**
+	 * Files from <a href="https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher
+	 * .html?nn=127558#js-toc-entry2">https://www.bzst.de</a>
+	 * <p>
+	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf
+	 * .zip?__blob=publicationFile&v=5">Direct download</a>
+	 * </p>
+	 */
+	private static final String DIP_XSD = "dip.xsd";
+	/**
+	 * Files from <a href="https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher
+	 * .html?nn=127558#js-toc-entry2">https://www.bzst.de</a>
+	 * <p>
+	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf
+	 * .zip?__blob=publicationFile&v=5">Direct download</a>
+	 * </p>
+	 */
+	private static final String ISO_DPI_TYPES_XSD = "isodpitypes_v1.0.xsd";
+	/**
+	 * Files from <a href="https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher
+	 * .html?nn=127558#js-toc-entry2">https://www.bzst.de</a>
+	 * <p>
+	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf
+	 * .zip?__blob=publicationFile&v=5">Direct download</a>
+	 * </p>
+	 */
+	private static final String OECD_DPI_TYPES_XSD = "oecddpitypes_v1.0.xsd";
+	/**
+	 * Files from <a href="https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher
+	 * .html?nn=127558#js-toc-entry2">https://www.bzst.de</a>
+	 * <p>
+	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf
+	 * .zip?__blob=publicationFile&v=5">Direct download</a>
+	 * </p>
+	 */
+	private static final String DPI_XML_XSD = "DPIXML_v1.0.xsd";
 	private final BzstDipConfiguration configuration;
 	
 	public XMLDocumentCreator(final BzstDipConfiguration configuration)
@@ -129,7 +166,7 @@ public class XMLDocumentCreator
 	
 	private void validateXMLDocument(final String xmlString)
 	{
-		LOGGER.info("Starting to validate xml...");
+		LOGGER.debug("Starting to validate xml...");
 		
 		try
 		{
@@ -137,19 +174,25 @@ public class XMLDocumentCreator
 			
 			final Schema schema = factory.newSchema(new Source[]
 				{
-					// First load the files which doesn't depend on other XSDs
-					new StreamSource(this.getClass().getClassLoader().getResourceAsStream("xsd/dip.xsd")),
-					new StreamSource(this.getClass().getClassLoader().getResourceAsStream("xsd/isodpitypes_v1.0.xsd")),
-					new StreamSource(this.getClass().getClassLoader().getResourceAsStream("xsd/oecddpitypes_v1.0"
-						+ ".xsd")),
-					new StreamSource(this.getClass().getClassLoader().getResourceAsStream("xsd/DPIXML_v1.0.xsd"))
+					new StreamSource(this.getClass()
+						.getClassLoader()
+						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + DIP_XSD)),
+					new StreamSource(this.getClass()
+						.getClassLoader()
+						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + ISO_DPI_TYPES_XSD)),
+					new StreamSource(this.getClass()
+						.getClassLoader()
+						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + OECD_DPI_TYPES_XSD)),
+					new StreamSource(this.getClass()
+						.getClassLoader()
+						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + DPI_XML_XSD))
 				});
 			
 			final Validator validator = schema.newValidator();
 			validator.validate(
 				new StreamSource(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8))));
 			
-			LOGGER.info("Finished validating xml.");
+			LOGGER.debug("Finished validating xml.");
 		}
 		catch(final IOException | SAXException e)
 		{

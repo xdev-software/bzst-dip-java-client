@@ -22,6 +22,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
+import org.apache.logging.log4j.util.Strings;
+
+import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
@@ -169,9 +172,9 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
-	public BzstDipConfiguration build()
+	public BzstDipConfiguration buildAndValidate()
 	{
-		return new BzstDipConfiguration(
+		final BzstDipConfiguration configuration = new BzstDipConfiguration(
 			this.getSetPropertyOrReadFromFile(
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
@@ -227,6 +230,22 @@ public class BzstDipConfigurationBuilder
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM),
 			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress)
 		);
+		this.validateConfiguration(configuration);
+		return configuration;
+	}
+	
+	private void validateConfiguration(final BzstDipConfiguration configuration)
+	{
+		if(configuration.getDocType().isNewTransmission())
+		{
+			if(Strings.isBlank(configuration.getPlatformOperatorDocRefId()))
+			{
+				throw new ConfigurationException(
+					PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
+					"When sending a new transmission (OECD_0) a DocRefId must be set!"
+				);
+			}
+		}
 	}
 	
 	private Supplier<InputStream> getInputStreamSupplier(

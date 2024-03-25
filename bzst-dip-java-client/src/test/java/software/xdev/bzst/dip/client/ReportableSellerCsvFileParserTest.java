@@ -49,7 +49,7 @@ class ReportableSellerCsvFileParserTest
 		.setPlatformOperatorAddress(
 			new BzstDipAddressFix("TestCity")
 		)
-		.build();
+		.buildAndValidate();
 	
 	@Test
 	void shouldParseSuccessfullyTest() throws IOException
