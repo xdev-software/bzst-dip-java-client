@@ -20,8 +20,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 
-public class DocumentBuilderFactoryNoExternalEntities
+public final class DocumentBuilderFactoryNoExternalEntities
 {
+    private DocumentBuilderFactoryNoExternalEntities()
+    {
+    
+    }
+    
     public static DocumentBuilderFactory newInstance()
     {
         try

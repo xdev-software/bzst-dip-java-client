@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
@@ -47,7 +47,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.TINType;
 
 public class XMLDocumentBodyCreator
 {
-	private static final Logger LOGGER = LogManager.getLogger(XMLDocumentBodyCreator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(XMLDocumentBodyCreator.class);
 	private final BzstDipConfiguration configuration;
 	
 	public XMLDocumentBodyCreator(final BzstDipConfiguration configuration)

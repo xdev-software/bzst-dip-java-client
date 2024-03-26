@@ -37,8 +37,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import software.xdev.bzst.dip.client.factory.SchemaFactoryExtension;
@@ -50,7 +50,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.DipType;
 
 public class XMLDocumentCreator
 {
-	private static final Logger LOGGER = LogManager.getLogger(XMLDocumentCreator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(XMLDocumentCreator.class);
 	private static final String XSD_SUBDIRECTORY = "xsd";
 	/**
 	 * Files from <a href="https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher

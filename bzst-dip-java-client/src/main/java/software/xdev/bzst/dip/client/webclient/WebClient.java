@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +41,7 @@ import software.xdev.bzst.dip.client.util.WebClientUtil;
 
 public class WebClient implements AutoCloseable
 {
-	private static final Logger LOGGER = LogManager.getLogger(WebClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(WebClient.class);
 	private static final String AUTHORIZATION_STRING = "Authorization";
 	private static final String BEARER_STRING = "Bearer ";
 	public static final String DIP_MD = "/dip/md/";

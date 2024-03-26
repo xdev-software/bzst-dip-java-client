@@ -30,8 +30,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -48,7 +48,7 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 public final class WebClientUtil
 {
-	private static final Logger LOGGER = LogManager.getLogger(WebClientUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(WebClientUtil.class);
 	public static final String MDS_POSTFIX = "/auth/realms/mds";
 	public static final String TAG_NAME_DATENTRANSFERNUMMER = "Datentransfernummer";
 	

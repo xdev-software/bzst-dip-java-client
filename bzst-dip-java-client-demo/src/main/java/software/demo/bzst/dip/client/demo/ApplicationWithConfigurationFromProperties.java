@@ -2,8 +2,8 @@ package software.demo.bzst.dip.client.demo;
 
 import java.io.IOException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
@@ -16,7 +16,7 @@ import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
 @SuppressWarnings("checkstyle:MagicNumber")
 public final class ApplicationWithConfigurationFromProperties
 {
-	private static final Logger LOGGER = LogManager.getLogger(ApplicationWithConfigurationFromProperties.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationWithConfigurationFromProperties.class);
 	
 	public static void main(final String[] args)
 		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException

@@ -20,8 +20,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
-import org.apache.logging.log4j.util.Strings;
-
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
@@ -236,7 +234,8 @@ public class BzstDipConfigurationBuilder
 	{
 		if(configuration.getDocType().isNewTransmission())
 		{
-			if(Strings.isBlank(configuration.getPlatformOperatorDocRefId()))
+			if(configuration.getPlatformOperatorDocRefId() == null || configuration.getPlatformOperatorDocRefId()
+				.isBlank())
 			{
 				throw new ConfigurationException(
 					PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,

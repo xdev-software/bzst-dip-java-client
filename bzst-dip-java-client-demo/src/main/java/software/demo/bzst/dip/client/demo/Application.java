@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
@@ -32,7 +32,7 @@ import software.xdev.bzst.dip.client.model.message.BzstDipTin;
 @SuppressWarnings("checkstyle:MagicNumber")
 public final class Application
 {
-	private static final Logger LOGGER = LogManager.getLogger(Application.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 	
 	public static void main(final String[] args)
 		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException

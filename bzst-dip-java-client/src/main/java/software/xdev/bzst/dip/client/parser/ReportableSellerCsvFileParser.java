@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.ReportableSellerCreator;
@@ -43,7 +43,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 
 public final class ReportableSellerCsvFileParser
 {
-	private static final Logger LOGGER = LogManager.getLogger(ReportableSellerCsvFileParser.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCsvFileParser.class);
 	private static final String DELIMITER = ";";
 	
 	private ReportableSellerCsvFileParser()

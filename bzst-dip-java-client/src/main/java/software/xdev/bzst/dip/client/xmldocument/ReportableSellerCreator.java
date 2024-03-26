@@ -19,8 +19,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
@@ -49,7 +49,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 
 public class ReportableSellerCreator
 {
-	private static final Logger LOGGER = LogManager.getLogger(ReportableSellerCreator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCreator.class);
 	private final BzstDipConfiguration configuration;
 	
 	public ReportableSellerCreator(final BzstDipConfiguration configuration)

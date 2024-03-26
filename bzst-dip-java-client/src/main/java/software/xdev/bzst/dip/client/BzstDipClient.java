@@ -18,8 +18,8 @@ package software.xdev.bzst.dip.client;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
@@ -40,7 +40,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSell
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BzstDipClient
 {
-	private static final Logger LOGGER = LogManager.getLogger(BzstDipClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BzstDipClient.class);
 	private final BzstDipConfiguration configuration;
 	
 	public BzstDipClient(final BzstDipConfiguration configuration)
