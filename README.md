@@ -2,6 +2,10 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/bzst-dip-java-client/checkBuild.yml?branch=develop)](https://github.com/xdev-software/bzst-dip-java-client/actions/workflows/checkBuild.yml?query=branch%3Adevelop)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xdev-software_bzst-dip-java-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=xdev-software_bzst-dip-java-client)
 
+<div align="center">
+    <img src="assets/Logo.svg" height="200" alt="XDEV BZST-DIP-Java-Client Logo">
+</div>
+
 # bzst-dip-java-client
 
 Client for using
@@ -99,9 +103,9 @@ client.id=abcd1234-ab12-ab12-ab12-abcdef123456
 
 The client can be configured through a properties file (
 see [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties)
-and [ApplicationWithConfigurationFromProperties.class](./src/main/java/software/demo/bzst/dip/client/demo/ApplicationWithConfigurationFromProperties.class))
+and [ApplicationWithConfigurationFromProperties.java](./src/main/java/software/demo/bzst/dip/client/demo/ApplicationWithConfigurationFromProperties.java))
 or by creating a configuration object (
-see [Application.class](./src/main/java/software/demo/bzst/dip/client/demo/Application.class)).
+see [Application.java](./src/main/java/software/demo/bzst/dip/client/demo/Application.java)).
 
 ```java
 public static BzstDipConfiguration createConfiguration()
