@@ -58,7 +58,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import software.xdev.bzst.dip.client.exception.SigningException;
-import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryExtension;
+import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryNoExternalEntities;
 import software.xdev.bzst.dip.client.factory.TransformerFactoryExtension;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
@@ -81,7 +81,7 @@ public final class SigningUtil
 			final ByteArrayInputStream unsignedXmlByteArrayInputStream =
 				new ByteArrayInputStream(unsignedXmlString.getBytes(StandardCharsets.UTF_8)))
 		{
-			final DocumentBuilderFactory dbf = DocumentBuilderFactoryExtension.newInstance();
+			final DocumentBuilderFactory dbf = DocumentBuilderFactoryNoExternalEntities.newInstance();
 			dbf.setNamespaceAware(true);
 			
 			final Document dipXmlDocument = dbf.newDocumentBuilder().parse(unsignedXmlByteArrayInputStream);

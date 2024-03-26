@@ -19,9 +19,8 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import com.ctc.wstx.shaded.msv_core.verifier.jaxp.DocumentBuilderFactoryImpl;
 
-public class DocumentBuilderFactoryExtension extends DocumentBuilderFactoryImpl
+public class DocumentBuilderFactoryNoExternalEntities
 {
     public static DocumentBuilderFactory newInstance()
     {

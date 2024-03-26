@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
 import io.jsonwebtoken.Jwts;
 import software.xdev.bzst.dip.client.exception.EncryptionException;
 import software.xdev.bzst.dip.client.exception.SigningException;
-import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryExtension;
+import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryNoExternalEntities;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
@@ -99,7 +99,7 @@ public final class WebClientUtil
 	{
 		try
 		{
-			final DocumentBuilderFactory dbf = DocumentBuilderFactoryExtension.newInstance();
+			final DocumentBuilderFactory dbf = DocumentBuilderFactoryNoExternalEntities.newInstance();
 			final DocumentBuilder db = dbf.newDocumentBuilder();
 			final Document doc = db.parse(new InputSource(new StringReader(xmlString)));
 			
