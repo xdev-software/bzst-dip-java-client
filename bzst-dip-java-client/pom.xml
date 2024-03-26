@@ -15,7 +15,7 @@
 
 	<scm>
 		<url>https://github.com/xdev-software/bzst-dip-java-client</url>
-		<connection>https://github.com/xdev-software/bzst-dip-java-client.git</connection>
+		<connection>scm:git:https://github.com/xdev-software/bzst-dip-java-client.git</connection>
 	</scm>
 
 	<inceptionYear>2024</inceptionYear>
