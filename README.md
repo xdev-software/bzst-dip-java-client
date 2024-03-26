@@ -28,8 +28,13 @@ We created this client to make it as easy as possible for the developer to use t
 Through usage of the builder pattern (see [Configuration](#configuration) below), DTOs
 and a typesafe data model we ensure high usability and readability.
 
-To create the XML-files we created java classes from the xsd provided on
-the [BZSt-Website](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2) ([Direct download](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf)).
+The BZSt
+provides [XSD](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf) that
+define the expected XML structure and
+make it possible to generate java
+classes ([BZSt Docs](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2)).
+Our library validates each
+request through these XSD find errors before they are sent to the DIP.
 
 ## Installation
 [Installation guide for the latest release](https://github.com/xdev-software/bzst-dip-java-client/releases/latest#Installation)
