@@ -68,9 +68,9 @@ public class PropertiesSupplier
 	{
 		try(final FileInputStream fileInputStream = new FileInputStream(propertiesFileName))
 		{
-			final Properties properties = new Properties();
-			properties.load(fileInputStream);
-			this.properties = properties;
+			final Properties newProperties = new Properties();
+			newProperties.load(fileInputStream);
+			this.properties = newProperties;
 		}
 		catch(final Exception e)
 		{
@@ -82,9 +82,9 @@ public class PropertiesSupplier
 	{
 		try
 		{
-			final Properties properties = new Properties();
-			properties.load(propertiesInput);
-			this.properties = properties;
+			final Properties newProperties = new Properties();
+			newProperties.load(propertiesInput);
+			this.properties = newProperties;
 		}
 		catch(final IOException e)
 		{

@@ -41,11 +41,9 @@ public final class Application
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
 		final BzstDipCompleteResult bzstDipCompleteResult = bzstDipClient.sendDipAndQueryResult(createMessage());
 		LOGGER.info(
-			String.format(
-				"Sending dip message with transfer number %s %s",
+			"Sending dip message with transfer number {} {}",
 				bzstDipCompleteResult.dataTransferNumber(),
 				bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
-			)
 		);
 	}
 	

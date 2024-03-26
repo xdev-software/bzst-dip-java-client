@@ -71,10 +71,9 @@ public class WebClient implements AutoCloseable
 	{
 		try
 		{
-			final HttpResponse<String> httpResponse = this.httpClient.send(
+			return this.httpClient.send(
 				httpRequest,
 				HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-			return httpResponse;
 		}
 		catch(final IOException | InterruptedException e)
 		{

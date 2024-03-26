@@ -232,16 +232,16 @@ public class BzstDipConfigurationBuilder
 	
 	private void validateConfiguration(final BzstDipConfiguration configuration)
 	{
-		if(configuration.getDocType().isNewTransmission())
+		if(
+			configuration.getDocType().isNewTransmission()
+				&& (configuration.getPlatformOperatorDocRefId() == null
+				|| configuration.getPlatformOperatorDocRefId().isBlank())
+		)
 		{
-			if(configuration.getPlatformOperatorDocRefId() == null || configuration.getPlatformOperatorDocRefId()
-				.isBlank())
-			{
-				throw new ConfigurationException(
-					PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
-					"When sending a new transmission (OECD_0) a DocRefId must be set!"
-				);
-			}
+			throw new ConfigurationException(
+				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
+				"When sending a new transmission (OECD_0) a DocRefId must be set!"
+			);
 		}
 	}
 	

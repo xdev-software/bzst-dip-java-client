@@ -26,11 +26,9 @@ public final class ApplicationWithConfigurationFromProperties
 		final BzstDipCompleteResult bzstDipCompleteResult =
 			bzstDipClient.sendDipAndQueryResult(Application.createMessage());
 		LOGGER.info(
-			String.format(
-				"Sending dip message with transfer number %s %s",
-				bzstDipCompleteResult.dataTransferNumber(),
-				bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
-			)
+			"Sending dip message with transfer number {} {}",
+			bzstDipCompleteResult.dataTransferNumber(),
+			bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
 		);
 	}
 	

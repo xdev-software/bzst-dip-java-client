@@ -30,11 +30,9 @@ public final class ApplicationWithCsvInput
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
 		final BzstDipCompleteResult bzstDipCompleteResult = bzstDipClient.sendDipAndQueryResult(csvData);
 		LOGGER.info(
-			String.format(
-				"Sending dip message with transfer number %s %s",
-				bzstDipCompleteResult.dataTransferNumber(),
-				bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
-			)
+			"Sending dip message with transfer number {} {}",
+			bzstDipCompleteResult.dataTransferNumber(),
+			bzstDipCompleteResult.isSuccessful() ? "was successful." : "has failed!"
 		);
 	}
 	
