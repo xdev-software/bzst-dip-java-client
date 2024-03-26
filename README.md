@@ -5,12 +5,31 @@
 # bzst-dip-java-client
 
 Client for using
-the [Digitaler POSteingang of the BZSt online.portal](https://www.bzst.de/DE/Service/Portalinformation/Massendaten/DIP/dip.html?nn=68828).
+the [Mass data transmission DIP (mass data
+interface)](https://www.bzst.de/EN/Businesses/CESOP/electronic_data_transmission/electronic_data_transmission_node.html#js-toc-entry1).
 
-## Information about BZST DIP
+The BZSt (Bundeszentralamt für Steuern / Federal Central Tax Office) provides the Digital Inbox (DIP) as a service
+for payment service providers to transmit financial data.
+
+Clients need to register / login
+at [BZSt online.portal](https://www.bzst.de/DE/Service/Portalinformation/Massendaten/DIP/dip.html?nn=68828)
+through [Elster](https://www.elster.de/elsterweb/start), [BundID](https://id.bund.de/de)
+or [BZSt Online-Portal (BOP)](https://www.elster.de/bportal/start).
+
+See
+the [BZSt Information](https://www.bzst.de/EN/Service/Portalinformation/Login/login_node.html)
+for more information.
+
+*Warning*: **BZSt Online-Portal** (deprecated) is different from **BZSt online.portal**.
+
+## Rationale
+
+We created this client to make it as easy as possible for the developer to use the BZSt DIP.
+Through usage of the builder pattern (see [Configuration](#configuration) below), DTOs
+and a typesafe data model we ensure high usability and readability.
 
 To create the XML-files we created java classes from the xsd provided on
-the [BZST-Website](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2) ([Direct download](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf)).
+the [BZSt-Website](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2) ([Direct download](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf)).
 
 ## Installation
 [Installation guide for the latest release](https://github.com/xdev-software/bzst-dip-java-client/releases/latest#Installation)
@@ -69,6 +88,35 @@ at [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.propertie
 
 ```
 client.id=abcd1234-ab12-ab12-ab12-abcdef123456
+```
+
+### Configuration
+
+The client can be configured through a properties file (
+see [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties)
+and [ApplicationWithConfigurationFromProperties.class](./src/main/java/software/demo/bzst/dip/client/demo/ApplicationWithConfigurationFromProperties.class))
+or by creating a configuration object (
+see [Application.class](./src/main/java/software/demo/bzst/dip/client/demo/Application.class)).
+
+```java
+public static BzstDipConfiguration createConfiguration()
+{
+	return new BzstDipConfigurationBuilder()
+		.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
+		.setTaxID("123")
+		.setTaxNumber("123")
+		.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
+			.getResourceAsStream("DemoKeystore.jks"))
+		.setCertificateKeystorePassword("test123")
+		.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
+		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
+		.setReportingPeriod(LocalDate.now())
+		.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
+		.setPlatformOperatorOrganizationName("TestOrg")
+		.setPlatformOperatorPlatformName("TestApp")
+		.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
+		.buildAndValidate();
+}
 ```
 
 ## Support
