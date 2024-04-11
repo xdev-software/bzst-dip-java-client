@@ -137,4 +137,4 @@ use [our support](https://xdev.software/en/services/support).
 See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
 
 ## Dependencies and Licenses
-View the [license of the current project](LICENSE) or the [summary including all dependencies](https://xdev-software.github.io/bzst-dip-java-client/dependencies/)
+View the [license of the current project](LICENSE) or the [summary including all dependencies](https://xdev-software.github.io/bzst-dip-java-client/dependencies)
