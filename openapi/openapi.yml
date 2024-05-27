@@ -1,0 +1,271 @@
+openapi: 3.0.1
+info:
+  title: dip-mds
+  description: DIP-Massendatenschnittstelle
+  version: DIP-MDS 1.3
+tags:
+  - name: MdEinreichenProvider
+    description: Einreichen von Massendatenlieferungen
+paths:
+  /dip/start/{fachverfahren}:
+    post:
+      tags:
+        - MdEinreichenProvider
+      summary: Anfordern einer Datentransfernummer und Einleiten einer Massendatenlieferung
+      description: >-
+        Anfordern einer Datentransfernummer zur Identifikation der Lieferung und Einleiten einer Massendatenlieferung
+      operationId: einreichungAnmelden
+      parameters:
+        - name: fachverfahren
+          in: path
+          description: 'Das Ziel-Fachverfahren'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      responses:
+        '201':
+          description: Datentransfer erfolgreich initiiert
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Ungültiger Authorization Header
+        '404':
+          description: Zielfachverfahren nicht gefunden
+        '429':
+          description: Der Client hat zu viele Anfragen in einem bestimmten Zeitraum gesendet
+        '500':
+          description: Interner Fehler
+  /dip/md/{datentransfernummer}/xml:
+    put:
+      tags:
+        - MdEinreichenProvider
+      summary: Einreichung des XML
+      description: >-
+        Einreichung der Daten-XML unter Angabe einer Datentransfernummer
+      operationId: massendatenEinreichen
+      parameters:
+        - name: datentransfernummer
+          in: path
+          description: 'Die Datentransfernummer, die die Transaktion identifiziert'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      requestBody:
+        description: >-
+          Einreichung der Daten-XML unter Angabe einer Datentransfernummer
+        content:
+          application/octet-stream:
+            schema:
+              type: InputStream
+      responses:
+        '200':
+          description: Einreichung erfolgreich
+        '400':
+          description: Ungültige Datentransfernummer
+        '401':
+          description: Ungültiger Authorization Header
+        '410':
+          description: Datentransfer wurde bereits beendet
+        '424':
+          description: Der Datenübermittler ist dem Vorgang nicht zugeordnet
+        '500':
+          description: Interner Fehler
+  /dip/md/{datentransfernummer}/attachment:
+    put:
+      tags:
+        - MdEinreichenProvider
+      summary: Einreichung zusätzlicher Anhänge
+      description: >-
+        Einreichung zusätzlicher Anhänge unter Angabe einer Datentransfernummer
+      operationId: anhangEinreichen
+      parameters:
+        - name: datentransfernummer
+          in: path
+          description: 'Die Datentransfernummer, die die Transaktion identifiziert'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      requestBody:
+        description: >-
+          Einreichung zusätzlicher Anhänge unter Angabe einer Datentransfernummer
+        content:
+          application/octet-stream:
+            schema:
+              type: InputStream
+      responses:
+        '200':
+          description: Einreichung erfolgreich
+        '400':
+          description: Ungültige Datentransfernummer
+        '401':
+          description: Ungültiger Authorization Header
+        '424':
+          description: Der Datenübermittler ist dem Vorgang nicht zugeordnet
+        '500':
+          description: Interner Fehler
+  /dip/md/{datentransfernummer}/finish:
+    patch:
+      tags:
+        - MdEinreichenProvider
+      summary: Erklärung, dass die Massendatenlieferung abgeschlossen ist
+      description: >-
+        Erklärung der Fertigstellung der Massendatenlieferung
+      operationId: einreichungBeenden
+      parameters:
+        - name: datentransfernummer
+          in: path
+          description: 'Die Datentransfernummer, die die Transaktion identifiziert'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      responses:
+        '200':
+          description: Anfrage erfolgreich
+        '400':
+          description: Ungültige Datentransfernummer
+        '401':
+          description: Ungültiger Authorization Header
+        '410':
+          description: Datentransfer wurde bereits beendet
+        '424':
+          description: Der Datenübermittler ist dem Vorgang nicht zugeordnet
+        '500':
+          description: Interner Fehler
+  /dip/md/{datentransfernummer}/abort:
+    patch:
+      tags:
+        - MdEinreichenProvider
+      summary: Abbruch der laufenden Übertragung und Verwerfen der bisher übertragenen Dateien
+      description: >-
+        Verkünden der Absicht, die laufende Massendatenlieferung abzubrechen und die übertragenen Dateien zu verwerfen
+      operationId: einreichungAbbrechen
+      parameters:
+        - name: datentransfernummer
+          in: path
+          description: 'Die Datentransfernummer, die die Transaktion identifiziert'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      responses:
+        '200':
+          description: Anfrage erfolgreich
+        '400':
+          description: Ungültige Datentransfernummer
+        '401':
+          description: Ungültiger Authorization Header
+        '410':
+          description: Datentransfer wurde bereits beendet
+        '424':
+          description: Der Datenübermittler ist dem Vorgang nicht zugeordnet
+        '500':
+          description: Interner Fehler
+  /dip/md/{datentransfernummer}/protocol:
+    get:
+      tags:
+        - MdEinreichenProvider
+      summary: Abruf des Ergebnisprotokolls
+      description: Abruf des Ergebnisprotokolls
+      operationId: protokollAbrufen
+      parameters:
+        - name: datentransfernummer
+          in: path
+          description: 'Die Datentransfernummer, die die Transaktion identifiziert'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      responses:
+        '200':
+          description: Anfrage erfolgreich
+          content:
+            application/octet-stream:
+              schema:
+                type: InputStream
+        '400':
+          description: Ungültige Datentransfernummer
+        '401':
+          description: Ungültiger Authorization Header
+        '404':
+          description: Protokoll liegt nicht vor
+        '424':
+          description: Der Datenübermittler ist dem Vorgang nicht zugeordnet
+        '500':
+          description: Interner Fehler
+    patch:
+      tags:
+        - MdEinreichenProvider
+      summary: Erhalt des Protokolls bestätigen
+      description: Erhalt des Protokolls bestätigen
+      operationId: protokollErhalten
+      parameters:
+        - name: datentransfernummer
+          in: path
+          description: 'Die Datentransfernummer, die die Transaktion identifiziert'
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      responses:
+        '200':
+          description: Anfrage erfolgreich
+        '400':
+          description: Ungültige Datentransfernummer
+        '401':
+          description: Ungültiger Authorization Header
+        '404':
+          description: Protokoll liegt nicht vor
+        '424':
+          description: Der Datenübermittler ist dem Vorgang nicht zugeordnet
+        '500':
+          description: Interner Fehler
+  /dip/md/protocolnumbers:
+    get:
+      tags:
+        - MdEinreichenProvider
+      summary: Abruf einer Liste aller Datentransfernummern mit verfügbarem Protokoll
+      description: Abruf einer Liste aller Datentransfernummern mit verfügbarem Protokoll
+      operationId: alleProtokollnummern
+      parameters:
+        - name: Authorization
+          schema:
+            type: string
+          in: header
+      responses:
+        '200':
+          description: Anfrage erfolgreich
+          content:
+            application/octet-stream:
+              schema:
+                type: InputStream
+        '401':
+          description: Ungültiger Authorization Header
+        '500':
+          description: Interner Fehler
