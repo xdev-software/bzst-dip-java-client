@@ -18,6 +18,12 @@ package software.xdev.bzst.dip.client.model.message;
 import java.util.List;
 
 
+/**
+ * Represents the result of querying for a response on the BZST API.
+ *
+ * @param dataTransferNumber    of the sent message
+ * @param singleTransferResults of all received results
+ */
 public record BzstDipCompleteResult(String dataTransferNumber, List<BzstDipSingleTransferResult> singleTransferResults)
 {
 	
@@ -31,6 +37,11 @@ public record BzstDipCompleteResult(String dataTransferNumber, List<BzstDipSingl
 		);
 	}
 	
+	/**
+	 * @return {@code true} if the set {@link #dataTransferNumber} is found in the results and the status
+	 * of the result is
+	 * {@link software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult.StatusCodeMeaning#OK}.
+	 */
 	public boolean isSuccessful()
 	{
 		return this.singleTransferResults.stream().anyMatch(

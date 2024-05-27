@@ -18,6 +18,16 @@ package software.xdev.bzst.dip.client.model.message;
 import software.xdev.bzst.dip.client.xmldocument.model.FeesType;
 
 
+/**
+ * From <a
+ * href="https://www.oecd.org/tax/exchange-of-tax-information/model-rules-for-reporting-by-digital-platform-operators
+ * -xml-schema-user-guide-for-tax-administrations.pdf" >Model Rules for Reporting by Digital Platform
+ * Operators</a>:<br>
+ * <p>
+ * The Fees element specifies the fees and commissions that a Reporting Platform Operator has withheld in respect of a
+ * Reportable Seller. It is split into four elements, representing the quarters in respect of which the reporting of
+ * fees or commissions withheld or charged by the Reporting Platform Operator
+ */
 public record BzstDipFees(
 	BzstDipMonetaryAmount feesQuarter1,
 	BzstDipMonetaryAmount feesQuarter2,

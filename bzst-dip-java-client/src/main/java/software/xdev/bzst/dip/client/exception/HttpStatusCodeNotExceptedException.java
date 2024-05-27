@@ -17,6 +17,10 @@ package software.xdev.bzst.dip.client.exception;
 
 import java.net.http.HttpResponse;
 
+
+/**
+ * Is used while communicating with HTTP and an unexpected status code is returned.
+ */
 public class HttpStatusCodeNotExceptedException extends Exception
 {
     public HttpStatusCodeNotExceptedException(final HttpResponse<String> httpResponse)

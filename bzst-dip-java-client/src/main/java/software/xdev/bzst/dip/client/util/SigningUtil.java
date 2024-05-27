@@ -63,6 +63,9 @@ import software.xdev.bzst.dip.client.factory.TransformerFactoryExtension;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
+/**
+ * Helps with signing XML-Documents
+ */
 public final class SigningUtil
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SigningUtil.class);
@@ -74,6 +77,12 @@ public final class SigningUtil
 	{
 	}
 	
+	/**
+	 * Signs an unsigned xml string with the corresponding keystore from the
+	 * {@link BzstDipConfiguration#certificateKeystoreInputStream}
+	 *
+	 * @return the signed xml document as string
+	 */
 	public static String signXMLDocument(final String unsignedXmlString, final BzstDipConfiguration configuration)
 	{
 		try(final InputStream keystoreInputStream = configuration.getCertificateKeystoreInputStream().get();
@@ -96,11 +105,6 @@ public final class SigningUtil
 					KEYSTORE_TYPE
 				);
 			
-			if(privateKeyEntry == null)
-			{
-				throw new SigningException("Private key entry is null.");
-			}
-			
 			// Sign context
 			createDomSignContext(privateKeyEntry, newDocument, xmlSignatureFactory, dipXmlDocument);
 			
@@ -108,12 +112,12 @@ public final class SigningUtil
 			final TransformerFactory transformerFactory = TransformerFactoryExtension.newInstance();
 			transformerFactory.newTransformer().transform(new DOMSource(newDocument), outputTarget);
 			
-			if(validateSignature(newDocument, xmlSignatureFactory, privateKeyEntry))
+			if(!validateSignature(newDocument, xmlSignatureFactory, privateKeyEntry))
 			{
-				return outputStream.toString(StandardCharsets.UTF_8);
+				throw new SigningException("The validation of the signature from the XML document has failed.");
 			}
 			
-			throw new SigningException("The validation of the signature from the XML document has failed.");
+			return outputStream.toString(StandardCharsets.UTF_8);
 		}
 		catch(final Exception e)
 		{
@@ -212,6 +216,10 @@ public final class SigningUtil
 		return s.validate(valContext);
 	}
 	
+	/**
+	 * Reads the given {@link InputStream} with the corresponding password
+	 * and returns it as {@link KeyStore.PrivateKeyEntry}.
+	 */
 	public static KeyStore.PrivateKeyEntry getPrivateKeyEntry(
 		final InputStream keyStoreInputStream,
 		final String keyStorePassword,
@@ -223,9 +231,15 @@ public final class SigningUtil
 			final KeyStore ks = KeyStore.getInstance(type);
 			ks.load(keyStoreInputStream, keyStorePassword.toCharArray());
 			
-			return (KeyStore.PrivateKeyEntry)ks.getEntry(
+			final KeyStore.PrivateKeyEntry certificate = (KeyStore.PrivateKeyEntry)ks.getEntry(
 				"certificate",
 				new KeyStore.PasswordProtection(keyStorePassword.toCharArray()));
+			
+			if(certificate == null)
+			{
+				throw new SigningException("The private key entry in the keystore is null.");
+			}
+			return certificate;
 		}
 		catch(final Exception e)
 		{

@@ -15,6 +15,12 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
+import software.xdev.bzst.dip.client.util.SigningUtil;
+
+
+/**
+ * Is used while signing HTTP requests in {@link SigningUtil}.
+ */
 public class SigningException extends RuntimeException
 {
 	public SigningException(final String message)
