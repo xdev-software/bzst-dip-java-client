@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>software.xdev</groupId>
-	<artifactId>template-placeholder-demo</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>bzst-dip-java-client-demo</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<organization>
@@ -21,14 +21,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<mainClass>software.xdev.Application</mainClass>
+		<mainClass>software.xdev.bzst.dip.client.Application</mainClass>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>software.xdev</groupId>
-			<artifactId>template-placeholder</artifactId>
+			<artifactId>bzst-dip-java-client</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<version>2.23.1</version>
 		</dependency>
 	</dependencies>
 
