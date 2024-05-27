@@ -41,6 +41,12 @@ import software.xdev.bzst.dip.client.xmldocument.model.TINType;
 import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 
 
+/**
+ * Parses CSV files in a very specific way and creates {@link CorrectableReportableSellerType}s from it.
+ * <p>
+ * See {@code test/resources/TestCsvData.csv}
+ * </p>
+ */
 public final class ReportableSellerCsvFileParser
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCsvFileParser.class);

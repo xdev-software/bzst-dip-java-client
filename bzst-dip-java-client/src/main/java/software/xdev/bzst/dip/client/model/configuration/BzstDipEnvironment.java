@@ -18,6 +18,9 @@ package software.xdev.bzst.dip.client.model.configuration;
 import software.xdev.bzst.dip.client.xmldocument.model.EnvironmentType;
 
 
+/**
+ * Defines either an {@link BzstDipEnvironment#PRODUCTION} or an {@link BzstDipEnvironment#TEST} environment.
+ */
 public enum BzstDipEnvironment
 {
 	TEST,

@@ -39,6 +39,9 @@ import software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult;
 import software.xdev.bzst.dip.client.util.WebClientUtil;
 
 
+/**
+ * Helps to communicate with the BZST API.
+ */
 public class WebClient implements AutoCloseable
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebClient.class);
@@ -153,9 +156,6 @@ public class WebClient implements AutoCloseable
 			.build();
 	}
 	
-	/*
-	 * Upload mass data
-	 */
 	public String uploadMassData(final String dataTransferNumber, final String xmlString)
 		throws HttpStatusCodeNotExceptedException
 	{
@@ -178,8 +178,8 @@ public class WebClient implements AutoCloseable
 			.build();
 	}
 	
-	/*
-	 * Close the submission
+	/**
+	 * Requests the closing of the submission with the given dataTransferNumber.
 	 */
 	public String closeSubmission(final String dataTransferNumber) throws HttpStatusCodeNotExceptedException
 	{
@@ -225,7 +225,7 @@ public class WebClient implements AutoCloseable
 			.build();
 	}
 	
-	/*
+	/**
 	 * Get the result protocol
 	 *
 	 * @return Returns complete HttpResponse
@@ -248,7 +248,7 @@ public class WebClient implements AutoCloseable
 			.build();
 	}
 	
-	/*
+	/**
 	 * Confirm the result protocol
 	 */
 	public BzstDipSingleTransferResult confirmTransfer(final String transferNumber)
@@ -269,9 +269,6 @@ public class WebClient implements AutoCloseable
 			.build();
 	}
 	
-	/*
-	 * Abort submission
-	 */
 	public String abortSubmission(final String dataTransferNumber) throws HttpStatusCodeNotExceptedException
 	{
 		LOGGER.error("Aborting submission...");

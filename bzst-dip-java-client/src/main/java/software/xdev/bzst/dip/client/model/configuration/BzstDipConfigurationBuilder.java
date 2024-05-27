@@ -25,27 +25,88 @@ import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 
+/**
+ * Builder construct for the {@link BzstDipConfiguration}.
+ */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class BzstDipConfigurationBuilder
 {
+	public static final int DEFAULT_DELAY_BEFORE_CHECKING_RESULTS_IN_MILLIS = 1_000;
+	public static final int DEFAULT_RETRY_QUERY_RESULTS = 10;
+	public static final int DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS = 1_000;
+	
 	private final PropertiesSupplier propertiesSupplier;
+	/**
+	 * @see BzstDipConfiguration#getCertificateKeystorePassword()
+	 */
 	private String certificateKeystorePassword;
+	/**
+	 * @see BzstDipConfiguration#getClientId()
+	 */
 	private String clientId;
+	/**
+	 * @see BzstDipConfiguration#getTaxID()
+	 */
 	private String taxID;
+	/**
+	 * @see BzstDipConfiguration#getTaxNumber()
+	 */
 	private String taxNumber;
+	/**
+	 * @see BzstDipConfiguration#getRealmEnvironmentBaseUrl()
+	 */
 	private String realmEnvironmentBaseUrl;
+	/**
+	 * @see BzstDipConfiguration#getEnvironment()
+	 */
 	private BzstDipEnvironment environment;
+	/**
+	 * @see BzstDipConfiguration#getMessageTypeIndic()
+	 */
 	private BzstDipDpiMessageType messageTypeIndic;
+	/**
+	 * @see BzstDipConfiguration#getReportingPeriod()
+	 */
 	private LocalDate reportingPeriod;
+	/**
+	 * @see BzstDipConfiguration#getDocType()
+	 */
 	private BzstDipOecdDocType docTypeIndic;
+	/**
+	 * @see BzstDipConfiguration#getPlatformOperatorDocRefId()
+	 */
 	private String platformOperatorDocRefId;
+	/**
+	 * @see BzstDipConfiguration#getPlatformOperatorCorrDocRefId()
+	 */
 	private String platformOperatorCorrDocRefId;
+	/**
+	 * @see BzstDipConfiguration#getCertificateKeystoreInputStream()
+	 */
 	private Supplier<InputStream> certificateKeystoreInputStream;
+	/**
+	 * @see BzstDipQueryResultConfiguration#delayBeforeCheckingResults
+	 */
 	private Duration delayBeforeCheckingResults;
+	/**
+	 * @see BzstDipQueryResultConfiguration#retryQueryResultsAmount
+	 */
 	private Integer retryQueryResultsAmount;
+	/**
+	 * @see BzstDipQueryResultConfiguration#delayInBetweenResultChecks
+	 */
 	private Duration delayInBetweenResultChecks;
+	/**
+	 * @see BzstDipConfiguration#getPlatformOperatorOrganizationName()
+	 */
 	private String platformOperatorOrganizationName;
+	/**
+	 * @see BzstDipConfiguration#getPlatformOperatorPlatformName()
+	 */
 	private String platformOperatorPlatformName;
+	/**
+	 * @see BzstDipConfiguration#getPlatformOperatorAddress()
+	 */
 	private BzstDipAddressFix platformOperatorAddress;
 	
 	public BzstDipConfigurationBuilder(final PropertiesSupplier propertiesSupplier)
@@ -58,90 +119,150 @@ public class BzstDipConfigurationBuilder
 		this(new PropertiesSupplier());
 	}
 	
+	/**
+	 * @param certificateKeystorePassword {@link #certificateKeystorePassword}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setCertificateKeystorePassword(final String certificateKeystorePassword)
 	{
 		this.certificateKeystorePassword = certificateKeystorePassword;
 		return this;
 	}
 	
+	/**
+	 * @param clientId {@link #clientId}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setClientId(final String clientId)
 	{
 		this.clientId = clientId;
 		return this;
 	}
 	
+	/**
+	 * @param taxID {@link #taxID}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setTaxID(final String taxID)
 	{
 		this.taxID = taxID;
 		return this;
 	}
 	
+	/**
+	 * @param taxNumber {@link #taxNumber}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setTaxNumber(final String taxNumber)
 	{
 		this.taxNumber = taxNumber;
 		return this;
 	}
 	
+	/**
+	 * @param realmEnvironmentBaseUrl {@link #realmEnvironmentBaseUrl}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setRealmEnvironmentBaseUrl(final String realmEnvironmentBaseUrl)
 	{
 		this.realmEnvironmentBaseUrl = realmEnvironmentBaseUrl;
 		return this;
 	}
 	
+	/**
+	 * @param environment {@link #environment}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setEnvironment(final BzstDipEnvironment environment)
 	{
 		this.environment = environment;
 		return this;
 	}
 	
+	/**
+	 * @param messageTypeIndic {@link #messageTypeIndic}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setMessageTypeIndic(final BzstDipDpiMessageType messageTypeIndic)
 	{
 		this.messageTypeIndic = messageTypeIndic;
 		return this;
 	}
 	
+	/**
+	 * @param reportingPeriod {@link #reportingPeriod}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setReportingPeriod(final LocalDate reportingPeriod)
 	{
 		this.reportingPeriod = reportingPeriod;
 		return this;
 	}
 	
+	/**
+	 * @param docTypeIndic {@link #docTypeIndic}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setDocTypeIndic(final BzstDipOecdDocType docTypeIndic)
 	{
 		this.docTypeIndic = docTypeIndic;
 		return this;
 	}
 	
+	/**
+	 * @param platformOperatorDocRefId {@link #platformOperatorDocRefId}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setPlatformOperatorDocRefId(final String platformOperatorDocRefId)
 	{
 		this.platformOperatorDocRefId = platformOperatorDocRefId;
 		return this;
 	}
 	
+	/**
+	 * @param platformOperatorCorrDocRefId {@link #platformOperatorCorrDocRefId}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setPlatformOperatorCorrDocRefId(final String platformOperatorCorrDocRefId)
 	{
 		this.platformOperatorCorrDocRefId = platformOperatorCorrDocRefId;
 		return this;
 	}
 	
+	/**
+	 * @param delayBeforeCheckingResults {@link #delayBeforeCheckingResults}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setDelayBeforeCheckingResults(final Duration delayBeforeCheckingResults)
 	{
 		this.delayBeforeCheckingResults = delayBeforeCheckingResults;
 		return this;
 	}
 	
+	/**
+	 * @param retryQueryResultsAmount {@link #retryQueryResultsAmount}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setRetryQueryResultsAmount(final int retryQueryResultsAmount)
 	{
 		this.retryQueryResultsAmount = retryQueryResultsAmount;
 		return this;
 	}
 	
+	/**
+	 * @param delayInBetweenResultChecks {@link #delayInBetweenResultChecks}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setDelayInBetweenResultChecks(final Duration delayInBetweenResultChecks)
 	{
 		this.delayInBetweenResultChecks = delayInBetweenResultChecks;
 		return this;
 	}
 	
+	/**
+	 * @param certificateKeystoreInputStream {@link #certificateKeystoreInputStream}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(
 		final Supplier<InputStream> certificateKeystoreInputStream)
 	{
@@ -149,6 +270,10 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
+	/**
+	 * @param platformOperatorOrganizationName {@link #platformOperatorOrganizationName}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setPlatformOperatorOrganizationName(
 		final String platformOperatorOrganizationName)
 	{
@@ -156,18 +281,29 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
+	/**
+	 * @param platformOperatorPlatformName {@link #platformOperatorPlatformName}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setPlatformOperatorPlatformName(final String platformOperatorPlatformName)
 	{
 		this.platformOperatorPlatformName = platformOperatorPlatformName;
 		return this;
 	}
 	
+	/**
+	 * @param platformOperatorAddress {@link #platformOperatorAddress}
+	 * @return itself
+	 */
 	public BzstDipConfigurationBuilder setPlatformOperatorAddress(final BzstDipAddressFix platformOperatorAddress)
 	{
 		this.platformOperatorAddress = platformOperatorAddress;
 		return this;
 	}
 	
+	/**
+	 * @return a new created {@link BzstDipConfiguration} with the values provided by this builder.
+	 */
 	public BzstDipConfiguration buildAndValidate()
 	{
 		final BzstDipConfiguration configuration = new BzstDipConfiguration(
@@ -206,18 +342,20 @@ public class BzstDipConfigurationBuilder
 			this.getInputStreamSupplier(
 				this.certificateKeystoreInputStream,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE),
-			this.getSetPropertyOrReadFromFileDuration(
-				this.delayBeforeCheckingResults,
-				PropertiesSupplier.PROPERTY_NAME_DELAY_BEFORE_CHECKING_RESULTS_IN_MS,
-				Duration.ofMillis(1000)),
-			this.getSetPropertyOrReadFromFileInteger(
-				this.retryQueryResultsAmount,
-				PropertiesSupplier.PROPERTY_NAME_RETRY_QUERY_RESULTS_AMOUNT,
-				10),
-			this.getSetPropertyOrReadFromFileDuration(
-				this.delayInBetweenResultChecks,
-				PropertiesSupplier.PROPERTY_NAME_DELAY_IN_BETWEEN_RESULT_CHECKS_IN_MS,
-				Duration.ofMillis(1000)),
+			new BzstDipQueryResultConfiguration(
+				this.getSetPropertyOrReadFromFileDuration(
+					this.delayBeforeCheckingResults,
+					PropertiesSupplier.PROPERTY_NAME_DELAY_BEFORE_CHECKING_RESULTS_IN_MS,
+					Duration.ofMillis(DEFAULT_DELAY_BEFORE_CHECKING_RESULTS_IN_MILLIS)),
+				this.getSetPropertyOrReadFromFileInteger(
+					this.retryQueryResultsAmount,
+					PropertiesSupplier.PROPERTY_NAME_RETRY_QUERY_RESULTS_AMOUNT,
+					DEFAULT_RETRY_QUERY_RESULTS),
+				this.getSetPropertyOrReadFromFileDuration(
+					this.delayInBetweenResultChecks,
+					PropertiesSupplier.PROPERTY_NAME_DELAY_IN_BETWEEN_RESULT_CHECKS_IN_MS,
+					Duration.ofMillis(DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS))
+			),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorOrganizationName,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_ORGANIZATION),
