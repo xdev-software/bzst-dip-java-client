@@ -25,6 +25,9 @@ public class BzstDipAddressFix
 	private final String suiteIdentifier;
 	private final String floorIdentifier;
 	private final String districtName;
+	/**
+	 * Post office box number
+	 */
 	private final String pob;
 	private final String postCode;
 	private final String city;

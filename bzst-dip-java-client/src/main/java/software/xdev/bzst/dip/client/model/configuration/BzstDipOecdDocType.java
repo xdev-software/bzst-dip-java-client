@@ -18,6 +18,9 @@ package software.xdev.bzst.dip.client.model.configuration;
 import software.xdev.bzst.dip.client.xmldocument.model.OECDDocTypeIndicEnumType;
 
 
+/**
+ * Defines the type and reason of a message.
+ */
 public enum BzstDipOecdDocType
 {
 	/**

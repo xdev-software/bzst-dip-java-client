@@ -18,6 +18,14 @@ package software.xdev.bzst.dip.client.model.message;
 import software.xdev.bzst.dip.client.xmldocument.model.ConsiderationType;
 
 
+/**
+ * From <a
+ * href="https://www.oecd.org/tax/exchange-of-tax-information/model-rules-for-reporting-by-digital-platform-operators
+ * -xml-schema-user-guide-for-tax-administrations.pdf" >Model Rules for Reporting by Digital Platform
+ * Operators</a>:<br>
+ * <p>
+ * This element contains information on the Consideration received by a Reportable Seller in the fourth quarter.
+ */
 public record BzstDipConsiderations(
 	BzstDipMonetaryAmount considerationQuarter1,
 	BzstDipMonetaryAmount considerationQuarter2,

@@ -16,40 +16,78 @@
 package software.xdev.bzst.dip.client.model.configuration;
 
 import java.io.InputStream;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 
+/**
+ * Holds all the information and configuration to use the Bzst-Dip-Client
+ */
 public class BzstDipConfiguration
 {
+	/**
+	 * This is the provided production endpoint url of the BZST.
+	 */
 	public static final String ENDPOINT_URL_PRODUCTION = "https://mds.bzst.bund.de";
+	/**
+	 * This is the provided test endpoint url of the BZST.
+	 */
 	public static final String ENDPOINT_URL_TEST = "https://mds-ktst.bzst.bund.de";
 	
+	/**
+	 * Defines the password for the certificate keystore that is used to decrypt the local keystore.
+	 */
 	private final String certificateKeystorePassword;
+	/**
+	 * Is used for identifying this client to the BZST API.
+	 * A valid issuer/clientId is defined by the BZST and must have been received from them.
+	 * <p>
+	 * See
+	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9">Kommunikationshandbuch
+	 * DIP-Standard 1.4</a> - Section 2.2.1:<br>
+	 * <i>DIP-ID des Kunden, welche bei der Freischaltung vergeben wurde</i>
+	 * </p>
+	 */
 	private final String clientId;
 	/**
 	 * Steueridentifikationsnummer (Steuer-ID) without spaces or slashes ({@code /})
 	 */
 	private final String taxID;
 	/**
-	 * Steuernummer in the "vereinheitlichtem Bundesschema".
+	 * <p>
+	 *     Organizational characteristic for the specified provider. The Steueridentifikationsnummer
+	 *     (for identification in the portal via Elster) or the BZST number
+	 *     and the associated type (ELSTER or BZSTCERT) are used.
+	 * </p>
 	 * <p>
 	 * See
 	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9">Kommunikationshandbuch
-	 * DIP-Standard 1.3</a> - Section 2.6.2
+	 * DIP-Standard 1.4</a> - Section 5.1.3:
 	 * </p>
 	 */
 	private final String taxNumber;
 	/**
-	 * For production: {@link #ENDPOINT_URL_PRODUCTION}
-	 * For test (default):  {@link #ENDPOINT_URL_TEST}
+	 * <ul>
+	 * <li>For production: {@link #ENDPOINT_URL_PRODUCTION}</li>
+	 * <li>For test (default):  {@link #ENDPOINT_URL_TEST}</li>
+	 * </ul>
 	 */
 	private final String realmEnvironmentBaseUrl;
+	/**
+	 * Defines if the client is running in an {@link BzstDipEnvironment#PRODUCTION} or in an
+	 * {@link BzstDipEnvironment#TEST} environment.
+	 */
 	private final BzstDipEnvironment environment;
+	
+	/**
+	 * Defines weather the message that is to send contains new information ({@link BzstDipDpiMessageType#DPI_401},
+	 * corrective information ({@link BzstDipDpiMessageType#DPI_402} or
+	 * no information ({@link BzstDipDpiMessageType#DPI_403}).
+	 */
 	private final BzstDipDpiMessageType messageTypeIndic;
+	
 	/**
 	 * References the last day of the year that is sent.
 	 * <p>
@@ -57,11 +95,18 @@ public class BzstDipConfiguration
 	 * </p>
 	 */
 	private final LocalDate reportingPeriod;
+	
+	/**
+	 * Defines which type of message is sent and why.
+	 */
 	private final BzstDipOecdDocType docType;
+	
+	/**
+	 * Defines the input of which the keystore is read. This can be any input as long as it is an {@link InputStream}.
+	 */
 	private final Supplier<InputStream> certificateKeystoreInputStream;
-	private final Duration delayBeforeCheckingResults;
-	private final int retryQueryResultsAmount;
-	private final Duration delayInBetweenResultChecks;
+	
+
 	/**
 	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/> The id references the xml document
 	 * which is supposed to be overwritten.
@@ -72,8 +117,21 @@ public class BzstDipConfiguration
 	 * The id references the xml document which is supposed to be corrected or deleted.
 	 */
 	private final String platformOperatorCorrDocRefId;
+	
+	private final BzstDipQueryResultConfiguration queryResultConfiguration;
+	
+	/**
+	 * Defines the name of the operators organization. (e.g. XDEV Software GmbH)
+	 */
 	private final String platformOperatorOrganizationName;
+	/**
+	 * Defines the name of the operators platform. (e.g. TestApp)
+	 */
 	private final String platformOperatorPlatformName;
+	
+	/**
+	 * Defines the address of the operator.
+	 */
 	private final BzstDipAddressFix platformOperatorAddress;
 	
 	public BzstDipConfiguration(
@@ -89,9 +147,7 @@ public class BzstDipConfiguration
 		final String platformOperatorDocRefId,
 		final String platformOperatorCorrDocRefId,
 		final Supplier<InputStream> certificateKeystoreInputStream,
-		final Duration delayBeforeCheckingResults,
-		final int retryQueryResultsAmount,
-		final Duration delayInBetweenResultChecks,
+		final BzstDipQueryResultConfiguration queryResultConfiguration,
 		final String platformOperatorOrganizationName,
 		final String platformOperatorPlatformName,
 		final BzstDipAddressFix platformOperatorAddress)
@@ -108,9 +164,7 @@ public class BzstDipConfiguration
 		this.platformOperatorDocRefId = platformOperatorDocRefId;
 		this.platformOperatorCorrDocRefId = platformOperatorCorrDocRefId;
 		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
-		this.delayBeforeCheckingResults = delayBeforeCheckingResults;
-		this.retryQueryResultsAmount = retryQueryResultsAmount;
-		this.delayInBetweenResultChecks = delayInBetweenResultChecks;
+		this.queryResultConfiguration = queryResultConfiguration;
 		this.platformOperatorOrganizationName = platformOperatorOrganizationName;
 		this.platformOperatorPlatformName = platformOperatorPlatformName;
 		this.platformOperatorAddress = platformOperatorAddress;
@@ -120,7 +174,6 @@ public class BzstDipConfiguration
 	{
 		return this.certificateKeystorePassword;
 	}
-	
 	public String getClientId()
 	{
 		return this.clientId;
@@ -176,19 +229,9 @@ public class BzstDipConfiguration
 		return this.certificateKeystoreInputStream;
 	}
 	
-	public Duration getDelayBeforeCheckingResults()
+	public BzstDipQueryResultConfiguration getQueryResultConfiguration()
 	{
-		return this.delayBeforeCheckingResults;
-	}
-	
-	public int getRetryQueryResultsAmount()
-	{
-		return this.retryQueryResultsAmount;
-	}
-	
-	public Duration getDelayInBetweenResultChecks()
-	{
-		return this.delayInBetweenResultChecks;
+		return this.queryResultConfiguration;
 	}
 	
 	public String getPlatformOperatorOrganizationName()

@@ -15,6 +15,10 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
+/**
+ * Is used if a property that must be set, is not set in the
+ * {@link software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder}.
+ */
 public class PropertyNotSetException extends ConfigurationException
 {
 	public PropertyNotSetException(final String propertyName)

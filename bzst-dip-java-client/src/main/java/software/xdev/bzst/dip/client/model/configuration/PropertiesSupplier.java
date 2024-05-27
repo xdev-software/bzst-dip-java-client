@@ -20,7 +20,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import software.xdev.bzst.dip.client.exception.ConfigurationException;
 
+
+/**
+ * Defines some kind of input where to read properties for the {@link BzstDipConfiguration} for.
+ */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class PropertiesSupplier
 {
@@ -64,6 +69,9 @@ public class PropertiesSupplier
 		this.properties = properties;
 	}
 	
+	/**
+	 * Reads the given filename as property file.
+	 */
 	public PropertiesSupplier(final String propertiesFileName)
 	{
 		try(final FileInputStream fileInputStream = new FileInputStream(propertiesFileName))
@@ -74,10 +82,14 @@ public class PropertiesSupplier
 		}
 		catch(final Exception e)
 		{
-			throw new RuntimeException(e);
+			throw new ConfigurationException("Error while reading properties file %s".formatted(propertiesFileName),
+				e);
 		}
 	}
 	
+	/**
+	 * Reads properties from the given {@link InputStream}.
+	 */
 	public PropertiesSupplier(final InputStream propertiesInput)
 	{
 		try
@@ -88,7 +100,7 @@ public class PropertiesSupplier
 		}
 		catch(final IOException e)
 		{
-			throw new RuntimeException(e);
+			throw new ConfigurationException("Error while reading properties from input", e);
 		}
 	}
 	

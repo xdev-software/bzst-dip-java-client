@@ -44,8 +44,8 @@ class WebClientUtilTest
 	{
 		final List<String> dataTransferNumbers =
 			WebClientUtil.extractTransferNumberFromXml(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-					"<Datentransfernummern/>");
+				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+					+ "<Datentransfernummern/>");
 		
 		assertEquals(0, dataTransferNumbers.size());
 	}
@@ -55,12 +55,12 @@ class WebClientUtilTest
 	{
 		final List<String> dataTransferNumbers =
 			WebClientUtil.extractTransferNumberFromXml(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-					"<Datentransfernummern>" +
-					"<Datentransfernummer>2394headfsoiu</Datentransfernummer>" +
-					"<Datentransfernummer>328ddsdfasdfa</Datentransfernummer>" +
-					"<Datentransfernummer>vbmcvbopfdpos</Datentransfernummer>" +
-					"</Datentransfernummern>");
+				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+					+ "<Datentransfernummern>"
+					+ "<Datentransfernummer>2394headfsoiu</Datentransfernummer>"
+					+ "<Datentransfernummer>328ddsdfasdfa</Datentransfernummer>"
+					+ "<Datentransfernummer>vbmcvbopfdpos</Datentransfernummer>"
+					+ "</Datentransfernummern>");
 		
 		assertEquals("2394headfsoiu", dataTransferNumbers.get(0));
 		assertEquals("328ddsdfasdfa", dataTransferNumbers.get(1));
