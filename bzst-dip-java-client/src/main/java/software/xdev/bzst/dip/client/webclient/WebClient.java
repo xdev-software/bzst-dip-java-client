@@ -15,24 +15,18 @@
  */
 package software.xdev.bzst.dip.client.webclient;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
+import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
+import software.xdev.bzst.dip.client.generated.client.ApiClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.BzstDipRequestStatusResult;
 import software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult;
@@ -42,162 +36,74 @@ import software.xdev.bzst.dip.client.util.WebClientUtil;
 /**
  * Helps to communicate with the BZST API.
  */
-public class WebClient implements AutoCloseable
+public class WebClient
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebClient.class);
-	private static final String AUTHORIZATION_STRING = "Authorization";
-	private static final String BEARER_STRING = "Bearer ";
-	public static final String DIP_MD = "/dip/md/";
-	public static final String PATCH = "PATCH";
 	public static final int OK_HTTP_STATUS_CODE = 200;
 	
-	private final HttpClient httpClient = HttpClient.newHttpClient();
-	private final BzstDipConfiguration configuration;
+	private final MdEinreichenProviderApi client;
+	private final BearerTokenRequester bearerTokenRequester;
 	
 	public WebClient(final BzstDipConfiguration configuration)
 	{
-		this.configuration = configuration;
+		this(configuration, new MdEinreichenProviderApi());
+		this.client.getApiClient().setBasePath(configuration.getRealmEnvironmentBaseUrl());
 	}
 	
-	private HttpResponse<String> executeRequest(final HttpRequest httpRequest, final int expectedHttpStatusCode)
-		throws HttpStatusCodeNotExceptedException
+	public WebClient(final BzstDipConfiguration configuration, final ApiClient apiClient)
 	{
-		final HttpResponse<String> httpResponse = this.executeRequest(httpRequest);
-		if(httpResponse.statusCode() != expectedHttpStatusCode)
-		{
-			throw new HttpStatusCodeNotExceptedException(httpResponse);
-		}
-		return httpResponse;
+		this(configuration, new MdEinreichenProviderApi(apiClient));
 	}
 	
-	private HttpResponse<String> executeRequest(final HttpRequest httpRequest)
+	public WebClient(
+		final BzstDipConfiguration configuration,
+		final MdEinreichenProviderApi mdEinreichenProviderApi)
 	{
-		try
-		{
-			return this.httpClient.send(
-				httpRequest,
-				HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-		}
-		catch(final IOException | InterruptedException e)
-		{
-			throw new RuntimeException("An error occurred while getting the access token.", e);
-		}
-	}
-	
-	private HttpRequest createGetAccessTokenRequest()
-	{
-		final String requestToken = WebClientUtil.createRequestToken(this.configuration);
-		
-		final HashMap<String, String> parameters = new HashMap<>();
-		parameters.put("grant_type", "client_credentials");
-		parameters.put("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
-		parameters.put("client_assertion", requestToken);
-		
-		return HttpRequest.newBuilder()
-			.POST(HttpRequest.BodyPublishers.ofString(createFormForParameters(parameters)))
-			.uri(URI.create(
-				this.configuration.getRealmEnvironmentBaseUrl() + "/auth/realms/mds/protocol/openid-connect/token"))
-			.header("Content-Type", "application/x-www-form-urlencoded")
-			.build();
-	}
-	
-	/**
-	 * For every request an access token is required
-	 *
-	 * @return Access Token as string
-	 */
-	public String getAccessToken() throws HttpStatusCodeNotExceptedException
-	{
-		LOGGER.debug("Getting access token...");
-		try
-		{
-			final HttpRequest httpRequest = this.createGetAccessTokenRequest();
-			final HttpResponse<String> httpResponse = this.executeRequest(httpRequest, OK_HTTP_STATUS_CODE);
-			
-			final ObjectMapper objectMapper = new ObjectMapper();
-			final AccessTokenHttpResponse accessTokenHttpResponse =
-				objectMapper.readValue(httpResponse.body(), AccessTokenHttpResponse.class);
-			
-			return accessTokenHttpResponse.getAccessToken();
-		}
-		catch(final IOException e)
-		{
-			throw new RuntimeException("An error occurred while getting the access token.", e);
-		}
-	}
-	
-	private HttpRequest createGetDataTransferNumberRequest() throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.POST(HttpRequest.BodyPublishers.noBody())
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + "/dip/start/DAC7"))
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
+		this.client = mdEinreichenProviderApi;
+		this.bearerTokenRequester = new BearerTokenRequester(configuration, this.client);
 	}
 	
 	/**
 	 * @return XML as string with data transfer numbers
 	 */
-	public String getDataTransferNumber() throws HttpStatusCodeNotExceptedException
+	public String getDataTransferNumber()
+	{
+		return this.getDataTransferNumber("DAC7");
+	}
+	
+	public String getDataTransferNumber(final String fachverfahren)
 	{
 		LOGGER.debug("Getting data transfer number...");
-		final HttpResponse<String> httpResponse = this.executeRequest(this.createGetDataTransferNumberRequest(), 201);
-		
-		return httpResponse.body();
+		return this.client.einreichungAnmelden(
+			fachverfahren,
+			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
+		);
 	}
 	
-	private HttpRequest createUploadMassDataRequest(final String dataTransferNumber, final String xmlString)
-		throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.PUT(HttpRequest.BodyPublishers.ofString(xmlString))
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/xml"))
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
-	}
-	
-	public String uploadMassData(final String dataTransferNumber, final String xmlString)
-		throws HttpStatusCodeNotExceptedException
+	public void uploadMassData(final String dataTransferNumber, final String xmlString)
 	{
 		LOGGER.debug("Uploading the xml data...");
 		
-		final HttpResponse<String> httpResponse = this.executeRequest(
-			this.createUploadMassDataRequest(dataTransferNumber, xmlString), OK_HTTP_STATUS_CODE);
+		this.client.massendatenEinreichen(
+			dataTransferNumber,
+			this.bearerTokenRequester.getAccessTokenWithBearerPrefix(),
+			new ByteArrayInputStream(xmlString.getBytes())
+		);
 		
 		LOGGER.debug("Uploaded data successfully!");
-		return httpResponse.body();
-	}
-	
-	private HttpRequest createCloseSubmissionRequest(final String dataTransferNumber)
-		throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/finish"))
-			.method(PATCH, HttpRequest.BodyPublishers.noBody())
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
 	}
 	
 	/**
 	 * Requests the closing of the submission with the given dataTransferNumber.
 	 */
-	public String closeSubmission(final String dataTransferNumber) throws HttpStatusCodeNotExceptedException
+	public void closeSubmission(final String dataTransferNumber)
 	{
 		LOGGER.debug("Closing submission...");
-		final HttpResponse<String> httpResponse = this.executeRequest(
-			this.createCloseSubmissionRequest(dataTransferNumber), OK_HTTP_STATUS_CODE);
+		this.client.einreichungBeenden(
+			dataTransferNumber,
+			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
+		);
 		LOGGER.debug("Closed submission successfully!");
-		
-		return httpResponse.body();
-	}
-	
-	private HttpRequest createGetResultLogsRequest() throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + "protocolnumbers"))
-			.GET()
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
 	}
 	
 	/**
@@ -205,24 +111,19 @@ public class WebClient implements AutoCloseable
 	 *
 	 * @return String list with data transfer numbers
 	 */
-	public List<String> requestResultLogs() throws HttpStatusCodeNotExceptedException, IOException
+	public List<String> requestResultLogs() throws IOException
 	{
-		final String responseBody = this.executeRequest(this.createGetResultLogsRequest(), OK_HTTP_STATUS_CODE).body();
-		LOGGER.debug("ResponseBody from data transfer number request:\n{}", responseBody);
-		
-		return WebClientUtil.extractTransferNumberFromXml(responseBody);
-	}
-	
-	public HttpRequest createGetResultProtocolRequest(final String dataTransferNumber)
-		throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.uri(
-				URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/protocol")
+		try(
+			final InputStream inputStream = this.client.alleProtokollnummern(
+				this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
 			)
-			.GET()
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
+		)
+		{
+			final String responseBody = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+			LOGGER.debug("ResponseBody from data transfer number request:\n{}", responseBody);
+			
+			return WebClientUtil.extractTransferNumberFromXml(responseBody);
+		}
 	}
 	
 	/**
@@ -231,52 +132,44 @@ public class WebClient implements AutoCloseable
 	 * @return Returns complete HttpResponse
 	 */
 	public BzstDipSingleTransferResult requestTransferResult(final String dataTransferNumber)
-		throws HttpStatusCodeNotExceptedException
+		throws IOException
 	{
-		final HttpResponse<String> httpResponse =
-			this.executeRequest(this.createGetResultProtocolRequest(dataTransferNumber));
-		return new BzstDipSingleTransferResult(dataTransferNumber, httpResponse.statusCode());
-	}
-	
-	private HttpRequest createConfirmResultProtocolRequest(final String transferNumber)
-		throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + transferNumber + "/protocol"))
-			.method(PATCH, HttpRequest.BodyPublishers.noBody())
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
+		try(
+			final InputStream inputStream = this.client.protokollAbrufen(
+				dataTransferNumber,
+				this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
+			)
+		)
+		{
+			final String text = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+			
+			// TODO: Check text
+			return new BzstDipSingleTransferResult(dataTransferNumber, 2);
+			
+			// return new BzstDipSingleTransferResult(dataTransferNumber, httpResponse.statusCode());
+		}
 	}
 	
 	/**
 	 * Confirm the result protocol
 	 */
-	public BzstDipSingleTransferResult confirmTransfer(final String transferNumber)
-		throws HttpStatusCodeNotExceptedException
+	public BzstDipSingleTransferResult confirmTransfer(final String dataTransferNumber)
 	{
-		final HttpResponse<String> httpResponse =
-			this.executeRequest(this.createConfirmResultProtocolRequest(transferNumber), OK_HTTP_STATUS_CODE);
-		return new BzstDipSingleTransferResult(transferNumber, httpResponse.statusCode());
+		this.client.protokollErhalten(
+			dataTransferNumber,
+			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
+		);
+		return new BzstDipSingleTransferResult(dataTransferNumber, OK_HTTP_STATUS_CODE);
 	}
 	
-	public HttpRequest createAbortSubmissionRequest(final String dataTransferNumber)
-		throws HttpStatusCodeNotExceptedException
-	{
-		return HttpRequest.newBuilder()
-			.uri(URI.create(this.configuration.getRealmEnvironmentBaseUrl() + DIP_MD + dataTransferNumber + "/abort"))
-			.method(PATCH, HttpRequest.BodyPublishers.noBody())
-			.header(AUTHORIZATION_STRING, BEARER_STRING + this.getAccessToken())
-			.build();
-	}
-	
-	public String abortSubmission(final String dataTransferNumber) throws HttpStatusCodeNotExceptedException
+	public void abortSubmission(final String dataTransferNumber)
 	{
 		LOGGER.error("Aborting submission...");
-		final HttpResponse<String> httpResponse = this.executeRequest(
-			this.createAbortSubmissionRequest(dataTransferNumber), OK_HTTP_STATUS_CODE);
+		this.client.einreichungAbbrechen(
+			dataTransferNumber,
+			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
+		);
 		LOGGER.debug("Aborted successfully.");
-		
-		return httpResponse.body();
 	}
 	
 	/**
@@ -285,7 +178,7 @@ public class WebClient implements AutoCloseable
 	 * @return returns true if the method should be called later again because the result is not yet available
 	 */
 	public BzstDipRequestStatusResult readAndConfirmDataTransferNumbers()
-		throws HttpStatusCodeNotExceptedException, IOException
+		throws IOException
 	{
 		final List<String> dataTransferNumbers = this.requestResultLogs();
 		LOGGER.debug("DataTransferNumbers {}", dataTransferNumbers);
@@ -301,7 +194,7 @@ public class WebClient implements AutoCloseable
 	}
 	
 	private BzstDipSingleTransferResult requestSingleTransferAndConfirm(final String transferNumber)
-		throws HttpStatusCodeNotExceptedException
+		throws IOException
 	{
 		final BzstDipSingleTransferResult singleTransferResult = this.requestTransferResult(transferNumber);
 		LOGGER.debug(
@@ -315,20 +208,5 @@ public class WebClient implements AutoCloseable
 			this.confirmTransfer(transferNumber);
 		}
 		return singleTransferResult;
-	}
-	
-	private static String createFormForParameters(final HashMap<String, String> parameters)
-	{
-		// Creating form with all parameters
-		return parameters.keySet().stream()
-			.map(key -> key + "=" + URLEncoder.encode(parameters.get(key), StandardCharsets.UTF_8))
-			.collect(Collectors.joining("&"));
-	}
-	
-	@Override
-	public void close()
-	{
-		// For Java 21
-		// this.httpClient.close();
 	}
 }

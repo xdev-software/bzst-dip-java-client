@@ -1,0 +1,136 @@
+/*
+ * Copyright © 2024 XDEV Software (https://xdev.software)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package software.xdev.bzst.dip.client.webclient;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.time.Duration;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import io.jsonwebtoken.Jwts;
+import software.xdev.bzst.dip.client.exception.EncryptionException;
+import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.util.SigningUtil;
+
+
+/**
+ * Helps to communicate with the BZST API.
+ */
+public class BearerTokenRequester
+{
+	private static final Logger LOGGER = LoggerFactory.getLogger(BearerTokenRequester.class);
+	private static final String BEARER_STRING = "Bearer ";
+	public static final String MDS_POSTFIX = "/auth/realms/mds";
+	
+	private final MdEinreichenProviderApi client;
+	private final BzstDipConfiguration configuration;
+	
+	public BearerTokenRequester(
+		final BzstDipConfiguration configuration,
+		final MdEinreichenProviderApi client
+	)
+	{
+		this.configuration = configuration;
+		this.client = client;
+	}
+	
+	/**
+	 * For every request an access token is required
+	 *
+	 * @return Access Token as string
+	 */
+	public String getAccessToken()
+	{
+		LOGGER.debug("Getting access token...");
+		final String requestToken = this.createRequestToken();
+		
+		final HashMap<String, String> parameters = new HashMap<>();
+		parameters.put("grant_type", "client_credentials");
+		parameters.put("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
+		parameters.put("client_assertion", requestToken);
+		
+		return this.client.invokeAPI(
+			this.configuration.getRealmEnvironmentBaseUrl() + "/auth/realms/mds/protocol/openid-connect/token",
+			"POST",
+			this.createFormForParameters(parameters),
+			new TypeReference<AccessTokenHttpResponse>()
+			{
+			},
+			Map.of("Content-Type", "application/x-www-form-urlencoded")
+		).getAccessToken();
+	}
+	
+	public String getAccessTokenWithBearerPrefix()
+	{
+		return BEARER_STRING + this.getAccessToken();
+	}
+	
+	private String createFormForParameters(final HashMap<String, String> parameters)
+	{
+		// Creating form with all parameters
+		return parameters.keySet().stream()
+			.map(key -> key + "=" + URLEncoder.encode(parameters.get(key), StandardCharsets.UTF_8))
+			.collect(Collectors.joining("&"));
+	}
+	
+	private String createRequestToken()
+	{
+		LOGGER.debug("Creating jwt token...");
+		try(final InputStream keystoreInputStream = this.configuration.getCertificateKeystoreInputStream().get())
+		{
+			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
+				keystoreInputStream,
+				this.configuration.getCertificateKeystorePassword(),
+				SigningUtil.KEYSTORE_TYPE
+			);
+			
+			final PrivateKey privateKey = privateKeyEntry.getPrivateKey();
+			final String clientId = this.configuration.getClientId();
+			LOGGER.debug("Using client id: {}", clientId);
+			
+			return Jwts.builder()
+				.issuer(clientId)
+				.subject(clientId)
+				.audience().add(
+					this.configuration.getRealmEnvironmentBaseUrl() + MDS_POSTFIX)
+				.and()
+				.issuedAt(new Date())
+				.expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()))
+				.id(UUID.randomUUID().toString())
+				.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
+				.signWith(privateKey, Jwts.SIG.RS256)
+				.compact();
+		}
+		catch(final IOException ioException)
+		{
+			throw new EncryptionException("An error occurred while creating the request token.", ioException);
+		}
+	}
+}
