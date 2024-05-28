@@ -263,7 +263,10 @@ public class BzstDipClient
 		{
 			if(retryCounter != 0)
 			{
-				Thread.sleep(this.configuration.getQueryResultConfiguration().delayInBetweenResultChecks().toMillis());
+				final long delayInMilliseconds =
+					this.configuration.getQueryResultConfiguration().delayInBetweenResultChecks().toMillis();
+				LOGGER.debug("Waiting {}ms for next query...", delayInMilliseconds);
+				Thread.sleep(delayInMilliseconds);
 			}
 			requestStatusResult = webClient.readAndConfirmDataTransferNumbers();
 			retryCounter++;
