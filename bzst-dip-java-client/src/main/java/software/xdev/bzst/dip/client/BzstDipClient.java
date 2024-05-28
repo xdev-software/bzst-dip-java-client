@@ -75,7 +75,7 @@ public class BzstDipClient
 	public BzstDipSendingResult sendDipOnly(final String csvData)
 		throws HttpStatusCodeNotExceptedException
 	{
-		return this.sendDipOnly(ReportableSellerCsvFileParser.parseCsvData(csvData, this.configuration));
+		return this.sendDipOnly(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class BzstDipClient
 	public BzstDipCompleteResult sendDipAndQueryResult(final String csvData)
 		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
 	{
-		return this.sendDipAndQueryResult(ReportableSellerCsvFileParser.parseCsvData(csvData, this.configuration));
+		return this.sendDipAndQueryResult(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
 	
 	/**

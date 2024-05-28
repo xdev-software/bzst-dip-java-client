@@ -60,7 +60,7 @@ class ReportableSellerCsvFileParserTest
 		final String resourceName = "src/test/resources/TestCsvData.csv";
 		
 		final List<CorrectableReportableSellerType> reportableSeller =
-			ReportableSellerCsvFileParser.parseCsvData(Files.readString(Path.of(resourceName)), this.configuration);
+			new ReportableSellerCsvFileParser(this.configuration).parseCsvData(Files.readString(Path.of(resourceName)));
 		
 		// Check size
 		assertEquals(2, reportableSeller.size());
