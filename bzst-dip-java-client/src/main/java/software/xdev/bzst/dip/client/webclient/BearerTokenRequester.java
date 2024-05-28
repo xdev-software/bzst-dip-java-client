@@ -17,16 +17,14 @@ package software.xdev.bzst.dip.client.webclient;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,33 +69,33 @@ public class BearerTokenRequester
 		LOGGER.debug("Getting access token...");
 		final String requestToken = this.createRequestToken();
 		
-		final HashMap<String, String> parameters = new HashMap<>();
+		final HashMap<String, Object> parameters = new HashMap<>();
 		parameters.put("grant_type", "client_credentials");
 		parameters.put("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
 		parameters.put("client_assertion", requestToken);
 		
-		return this.client.invokeAPI(
-			this.configuration.getRealmEnvironmentBaseUrl() + "/auth/realms/mds/protocol/openid-connect/token",
+		return this.client.getApiClient().invokeAPI(
+			"/auth/realms/mds/protocol/openid-connect/token",
 			"POST",
-			this.createFormForParameters(parameters),
+			List.of(),
+			List.of(),
+			"",
+			null,
+			Map.of(),
+			Map.of(),
+			parameters,
+			"",
+			"application/x-www-form-urlencoded;charset=UTF8",
+			new String[]{},
 			new TypeReference<AccessTokenHttpResponse>()
 			{
-			},
-			Map.of("Content-Type", "application/x-www-form-urlencoded")
+			}
 		).getAccessToken();
 	}
 	
 	public String getAccessTokenWithBearerPrefix()
 	{
 		return BEARER_STRING + this.getAccessToken();
-	}
-	
-	private String createFormForParameters(final HashMap<String, String> parameters)
-	{
-		// Creating form with all parameters
-		return parameters.keySet().stream()
-			.map(key -> key + "=" + URLEncoder.encode(parameters.get(key), StandardCharsets.UTF_8))
-			.collect(Collectors.joining("&"));
 	}
 	
 	private String createRequestToken()
