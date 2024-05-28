@@ -17,9 +17,6 @@ package software.xdev.bzst.dip.client.model.configuration;
 
 import java.time.Duration;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-
 
 /**
  * @param delayBeforeCheckingResults Defines the initial delay after the data is sent and the result is queried.<br>
@@ -33,11 +30,8 @@ import jakarta.validation.constraints.PositiveOrZero;
  *                                   BzstDipConfigurationBuilder#DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS}.
  */
 public record BzstDipQueryResultConfiguration(
-	@NotNull
 	Duration delayBeforeCheckingResults,
-	@PositiveOrZero
 	int retryQueryResultsAmount,
-	@NotNull
 	Duration delayInBetweenResultChecks
 )
 {

@@ -19,10 +19,6 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 
@@ -54,12 +50,10 @@ public class BzstDipConfiguration
 	 * <i>DIP-ID des Kunden, welche bei der Freischaltung vergeben wurde</i>
 	 * </p>
 	 */
-	@NotBlank(message = "The clientId (DIP-ID) must not be null or blank")
 	private final String clientId;
 	/**
 	 * Steueridentifikationsnummer (Steuer-ID) without spaces or slashes ({@code /})
 	 */
-	@NotBlank(message = "The taxId (Steueridentifikationsnummer/Steuer-ID) must not be null or blank")
 	private final String taxID;
 	/**
 	 * <p>
@@ -73,7 +67,6 @@ public class BzstDipConfiguration
 	 * DIP-Standard 1.4</a> - Section 5.1.3:
 	 * </p>
 	 */
-	@NotBlank(message = "The taxNumber (Steueridentifikationsnummer/BZST number) must not be null or blank")
 	private final String taxNumber;
 	/**
 	 * <ul>
@@ -81,13 +74,11 @@ public class BzstDipConfiguration
 	 * <li>For test (default):  {@link #ENDPOINT_URL_TEST}</li>
 	 * </ul>
 	 */
-	@NotBlank(message = "The realm environment base URL must not be null or blank")
 	private final String realmEnvironmentBaseUrl;
 	/**
 	 * Defines if the client is running in an {@link BzstDipEnvironment#PRODUCTION} or in an
 	 * {@link BzstDipEnvironment#TEST} environment.
 	 */
-	@NotNull
 	private final BzstDipEnvironment environment;
 	
 	/**
@@ -95,7 +86,6 @@ public class BzstDipConfiguration
 	 * corrective information ({@link BzstDipDpiMessageType#DPI_402} or
 	 * no information ({@link BzstDipDpiMessageType#DPI_403}).
 	 */
-	@NotNull
 	private final BzstDipDpiMessageType messageTypeIndic;
 	
 	/**
@@ -113,19 +103,16 @@ public class BzstDipConfiguration
 	 * Kalenderjahr in ReportingPeriod muss kleiner gleich dem aktuellen Kalenderjahr sein.</i>
 	 * </p>
 	 */
-	@PastOrPresent
 	private final LocalDate reportingPeriod;
 	
 	/**
 	 * Defines which type of message is sent and why.
 	 */
-	@NotNull
 	private final BzstDipOecdDocType docType;
 	
 	/**
 	 * Defines the input of which the keystore is read. This can be any input as long as it is an {@link InputStream}.
 	 */
-	@NotNull
 	private final Supplier<InputStream> certificateKeystoreInputStream;
 	
 
@@ -140,24 +127,20 @@ public class BzstDipConfiguration
 	 */
 	private final String platformOperatorCorrDocRefId;
 	
-	@NotNull
 	private final BzstDipQueryResultConfiguration queryResultConfiguration;
 	
 	/**
 	 * Defines the name of the operators organization. (e.g. XDEV Software GmbH)
 	 */
-	@NotBlank(message = "The platform operator organization name must not be null or blank")
 	private final String platformOperatorOrganizationName;
 	/**
 	 * Defines the name of the operators platform. (e.g. TestApp)
 	 */
-	@NotBlank(message = "The platform operator platform name must not be null or blank")
 	private final String platformOperatorPlatformName;
 	
 	/**
 	 * Defines the address of the operator.
 	 */
-	@NotNull
 	private final BzstDipAddressFix platformOperatorAddress;
 	
 	public BzstDipConfiguration(
