@@ -18,7 +18,16 @@ package software.xdev.bzst.dip.client.model.configuration;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
@@ -364,11 +373,32 @@ public class BzstDipConfigurationBuilder
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM),
 			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress)
 		);
-		this.validateConfiguration(configuration);
+		this.validateConfigurationByBean(configuration);
+		this.validateConfigurationManually(configuration);
 		return configuration;
 	}
 	
-	private void validateConfiguration(final BzstDipConfiguration configuration)
+	private void validateConfigurationByBean(final BzstDipConfiguration configuration)
+	{
+		final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		final Validator validator = factory.getValidator();
+		final Set<ConstraintViolation<? extends Object>> validations = new HashSet<>();
+		
+		validations.addAll(validator.validate(configuration));
+		validations.addAll(validator.validate(configuration.getQueryResultConfiguration()));
+		validations.addAll(validator.validate(configuration.getPlatformOperatorAddress()));
+		
+		if(!validations.isEmpty())
+		{
+			throw new ConfigurationException(
+				"Following invalid entries are in the configuration: \n%s".formatted(
+					validations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(";\n"))
+				)
+			);
+		}
+	}
+	
+	private void validateConfigurationManually(final BzstDipConfiguration configuration)
 	{
 		if(
 			configuration.getDocType().isNewTransmission()
@@ -379,6 +409,34 @@ public class BzstDipConfigurationBuilder
 			throw new ConfigurationException(
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
 				"When sending a new transmission (OECD_0) a DocRefId must be set!"
+			);
+		}
+		if(configuration.getDocType().isCorrectionOrDeletion()
+			&& (configuration.getPlatformOperatorCorrDocRefId() == null
+			|| configuration.getPlatformOperatorCorrDocRefId().isBlank())
+		)
+		{
+			throw new ConfigurationException(
+				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_CORR_DOC_REF_ID,
+				"When sending a correction or deletion (OECD_2 or OECD_3) a CorrDocRefId must be set!"
+			);
+		}
+		final BzstDipQueryResultConfiguration queryResultConfiguration =
+			Objects.requireNonNull(configuration.getQueryResultConfiguration());
+		if(queryResultConfiguration.delayBeforeCheckingResults() == null
+			|| queryResultConfiguration.delayBeforeCheckingResults().isNegative())
+		{
+			throw new ConfigurationException(
+				PropertiesSupplier.PROPERTY_NAME_DELAY_BEFORE_CHECKING_RESULTS_IN_MS,
+				"The delay before checking results must be positive or zero!"
+			);
+		}
+		if(queryResultConfiguration.delayInBetweenResultChecks() == null
+			|| queryResultConfiguration.delayInBetweenResultChecks().isNegative())
+		{
+			throw new ConfigurationException(
+				PropertiesSupplier.PROPERTY_NAME_DELAY_IN_BETWEEN_RESULT_CHECKS_IN_MS,
+				"The delay in between checking results must be positive or zero!"
 			);
 		}
 	}
