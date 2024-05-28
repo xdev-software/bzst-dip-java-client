@@ -38,7 +38,7 @@ class ReportableSellerCsvFileParserTest
 {
 	private final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder()
 		.setClientId("TestClient")
-		.setTaxID("123")
+		.setTaxID("86095742719")
 		.setTaxNumber("123")
 		.setCertificateKeystorePassword("test123")
 		.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
