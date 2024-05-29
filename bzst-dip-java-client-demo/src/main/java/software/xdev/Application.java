@@ -26,6 +26,7 @@ import software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities;
 import software.xdev.bzst.dip.client.model.message.BzstDipOecdLegalAddressType;
 import software.xdev.bzst.dip.client.model.message.BzstDipTaxes;
 import software.xdev.bzst.dip.client.model.message.BzstDipTin;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -52,9 +53,7 @@ public final class Application
 			.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 			.setTaxID("123")
 			.setTaxNumber("123")
-			.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-				.getResourceAsStream("DemoKeystore.jks"))
-			.setCertificateKeystorePassword("test123")
+			.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 			.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 			.setReportingPeriod(LocalDate.now())

@@ -50,7 +50,7 @@ request through these XSD find errors before they are sent to the DIP.
 
 See the [examples in the demo package](./src/main/java/software/demo/bzst/dip/client/demo).
 
-### Create keystore file
+### Create certificate
 
 For authentification at the BZST you have to create a public- and private-key.
 
@@ -58,7 +58,7 @@ First you have to create a **PEM** file as described on
 the [BZST Website](https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9) (see
 1.7).
 
-OpenSSL can be downloaded from their [website](https://www.openssl.org/).
+OpenSSL can be downloaded from the [website](https://www.openssl.org/).
 
 ```
 openssl req -newkey rsa-pss -new -nodes -x509 -days 3650 -pkeyopt rsa_keygen_bits:4096 -sigopt rsa_pss_saltlen:32 -keyout key.pem -out cert.pem

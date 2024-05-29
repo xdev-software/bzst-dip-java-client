@@ -31,6 +31,7 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
@@ -40,9 +41,7 @@ class ReportableSellerCsvFileParserTest
 		.setClientId("TestClient")
 		.setTaxID("123")
 		.setTaxNumber("123")
-		.setCertificateKeystorePassword("test123")
-		.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-			.getResourceAsStream("DemoKeystore.jks"))
+		.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 		.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 		.setReportingPeriod(LocalDate.now())

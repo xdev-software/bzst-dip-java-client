@@ -15,9 +15,6 @@
  */
 package software.xdev.bzst.dip.client.webclient;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.time.Duration;
 import java.util.Date;
@@ -32,10 +29,8 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import io.jsonwebtoken.Jwts;
-import software.xdev.bzst.dip.client.exception.EncryptionException;
 import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.util.SigningUtil;
 
 
 /**
@@ -101,34 +96,22 @@ public class BearerTokenRequester
 	private String createRequestToken()
 	{
 		LOGGER.debug("Creating jwt token...");
-		try(final InputStream keystoreInputStream = this.configuration.getCertificateKeystoreInputStream().get())
-		{
-			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
-				keystoreInputStream,
-				this.configuration.getCertificateKeystorePassword(),
-				SigningUtil.KEYSTORE_TYPE
-			);
-			
-			final PrivateKey privateKey = privateKeyEntry.getPrivateKey();
-			final String clientId = this.configuration.getClientId();
-			LOGGER.debug("Using client id: {}", clientId);
-			
-			return Jwts.builder()
-				.issuer(clientId)
-				.subject(clientId)
-				.audience().add(
-					this.configuration.getRealmEnvironmentBaseUrl() + MDS_POSTFIX)
-				.and()
-				.issuedAt(new Date())
-				.expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()))
-				.id(UUID.randomUUID().toString())
-				.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
-				.signWith(privateKey, Jwts.SIG.RS256)
-				.compact();
-		}
-		catch(final IOException ioException)
-		{
-			throw new EncryptionException("An error occurred while creating the request token.", ioException);
-		}
+		
+		final PrivateKey privateKey = this.configuration.getSigningProvider().getPrivateKey();
+		final String clientId = this.configuration.getClientId();
+		LOGGER.debug("Using client id: {}", clientId);
+		
+		return Jwts.builder()
+			.issuer(clientId)
+			.subject(clientId)
+			.audience().add(
+				this.configuration.getRealmEnvironmentBaseUrl() + MDS_POSTFIX)
+			.and()
+			.issuedAt(new Date())
+			.expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()))
+			.id(UUID.randomUUID().toString())
+			.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
+			.signWith(privateKey, Jwts.SIG.RS256)
+			.compact();
 	}
 }

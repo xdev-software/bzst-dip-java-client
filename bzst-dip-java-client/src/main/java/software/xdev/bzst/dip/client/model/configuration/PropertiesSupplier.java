@@ -29,8 +29,11 @@ import software.xdev.bzst.dip.client.exception.ConfigurationException;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class PropertiesSupplier
 {
-	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD = "certificate.keystore.password";
-	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE = "certificate.keystore.file";
+	public static final String PROPERTY_NAME_SIGNING_JKS_KEYSTORE_PASSWORD = "signing.jks.keystore.password";
+	public static final String PROPERTY_NAME_SIGNING_JKS_KEYSTORE_FILE = "signing.jks.keystore.file";
+	public static final String PROPERTY_NAME_SIGNING_PEM_CERTIFICATE_FILE = "signing.pem.certificate.file";
+	public static final String PROPERTY_NAME_SIGNING_PEM_PRIVATE_KEY_FILE = "signing.pem.private.key.file";
+	public static final String PROPERTY_NAME_SIGNING_PEM_SIGNATURE_ALGORITHM = "signing.pem.signature.algorithm";
 	public static final String PROPERTY_NAME_CLIENT_ID = "client.id";
 	public static final String PROPERTY_NAME_TAX_ID = "tax.id";
 	public static final String PROPERTY_NAME_TAX_NUMBER = "tax.number";

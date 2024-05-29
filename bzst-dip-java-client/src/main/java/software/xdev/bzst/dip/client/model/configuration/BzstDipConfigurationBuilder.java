@@ -15,14 +15,15 @@
  */
 package software.xdev.bzst.dip.client.model.configuration;
 
-import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.signing.SigningProvider;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
+import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
 /**
@@ -36,10 +37,6 @@ public class BzstDipConfigurationBuilder
 	public static final int DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS = 1_000;
 	
 	private final PropertiesSupplier propertiesSupplier;
-	/**
-	 * @see BzstDipConfiguration#getCertificateKeystorePassword()
-	 */
-	private String certificateKeystorePassword;
 	/**
 	 * @see BzstDipConfiguration#getClientId()
 	 */
@@ -81,9 +78,9 @@ public class BzstDipConfigurationBuilder
 	 */
 	private String platformOperatorCorrDocRefId;
 	/**
-	 * @see BzstDipConfiguration#getCertificateKeystoreInputStream()
+	 * @see BzstDipConfiguration#getSigningProvider()
 	 */
-	private Supplier<InputStream> certificateKeystoreInputStream;
+	private SigningProvider signingProvider;
 	/**
 	 * @see BzstDipQueryResultConfiguration#delayBeforeCheckingResults
 	 */
@@ -117,16 +114,6 @@ public class BzstDipConfigurationBuilder
 	public BzstDipConfigurationBuilder()
 	{
 		this(new PropertiesSupplier());
-	}
-	
-	/**
-	 * @param certificateKeystorePassword {@link #certificateKeystorePassword}
-	 * @return itself
-	 */
-	public BzstDipConfigurationBuilder setCertificateKeystorePassword(final String certificateKeystorePassword)
-	{
-		this.certificateKeystorePassword = certificateKeystorePassword;
-		return this;
 	}
 	
 	/**
@@ -243,7 +230,7 @@ public class BzstDipConfigurationBuilder
 	 * @param retryQueryResultsAmount {@link #retryQueryResultsAmount}
 	 * @return itself
 	 */
-	public BzstDipConfigurationBuilder setRetryQueryResultsAmount(final int retryQueryResultsAmount)
+	public BzstDipConfigurationBuilder setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
 	{
 		this.retryQueryResultsAmount = retryQueryResultsAmount;
 		return this;
@@ -260,13 +247,12 @@ public class BzstDipConfigurationBuilder
 	}
 	
 	/**
-	 * @param certificateKeystoreInputStream {@link #certificateKeystoreInputStream}
+	 * @param signingProvider {@link #signingProvider}
 	 * @return itself
 	 */
-	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(
-		final Supplier<InputStream> certificateKeystoreInputStream)
+	public BzstDipConfigurationBuilder setSigningProvider(final SigningProvider signingProvider)
 	{
-		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
+		this.signingProvider = signingProvider;
 		return this;
 	}
 	
@@ -307,10 +293,6 @@ public class BzstDipConfigurationBuilder
 	public BzstDipConfiguration buildAndValidate()
 	{
 		final BzstDipConfiguration configuration = new BzstDipConfiguration(
-			this.getSetPropertyOrReadFromFile(
-				this.certificateKeystorePassword,
-				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
-				""),
 			this.getSetPropertyOrReadFromFile(this.clientId, PropertiesSupplier.PROPERTY_NAME_CLIENT_ID),
 			this.getSetPropertyOrReadFromFile(this.taxID, PropertiesSupplier.PROPERTY_NAME_TAX_ID),
 			this.getSetPropertyOrReadFromFile(this.taxNumber, PropertiesSupplier.PROPERTY_NAME_TAX_NUMBER),
@@ -331,6 +313,7 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFileOecdDocType(
 				this.docTypeIndic,
 				PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC),
+			this.getSigningProvider(this.signingProvider),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorDocRefId,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
@@ -339,9 +322,6 @@ public class BzstDipConfigurationBuilder
 				this.platformOperatorCorrDocRefId,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_CORR_DOC_REF_ID,
 				""),
-			this.getInputStreamSupplier(
-				this.certificateKeystoreInputStream,
-				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE),
 			new BzstDipQueryResultConfiguration(
 				this.getSetPropertyOrReadFromFileDuration(
 					this.delayBeforeCheckingResults,
@@ -383,16 +363,81 @@ public class BzstDipConfigurationBuilder
 		}
 	}
 	
-	private Supplier<InputStream> getInputStreamSupplier(
-		final Supplier<InputStream> builderProperty,
-		final String propertyNameInFile)
+	private SigningProvider getSigningProvider(final SigningProvider builderProperty)
 	{
 		if(builderProperty != null)
 		{
 			return builderProperty;
 		}
-		final String inputFile = this.getSetPropertyOrReadFromFile(null, propertyNameInFile);
-		return () -> ClassLoader.getSystemClassLoader().getResourceAsStream(inputFile);
+		final SigningProviderByJks signingProviderByJks = this.createJksKeyProvider();
+		if(signingProviderByJks != null)
+		{
+			return signingProviderByJks;
+		}
+		
+		final SigningProviderByPem signingProviderByPem = this.createPemKeyProvider();
+		if(signingProviderByPem != null)
+		{
+			return signingProviderByPem;
+		}
+		throw new ConfigurationException("A signing provider must be set");
+	}
+	
+	private SigningProviderByJks createJksKeyProvider()
+	{
+		final String jksKeystorePassword =
+			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_PASSWORD);
+		final String jksKeystoreFile =
+			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_FILE);
+		if(jksKeystorePassword == null && jksKeystoreFile == null)
+		{
+			return null;
+		}
+		if(jksKeystorePassword != null && jksKeystoreFile != null)
+		{
+			return new SigningProviderByJks(
+				jksKeystoreFile,
+				jksKeystorePassword
+			);
+		}
+		if(jksKeystoreFile == null)
+		{
+			throw new ConfigurationException(
+				"Invalid configuration of JKS Keystore: Keystore password is set, but the keystore file is not.");
+		}
+		throw new ConfigurationException(
+			"Invalid configuration of JKS Keystore: Keystore file is set, but the keystore password is not.");
+	}
+	
+	private SigningProviderByPem createPemKeyProvider()
+	{
+		final String signatureAlgorithm = this.getSetPropertyOrReadFromFile(
+			null,
+			PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_SIGNATURE_ALGORITHM,
+			SigningProviderByPem.DEFAULT_PRIVATE_KEY_ALGORITHM);
+		final String pemCertificateFile =
+			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_CERTIFICATE_FILE);
+		final String pemPrivateKeyFile =
+			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_PRIVATE_KEY_FILE);
+		if(pemCertificateFile == null && pemPrivateKeyFile == null)
+		{
+			return null;
+		}
+		if(pemCertificateFile != null && pemPrivateKeyFile != null)
+		{
+			return new SigningProviderByPem(
+				pemCertificateFile,
+				pemPrivateKeyFile,
+				signatureAlgorithm
+			);
+		}
+		if(pemCertificateFile == null)
+		{
+			throw new ConfigurationException(
+				"Invalid configuration of PEM Signature: The private key is set, but the certificate file is not.");
+		}
+		throw new ConfigurationException(
+			"Invalid configuration of PEM Signature: The certificate file is set, but the private key is not.");
 	}
 	
 	private BzstDipAddressFix getSetPropertyOrReadFromFileAddress(final BzstDipAddressFix builderProperty)

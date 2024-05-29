@@ -13,23 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.exception;
+package software.xdev.bzst.dip.client.signing;
 
-import software.xdev.bzst.dip.client.signing.XmlSigner;
+import java.security.PrivateKey;
+import java.security.cert.X509Certificate;
 
 
-/**
- * Is used while signing HTTP requests in {@link XmlSigner}.
- */
-public class SigningException extends RuntimeException
+public interface SigningProvider
 {
-	public SigningException(final String message)
-	{
-		super(message);
-	}
+	X509Certificate getCertificate();
 	
-	public SigningException(final String message, final Throwable cause)
-	{
-		super(message, cause);
-	}
+	PrivateKey getPrivateKey();
 }
