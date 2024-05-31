@@ -26,7 +26,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.NumberOfActivitiesType;
  * -xml-schema-user-guide-for-tax-administrations.pdf" >Model Rules for Reporting by Digital Platform
  * Operators</a>:<br>
  * <p>
- * The Number of Activities element specified the number of Relevant Activities that a Reportable Seller has provided.
+ * The number of activities element specified the number of relevant activities that a Reportable Seller has provided.
  */
 public class BzstDipNumberOfActivities
 {

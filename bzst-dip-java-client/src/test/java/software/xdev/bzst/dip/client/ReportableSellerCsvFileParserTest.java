@@ -18,13 +18,23 @@ package software.xdev.bzst.dip.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+
+import software.xdev.bzst.dip.client.exception.CsvParseException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
@@ -36,6 +46,11 @@ import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSell
 
 class ReportableSellerCsvFileParserTest
 {
+	public static final String TEST_CSV_FILE = "src/test/resources/TestCsvData.csv";
+	public static final String TEST_CSV_FILE_WITH_COMMA_SEPERATOR =
+		"src/test/resources/TestCsvDataWithCommaSeperator.csv";
+	public static final String TEST_CSV_FILE_WITH_CORRUPTED_DATA =
+		"src/test/resources/TestCsvDataWithCorruptedData.csv";
 	private final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder()
 		.setClientId("TestClient")
 		.setTaxID("86095742719")
@@ -55,12 +70,14 @@ class ReportableSellerCsvFileParserTest
 		.buildAndValidate();
 	
 	@Test
-	void shouldParseSuccessfullyTest() throws IOException
+	void shouldParseSuccessfullyTest() throws IOException, CsvValidationException
 	{
-		final String resourceName = "src/test/resources/TestCsvData.csv";
+		final String resourceName = TEST_CSV_FILE;
+		
+		final String csvData = Files.readString(Path.of(resourceName));
 		
 		final List<CorrectableReportableSellerType> reportableSeller =
-			new ReportableSellerCsvFileParser(this.configuration).parseCsvData(Files.readString(Path.of(resourceName)));
+			new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData);
 		
 		// Check size
 		assertEquals(2, reportableSeller.size());
@@ -77,5 +94,73 @@ class ReportableSellerCsvFileParserTest
 				.get(0)
 				.getFirstName()
 				.getValue());
+	}
+	
+	@Test
+	void parse_commaSeperator_correctConfig() throws IOException, CsvValidationException
+	{
+		final String resourceName = TEST_CSV_FILE_WITH_COMMA_SEPERATOR;
+		
+		final String csvData = Files.readString(Path.of(resourceName));
+		
+		try(final Reader reader = new StringReader(csvData))
+		{
+			final CSVParser parser = new CSVParserBuilder()
+				.withSeparator(',')
+				.withIgnoreQuotations(true)
+				.build();
+			
+			try(
+				final CSVReader csvReader = new CSVReaderBuilder(reader)
+					.withSkipLines(1)
+					.withCSVParser(parser)
+					.build())
+			{
+				final List<CorrectableReportableSellerType> reportableSeller =
+					new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvReader);
+				
+				// Check size
+				assertEquals(2, reportableSeller.size());
+				// Check value
+				assertEquals(
+					"Liselotte",
+					reportableSeller
+						.get(0)
+						.getIdentity()
+						.getIndividualSeller()
+						.getStandard()
+						.getIndSellerID()
+						.getName()
+						.get(0)
+						.getFirstName()
+						.getValue());
+			}
+		}
+	}
+	
+	@Test
+	void parse_commaSeperator_invalidConfig() throws IOException
+	{
+		final String resourceName = TEST_CSV_FILE_WITH_COMMA_SEPERATOR;
+		
+		final String csvData = Files.readString(Path.of(resourceName));
+		
+		Assertions.assertThrows(
+			CsvParseException.class,
+			() ->
+				new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
+	}
+	
+	@Test
+	void parse_invalidFile() throws IOException
+	{
+		final String resourceName = TEST_CSV_FILE_WITH_CORRUPTED_DATA;
+		
+		final String csvData = Files.readString(Path.of(resourceName));
+		
+		Assertions.assertThrows(
+			CsvParseException.class,
+			() ->
+				new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
 }

@@ -21,6 +21,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.opencsv.exceptions.CsvValidationException;
+
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
@@ -73,7 +75,7 @@ public class BzstDipClient
 	 * @return the result which only contains the dataTransferNumber
 	 */
 	public BzstDipSendingResult sendDipOnly(final String csvData)
-		throws HttpStatusCodeNotExceptedException
+		throws HttpStatusCodeNotExceptedException, CsvValidationException, IOException
 	{
 		return this.sendDipOnly(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
