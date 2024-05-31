@@ -93,6 +93,15 @@ public class BzstDipConfiguration
 	 * <p>
 	 * E.g. for the year 2023 this would be {@code LocalDate.of(2023,12,31)}
 	 * </p>
+	 * <p>
+	 *     Date must be in the past or current date.<br>
+	 *     See
+	 *     <a href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/kommunikationshandbuch_dac7_dpi.pdf?__blob=publicationFile&v=9">
+	 *         Kommunikationshandbuch Meldepflichten digitaler Plattformbetreiber (Section 2.2)
+	 *     </a>
+	 *     <i>"Eine Lieferung von Daten zu in der Zukunft liegenden Meldejahren ist nicht möglich, d.h. das
+	 * Kalenderjahr in ReportingPeriod muss kleiner gleich dem aktuellen Kalenderjahr sein.</i>
+	 * </p>
 	 */
 	private final LocalDate reportingPeriod;
 	
@@ -108,8 +117,8 @@ public class BzstDipConfiguration
 	
 
 	/**
-	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/> The id references the xml document
-	 * which is supposed to be overwritten.
+	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/>
+	 * The id references the xml document which is supposed to be overwritten.
 	 */
 	private final String platformOperatorDocRefId;
 	/**

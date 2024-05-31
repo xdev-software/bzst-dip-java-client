@@ -20,7 +20,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
-import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
@@ -364,23 +363,8 @@ public class BzstDipConfigurationBuilder
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM),
 			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress)
 		);
-		this.validateConfiguration(configuration);
+		BzstDipConfigurationValidator.validateConfiguration(configuration);
 		return configuration;
-	}
-	
-	private void validateConfiguration(final BzstDipConfiguration configuration)
-	{
-		if(
-			configuration.getDocType().isNewTransmission()
-				&& (configuration.getPlatformOperatorDocRefId() == null
-				|| configuration.getPlatformOperatorDocRefId().isBlank())
-		)
-		{
-			throw new ConfigurationException(
-				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
-				"When sending a new transmission (OECD_0) a DocRefId must be set!"
-			);
-		}
 	}
 	
 	private Supplier<InputStream> getInputStreamSupplier(
