@@ -50,7 +50,7 @@ public class ConfigurationTestUtil
 	{
 		return new BzstDipConfigurationBuilder()
 			.setClientId("TestClient")
-			.setTaxID("123")
+			.setTaxID("86095742719")
 			.setTaxNumber("123")
 			.setSigningProvider(new SigningProviderByPem("DemoKey.pem", "DemoCert.pem"))
 			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)

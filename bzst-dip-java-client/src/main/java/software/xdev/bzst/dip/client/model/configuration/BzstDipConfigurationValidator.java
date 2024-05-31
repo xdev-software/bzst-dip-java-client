@@ -26,9 +26,6 @@ public class BzstDipConfigurationValidator
 	public static void validateConfiguration(final BzstDipConfiguration configuration)
 	{
 		checkForNullOrBlank(
-			PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
-			configuration.getCertificateKeystorePassword());
-		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_CLIENT_ID, configuration.getClientId());
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_TAX_ID, configuration.getTaxID());
@@ -40,7 +37,6 @@ public class BzstDipConfigurationValidator
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_ENVIRONMENT, configuration.getEnvironment());
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC, configuration.getMessageTypeIndic());
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC, configuration.getDocType());
-		checkForNull("certificate keystore input", configuration.getCertificateKeystoreInputStream());
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_ORGANIZATION,
 			configuration.getPlatformOperatorOrganizationName());

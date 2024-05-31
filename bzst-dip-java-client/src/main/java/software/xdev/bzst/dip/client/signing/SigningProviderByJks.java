@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.slf4j.Logger;
@@ -49,6 +50,7 @@ public class SigningProviderByJks implements SigningProvider
 			() -> ClassLoader.getSystemClassLoader().getResourceAsStream(certificateKeystorePath),
 			certificateKeystorePassword
 		);
+		Objects.requireNonNull(certificateKeystorePath);
 	}
 	
 	public SigningProviderByJks(
@@ -56,8 +58,8 @@ public class SigningProviderByJks implements SigningProvider
 		final String certificateKeystorePassword
 	)
 	{
-		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
-		this.certificateKeystorePassword = certificateKeystorePassword;
+		this.certificateKeystoreInputStream = Objects.requireNonNull(certificateKeystoreInputStream);
+		this.certificateKeystorePassword = Objects.requireNonNull(certificateKeystorePassword);
 	}
 	
 	@Override

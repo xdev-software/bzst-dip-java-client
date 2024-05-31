@@ -24,6 +24,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.apache.hc.client5.http.utils.Base64;
@@ -72,6 +73,9 @@ public class SigningProviderByPem implements SigningProvider
 			() -> ClassLoader.getSystemClassLoader().getResourceAsStream(privateKeyPemFilePath),
 			privateKeyAlgorithm
 		);
+		Objects.requireNonNull(certificatePemFilePath);
+		Objects.requireNonNull(privateKeyPemFilePath);
+		Objects.requireNonNull(privateKeyAlgorithm);
 	}
 	
 	/**
@@ -94,9 +98,9 @@ public class SigningProviderByPem implements SigningProvider
 		final Supplier<InputStream> privateKeyPemInputStream,
 		final String privateKeyAlgorithm)
 	{
-		this.certificatePemInputStream = certificatePemInputStream;
-		this.privateKeyPemInputStream = privateKeyPemInputStream;
-		this.privateKeyAlgorithm = privateKeyAlgorithm;
+		this.certificatePemInputStream = Objects.requireNonNull(certificatePemInputStream);
+		this.privateKeyPemInputStream = Objects.requireNonNull(privateKeyPemInputStream);
+		this.privateKeyAlgorithm = Objects.requireNonNull(privateKeyAlgorithm);
 	}
 	
 	@Override
