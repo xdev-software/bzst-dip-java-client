@@ -51,7 +51,7 @@ public final class Application
 	{
 		return new BzstDipConfigurationBuilder()
 			.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
-			.setTaxID("123")
+			.setTaxID("86095742719")
 			.setTaxNumber("123")
 			.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)

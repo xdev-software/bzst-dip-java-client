@@ -51,19 +51,19 @@ public final class ReportableSellerCsvFileParser
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCsvFileParser.class);
 	private static final String DELIMITER = ";";
+	private final BzstDipConfiguration configuration;
 	
-	private ReportableSellerCsvFileParser()
+	public ReportableSellerCsvFileParser(final BzstDipConfiguration configuration)
 	{
+		this.configuration = configuration;
 	}
 	
-	public static List<CorrectableReportableSellerType> parseCsvData(
-		final String csvData,
-		final BzstDipConfiguration configuration)
+	public List<CorrectableReportableSellerType> parseCsvData(final String csvData)
 	{
-		return parseReportableSeller(readCSVFile(csvData), configuration);
+		return this.parseReportableSeller(this.readCSVFile(csvData));
 	}
 	
-	private static List<List<String>> readCSVFile(final String csvData)
+	private List<List<String>> readCSVFile(final String csvData)
 	{
 		final List<List<String>> records = new ArrayList<>();
 		
@@ -96,13 +96,11 @@ public final class ReportableSellerCsvFileParser
 	}
 	
 	@SuppressWarnings("checkstyle:MagicNumber")
-	private static List<CorrectableReportableSellerType> parseReportableSeller(
-		final List<List<String>> data,
-		final BzstDipConfiguration configuration)
+	private List<CorrectableReportableSellerType> parseReportableSeller(final List<List<String>> data)
 	{
 		final List<CorrectableReportableSellerType> reportableSeller = new ArrayList<>();
 		final ReportableSellerCreator xmlDocBodyReportableSeller = new ReportableSellerCreator(
-			configuration);
+			this.configuration);
 		
 		LOGGER.debug("Looping through data now...");
 		for(final List<String> list : data.stream().skip(1).toList())
@@ -111,7 +109,7 @@ public final class ReportableSellerCsvFileParser
 					// Ansässigkeitsstaat
 					CountryCodeType.valueOf(list.get(0)),
 					// Steuer-ID & Issued by
-				ReportableSellerCsvFileParser.createTIN(
+				this.createTIN(
 						list.get(1),
 						CountryCodeType.valueOf(list.get(2))),
 					// Handelsregisternummer
@@ -125,32 +123,32 @@ public final class ReportableSellerCsvFileParser
 					// Birthdate
 					list.get(7),
 					// AddressType
-				ReportableSellerCsvFileParser.createAddressType(list.get(8)),
+				this.createAddressType(list.get(8)),
 					// Address with city
-				ReportableSellerCsvFileParser.createAddressFixForReportableSeller(list.get(9)),
-				ReportableSellerCsvFileParser.createNumberOfActivities(
+				this.createAddressFixForReportableSeller(list.get(9)),
+				this.createNumberOfActivities(
 						new BigInteger(list.get(10)),
 						new BigInteger(list.get(11)),
 						new BigInteger(list.get(12)),
 						new BigInteger(list.get(13))
 					),
-				ReportableSellerCsvFileParser.createConsiderationType(
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(14))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(15))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(16))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(17)))
+				this.createConsiderationType(
+					this.createMonAmntType(new BigInteger(list.get(14))),
+					this.createMonAmntType(new BigInteger(list.get(15))),
+					this.createMonAmntType(new BigInteger(list.get(16))),
+					this.createMonAmntType(new BigInteger(list.get(17)))
 					),
-				ReportableSellerCsvFileParser.createFeesType(
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(18))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(19))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(20))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(21)))
+				this.createFeesType(
+					this.createMonAmntType(new BigInteger(list.get(18))),
+					this.createMonAmntType(new BigInteger(list.get(19))),
+					this.createMonAmntType(new BigInteger(list.get(20))),
+					this.createMonAmntType(new BigInteger(list.get(21)))
 					),
-				ReportableSellerCsvFileParser.createTaxesType(
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(22))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(23))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(24))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(25)))
+				this.createTaxesType(
+					this.createMonAmntType(new BigInteger(list.get(22))),
+					this.createMonAmntType(new BigInteger(list.get(23))),
+					this.createMonAmntType(new BigInteger(list.get(24))),
+					this.createMonAmntType(new BigInteger(list.get(25)))
 					),
 					// Split Betriebsstättenstaaten
 					list.get(26),
@@ -162,7 +160,7 @@ public final class ReportableSellerCsvFileParser
 		return reportableSeller;
 	}
 	
-	public static TINType createTIN(final String tin, final CountryCodeType issuedBy)
+	public TINType createTIN(final String tin, final CountryCodeType issuedBy)
 	{
 		final TINType tinType = new TINType();
 		tinType.setIssuedBy(issuedBy);
@@ -171,7 +169,7 @@ public final class ReportableSellerCsvFileParser
 		return tinType;
 	}
 	
-	private static OECDLegalAddressTypeEnumType createAddressType(final String addressType)
+	private OECDLegalAddressTypeEnumType createAddressType(final String addressType)
 	{
 		
 		return switch(addressType)
@@ -184,14 +182,14 @@ public final class ReportableSellerCsvFileParser
 		};
 	}
 	
-	private static AddressFixType createAddressFixForReportableSeller(final String city)
+	private AddressFixType createAddressFixForReportableSeller(final String city)
 	{
 		final AddressFixType addressFixType = new AddressFixType();
 		addressFixType.setCity(city);
 		return addressFixType;
 	}
 	
-	private static MonAmntType createMonAmntType(final BigInteger value)
+	private MonAmntType createMonAmntType(final BigInteger value)
 	{
 		final MonAmntType monAmntType = new MonAmntType();
 		monAmntType.setCurrCode(CurrCodeType.EUR);
@@ -200,7 +198,7 @@ public final class ReportableSellerCsvFileParser
 		return monAmntType;
 	}
 	
-	private static NumberOfActivitiesType createNumberOfActivities(
+	private NumberOfActivitiesType createNumberOfActivities(
 		final BigInteger numberOfActivitiesQ1,
 		final BigInteger numberOfActivitiesQ2,
 		final BigInteger numberOfActivitiesQ3,
@@ -215,7 +213,7 @@ public final class ReportableSellerCsvFileParser
 		return numberOfActivitiesType;
 	}
 	
-	private static TaxesType createTaxesType(
+	private TaxesType createTaxesType(
 		final MonAmntType taxQ1,
 		final MonAmntType taxQ2,
 		final MonAmntType taxQ3,
@@ -231,7 +229,7 @@ public final class ReportableSellerCsvFileParser
 		return taxesType;
 	}
 	
-	private static FeesType createFeesType(
+	private FeesType createFeesType(
 		final MonAmntType feesQ1,
 		final MonAmntType feesQ2,
 		final MonAmntType feesQ3,
@@ -247,7 +245,7 @@ public final class ReportableSellerCsvFileParser
 		return feesType;
 	}
 	
-	private static ConsiderationType createConsiderationType(
+	private ConsiderationType createConsiderationType(
 		final MonAmntType consQ1,
 		final MonAmntType consQ2,
 		final MonAmntType consQ3,

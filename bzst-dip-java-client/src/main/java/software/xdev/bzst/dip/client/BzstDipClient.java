@@ -93,7 +93,7 @@ public class BzstDipClient
 	 */
 	public BzstDipSendingResult sendDipOnly(final String csvData)
 	{
-		return this.sendDipOnly(ReportableSellerCsvFileParser.parseCsvData(csvData, this.configuration));
+		return this.sendDipOnly(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class BzstDipClient
 	public BzstDipCompleteResult sendDipAndQueryResult(final String csvData)
 		throws InterruptedException, IOException
 	{
-		return this.sendDipAndQueryResult(ReportableSellerCsvFileParser.parseCsvData(csvData, this.configuration));
+		return this.sendDipAndQueryResult(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
 	
 	/**
@@ -268,7 +268,10 @@ public class BzstDipClient
 		{
 			if(retryCounter != 0)
 			{
-				Thread.sleep(this.configuration.getQueryResultConfiguration().delayInBetweenResultChecks().toMillis());
+				final long delayInMilliseconds =
+					this.configuration.getQueryResultConfiguration().delayInBetweenResultChecks().toMillis();
+				LOGGER.debug("Waiting {}ms for next query...", delayInMilliseconds);
+				Thread.sleep(delayInMilliseconds);
 			}
 			requestStatusResult = this.webClient.readAndConfirmDataTransferNumbers();
 			retryCounter++;

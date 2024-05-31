@@ -344,7 +344,7 @@ public class BzstDipConfigurationBuilder
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM),
 			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress)
 		);
-		this.validateConfiguration(configuration);
+		BzstDipConfigurationValidator.validateConfiguration(configuration);
 		return configuration;
 	}
 	
