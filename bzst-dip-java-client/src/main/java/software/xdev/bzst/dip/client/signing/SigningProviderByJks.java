@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
 import software.xdev.bzst.dip.client.exception.SigningException;
 
 
+/**
+ * Provides a certificate and a private key to use in the {@link XmlSigner} by reading the JKS-Keystore and a password.
+ */
 public class SigningProviderByJks implements SigningProvider
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SigningProviderByJks.class);

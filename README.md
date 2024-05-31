@@ -64,7 +64,20 @@ OpenSSL can be downloaded from the [website](https://www.openssl.org/).
 openssl req -newkey rsa-pss -new -nodes -x509 -days 3650 -pkeyopt rsa_keygen_bits:4096 -sigopt rsa_pss_saltlen:32 -keyout key.pem -out cert.pem
 ```
 
-Next you have to convert that file to a **PKCS12** file.
+You also have to set the public key in the [BZST online.portal](https://online.portal.bzst.de/).
+Exporting the public key with OpenSSL is easy:
+
+```
+openssl rsa -in key.pem -pubout > publicKey.pub
+```
+
+Now you can already use these two files to sign your requests. See
+the [example with PEM signing](./bzst-dip-java-client-demo\src\main\java\software\xdev\ApplicationWithPem.java).
+
+### Create Java KeyStore (JKS)
+
+If you want to go one step further you can use the Java KeyStore. Then you have to convert the `cert.pem` file to a *
+*PKCS12** file.
 
 ```
 openssl pkcs12 -export -in cert.pem -inkey key.pem -out certificate.p12 -name "certificate"
@@ -83,13 +96,6 @@ at [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.propertie
 ```
 certificate.keystore.password=SECRET_PASSWORD
 certificate.keystore.file=cert.jks
-```
-
-You also have to set the public key in the [BZST online.portal](https://online.portal.bzst.de/).
-Exporting the public key with OpenSSL is easy:
-
-```
-openssl rsa -in key.pem -pubout > publicKey.pub
 ```
 
 ### Client ID
@@ -117,9 +123,7 @@ public static BzstDipConfiguration createConfiguration()
 		.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 		.setTaxID("123")
 		.setTaxNumber("123")
-		.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-			.getResourceAsStream("DemoKeystore.jks"))
-		.setCertificateKeystorePassword("test123")
+		.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 		.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 		.setReportingPeriod(LocalDate.now())

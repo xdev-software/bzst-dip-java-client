@@ -19,6 +19,9 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 
 
+/**
+ * Provides a certificate and a private key to use in the {@link XmlSigner}.
+ */
 public interface SigningProvider
 {
 	X509Certificate getCertificate();

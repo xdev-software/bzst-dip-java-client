@@ -17,7 +17,7 @@ package software.xdev.bzst.dip.client.signing;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
@@ -31,6 +31,12 @@ import org.apache.hc.client5.http.utils.Base64;
 import software.xdev.bzst.dip.client.exception.SigningException;
 
 
+/**
+ * Provides a certificate and a private key to use in the {@link XmlSigner} by reading two PEM files.
+ * <p>
+ * Default algorithm while reading the private key is {@link DEFAULT_PRIVATE_KEY_ALGORITHM}.
+ * </p>
+ */
 public class SigningProviderByPem implements SigningProvider
 {
 	public static final String DEFAULT_PRIVATE_KEY_ALGORITHM = "RSASSA-PSS";
@@ -40,6 +46,9 @@ public class SigningProviderByPem implements SigningProvider
 	private X509Certificate certificate;
 	private PrivateKey privateKey;
 	
+	/**
+	 * Uses the default algorithm while reading the private key: {@link DEFAULT_PRIVATE_KEY_ALGORITHM}.
+	 */
 	public SigningProviderByPem(
 		final String certificatePemFilePath,
 		final String privateKeyPemFilePath
@@ -65,6 +74,9 @@ public class SigningProviderByPem implements SigningProvider
 		);
 	}
 	
+	/**
+	 * Uses the default algorithm while reading the private key: {@link DEFAULT_PRIVATE_KEY_ALGORITHM}.
+	 */
 	public SigningProviderByPem(
 		final Supplier<InputStream> certificatePemInputStream,
 		final Supplier<InputStream> privateKeyPemInputStream
@@ -139,7 +151,7 @@ public class SigningProviderByPem implements SigningProvider
 	
 	private PrivateKey readPrivateKey(final InputStream privateKeyInputStream) throws Exception
 	{
-		final String key = new String(privateKeyInputStream.readAllBytes(), Charset.defaultCharset());
+		final String key = new String(privateKeyInputStream.readAllBytes(), StandardCharsets.UTF_8);
 		
 		final String privateKeyPEM = key
 			.replace("-----BEGIN PRIVATE KEY-----", "")
