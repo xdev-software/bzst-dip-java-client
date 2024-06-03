@@ -44,6 +44,7 @@ import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
+@SuppressWarnings("MethodName")
 class ReportableSellerCsvFileParserTest
 {
 	public static final String TEST_CSV_FILE = "src/test/resources/TestCsvData.csv";
