@@ -45,7 +45,7 @@ request through these XSD find errors before they are sent to the DIP.
 
 ## Usage
 
-See the [examples in the demo package](./src/main/java/software/demo/bzst/dip/client/demo).
+See the [examples in the demo package](./bzst-dip-java-client-demo/src/main/java/software/xdev/).
 
 ### Create keystore file
 
@@ -103,9 +103,9 @@ client.id=abcd1234-ab12-ab12-ab12-abcdef123456
 
 The client can be configured through a properties file (
 see [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties)
-and [ApplicationWithConfigurationFromProperties.java](./bzst-dip-java-client-demo/src/main/java/software/demo/bzst/dip/client/demo/ApplicationWithConfigurationFromProperties.java))
+and [ApplicationWithConfigurationFromProperties.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithConfigurationFromProperties.java))
 or by creating a configuration object (
-see [Application.java](./bzst-dip-java-client-demo/src/main/java/software/demo/bzst/dip/client/demo/Application.java)).
+see [Application.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/Application.java)).
 
 ```java
 public static BzstDipConfiguration createConfiguration()
