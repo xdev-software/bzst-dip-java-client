@@ -24,6 +24,7 @@ import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
 
 
+@SuppressWarnings("MethodName")
 class BzstDipConfigurationBuilderTest
 {
 	

@@ -27,7 +27,7 @@ import software.xdev.bzst.dip.client.exception.TaxNumberException;
 /**
  * Checks if a taxNumber is valid.
  */
-public class TaxNumberValidator
+public final class TaxNumberValidator
 {
 	/**
 	 * Absolute length of the entire IdNr.
@@ -46,6 +46,9 @@ public class TaxNumberValidator
 	public static final int IDNR_CHECKSUM_LENGTH = 1;
 	
 	private static final Pattern PATTERN_3_DIGITS_SEQUENCE = Pattern.compile("(.)\\1\\1");
+	public static final int SIZE_FOR_TRIPLETS_ALLOWED = 8;
+	public static final int SIZE_FOR_DOUBLET_ALLOWED = 9;
+	public static final int SIZE_NOT_ALLOWED = 10;
 	
 	private TaxNumberValidator()
 	{
@@ -56,8 +59,6 @@ public class TaxNumberValidator
 	 * according to the <a
 	 * href="https://download.elster.de/download/schnittstellen/Pruefung_der_Steuer_und_Steueridentifikatsnummer.pdf">
 	 * Elster - Prüfung der Steuer- und Steueridentifikationsnummer sowie der Ordnungskriterien bei der Grundsteuer</a>
-	 *
-	 * @param taxNumber
 	 */
 	public static void validateTaxNumber(final String taxNumber)
 	{
@@ -92,7 +93,7 @@ public class TaxNumberValidator
 		}
 	}
 	
-	/*
+	/**
 	 * Validates the "number" part of the IdNr (digits 1 to 10). Returns
 	 * all validation errors found.
 	 */
@@ -123,21 +124,21 @@ public class TaxNumberValidator
 		
 		switch(digits.size())
 		{
-			case 8:
+			case SIZE_FOR_TRIPLETS_ALLOWED:
 				// only one triple allowed, causing lack of two other digits
 				if(digits.values().stream().filter(d -> d == 3).count() != 1)
 				{
 					return false;
 				}
 				break;
-			case 9:
+			case SIZE_FOR_DOUBLET_ALLOWED:
 				// only one double allowed, causing lack of one other digits
 				if(digits.values().stream().filter(d -> d == 2).count() != 1)
 				{
 					return false;
 				}
 				break;
-			case 10:
+			case SIZE_NOT_ALLOWED:
 				// no double or triple, not okay
 				return false;
 			default:
@@ -147,7 +148,7 @@ public class TaxNumberValidator
 		return true;
 	}
 	
-	/*
+	/**
 	 * Computes the check digit of the given "number" part of the IdNr and
 	 * compares it to the given one.
 	 */
@@ -170,7 +171,7 @@ public class TaxNumberValidator
 				return product;
 			});
 		
-		final int computedChecksum = (IDNR_LENGTH - p) % 10;
+		final int computedChecksum = (IDNR_LENGTH - p) % SIZE_NOT_ALLOWED;
 		
 		return computedChecksum == idnrCheckDigit;
 	}
