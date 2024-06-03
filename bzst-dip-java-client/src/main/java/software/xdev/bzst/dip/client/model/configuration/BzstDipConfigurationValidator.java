@@ -21,8 +21,12 @@ import java.time.LocalDate;
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 
 
-public class BzstDipConfigurationValidator
+public final class BzstDipConfigurationValidator
 {
+	private BzstDipConfigurationValidator()
+	{
+	}
+	
 	public static void validateConfiguration(final BzstDipConfiguration configuration)
 	{
 		checkForNullOrBlank(
