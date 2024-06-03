@@ -161,7 +161,6 @@ public class XMLDocumentBodyCreator
 		final TINType tinType = new TINType();
 		tinType.setIssuedBy(CountryCodeType.DE);
 		
-		// Steuer-ID
 		tinType.setValue(configuration.getTaxID());
 		correctablePlatformOperatorType.getTIN().add(tinType);
 		

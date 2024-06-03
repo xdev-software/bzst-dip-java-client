@@ -1,4 +1,4 @@
-package software.demo.bzst.dip.client.demo;
+package software.xdev;
 
 import java.io.IOException;
 

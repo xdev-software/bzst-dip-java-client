@@ -21,27 +21,27 @@ import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
+
+/**
+ * Creates a preconfigured {@link SchemaFactory}.
+ */
 public final class SchemaFactoryExtension
 {
     private SchemaFactoryExtension()
     {
     }
-
-    public static SchemaFactory newInstance()
+    
+    /**
+     * @return a preconfigured {@link SchemaFactory} that accesses no external DTD and schema for validation.
+     */
+    public static SchemaFactory newInstance() throws SAXNotSupportedException, SAXNotRecognizedException
     {
-        try
-        {
-            final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            schemaFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            schemaFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-
-            return schemaFactory;
-        }
-        catch (final SAXNotSupportedException | SAXNotRecognizedException e)
-        {
-            throw new RuntimeException("Something wrong happened while configuring DocumentBuilderFactory.", e);
-        }
+        final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        schemaFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        schemaFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+        
+        return schemaFactory;
     }
 }

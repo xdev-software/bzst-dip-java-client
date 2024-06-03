@@ -15,21 +15,17 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
-import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import java.io.IOException;
 
 
-/**
- * Is used for exception that occur during encryption in
- * {@link software.xdev.bzst.dip.client.util.WebClientUtil#createRequestToken(BzstDipConfiguration)}.
- */
-public class EncryptionException extends RuntimeException
+public class CsvParseException extends IOException
 {
-	public EncryptionException(final String message)
+	public CsvParseException(final String message)
 	{
 		super(message);
 	}
 	
-	public EncryptionException(final String message, final Throwable cause)
+	public CsvParseException(final String message, final Throwable cause)
 	{
 		super(message, cause);
 	}

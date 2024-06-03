@@ -9,8 +9,6 @@
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<inceptionYear>2024</inceptionYear>
-
 	<organization>
 		<name>XDEV Software</name>
 		<url>https://xdev.software</url>
@@ -97,11 +95,12 @@
 							<dependency>
 								<groupId>com.puppycrawl.tools</groupId>
 								<artifactId>checkstyle</artifactId>
-								<version>10.14.2</version>
+								<version>10.17.0</version>
 							</dependency>
 						</dependencies>
 						<configuration>
 							<configLocation>../.config/checkstyle/checkstyle.xml</configLocation>
+							<includeTestSourceDirectory>true</includeTestSourceDirectory>
 						</configuration>
 						<executions>
 							<execution>

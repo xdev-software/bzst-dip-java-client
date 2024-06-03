@@ -1,4 +1,4 @@
-package software.demo.bzst.dip.client.demo;
+package software.xdev;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -51,7 +51,7 @@ public final class Application
 	{
 		return new BzstDipConfigurationBuilder()
 			.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
-			.setTaxID("123")
+			.setTaxID("86095742719")
 			.setTaxNumber("123")
 			.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
 				.getResourceAsStream("DemoKeystore.jks"))

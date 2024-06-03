@@ -15,22 +15,14 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
-import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-
-
 /**
- * Is used for exception that occur during encryption in
- * {@link software.xdev.bzst.dip.client.util.WebClientUtil#createRequestToken(BzstDipConfiguration)}.
+ * Is used for exceptions that occur during configuration with the
+ * {@link software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder} or something similar.
  */
-public class EncryptionException extends RuntimeException
+public class TaxNumberException extends ConfigurationException
 {
-	public EncryptionException(final String message)
+	public TaxNumberException(final String taxNumber)
 	{
-		super(message);
-	}
-	
-	public EncryptionException(final String message, final Throwable cause)
-	{
-		super(message, cause);
+		super("The taxnumber (Steueridentifikationsnummer) is not valid!");
 	}
 }

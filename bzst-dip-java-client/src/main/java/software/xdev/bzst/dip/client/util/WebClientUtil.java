@@ -41,11 +41,13 @@ import org.xml.sax.SAXException;
 
 import io.jsonwebtoken.Jwts;
 import software.xdev.bzst.dip.client.exception.EncryptionException;
-import software.xdev.bzst.dip.client.exception.SigningException;
 import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryNoExternalEntities;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
+/**
+ * Helps in communicating as web client.
+ */
 public final class WebClientUtil
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebClientUtil.class);
@@ -66,11 +68,6 @@ public final class WebClientUtil
 				configuration.getCertificateKeystorePassword(),
 				SigningUtil.KEYSTORE_TYPE
 			);
-			
-			if(privateKeyEntry == null)
-			{
-				throw new SigningException("The private key entry in the keystore is null.");
-			}
 			
 			final PrivateKey privateKey = privateKeyEntry.getPrivateKey();
 			final String clientId = configuration.getClientId();

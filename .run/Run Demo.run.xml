@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run Demo" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="software.demo.bzst.dip.client.demo.Application" />
+    <option name="MAIN_CLASS_NAME" value="software.xdev.Application" />
     <module name="bzst-dip-java-client-demo" />
     <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
     <extension name="coverage">

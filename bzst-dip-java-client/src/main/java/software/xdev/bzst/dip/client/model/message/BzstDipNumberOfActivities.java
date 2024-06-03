@@ -20,6 +20,14 @@ import java.math.BigInteger;
 import software.xdev.bzst.dip.client.xmldocument.model.NumberOfActivitiesType;
 
 
+/**
+ * From <a
+ * href="https://www.oecd.org/tax/exchange-of-tax-information/model-rules-for-reporting-by-digital-platform-operators
+ * -xml-schema-user-guide-for-tax-administrations.pdf" >Model Rules for Reporting by Digital Platform
+ * Operators</a>:<br>
+ * <p>
+ * The number of activities element specified the number of relevant activities that a Reportable Seller has provided.
+ */
 public class BzstDipNumberOfActivities
 {
 	private final BigInteger numberQuarter1;

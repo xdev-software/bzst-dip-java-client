@@ -20,9 +20,14 @@ import java.math.BigInteger;
 import software.xdev.bzst.dip.client.xmldocument.model.MonAmntType;
 
 
+/**
+ * From <a
+ * href="https://www.oecd.org/tax/exchange-of-tax-information/model-rules-for-reporting-by-digital-platform-operators
+ * -xml-schema-user-guide-for-tax-administrations.pdf" >Model Rules for Reporting by Digital Platform Operators</a>:<br>
+ * Amounts shall be given in full units, i.e. without decimals
+ */
 public class BzstDipMonetaryAmount
 {
-	
 	private final BigInteger amount;
 	private final BzstDipCurrency currencyCode;
 	

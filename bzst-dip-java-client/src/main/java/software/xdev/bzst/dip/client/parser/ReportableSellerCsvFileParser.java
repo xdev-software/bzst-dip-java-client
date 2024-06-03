@@ -15,17 +15,23 @@
  */
 package software.xdev.bzst.dip.client.parser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+
+import software.xdev.bzst.dip.client.exception.CsvParseException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.ReportableSellerCreator;
 import software.xdev.bzst.dip.client.xmldocument.model.AddressFixType;
@@ -41,114 +47,189 @@ import software.xdev.bzst.dip.client.xmldocument.model.TINType;
 import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 
 
+/**
+ * Parses CSV files in a very specific way and creates {@link CorrectableReportableSellerType}s from it.
+ * <p>
+ * See {@code test/resources/TestCsvData.csv}
+ * </p>
+ * If the CSV data is formatted differently, it is also possible to parse the data through a {@link CSVReader}, see
+ * {@link #parseCsvData(CSVReader)}. The data must be in the following order:
+ * <ol>
+ *     <li>{@link CountryCodeType}</li>
+ *     <li>TIN</li>
+ *     <li>TIN Issued by</li>
+ *     <li>Handelsregisternummer</li>
+ *     <li>VAT</li>
+ *     <li>First name</li>
+ *     <li>Last name</li>
+ *     <li>Birthdate</li>
+ *     <li>AddressType</li>
+ *     <li>Address with city</li>
+ *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     1st quarter</li>
+ *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     2nd quarter</li>
+ *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     3rd quarter</li>
+ *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     4th quarter</li>
+ *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     1st quarter</li>
+ *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     2nd quarter</li>
+ *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     3rd quarter</li>
+ *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     4th quarter</li>
+ *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     1st quarter</li>
+ *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     2nd quarter</li>
+ *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     3rd quarter</li>
+ *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     4th quarter</li>
+ *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     1st quarter</li>
+ *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     2nd quarter</li>
+ *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     3rd quarter</li>
+ *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     4th quarter</li>
+ *     <li>Permanent establishments</li>
+ *     <li>docRefUUID</li>
+ * </ol>
+ */
 public final class ReportableSellerCsvFileParser
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCsvFileParser.class);
-	private static final String DELIMITER = ";";
+	private static final char DEFAULT_DELIMITER = ';';
+	public static final int MAX_INDEX_IN_SINGLE_LINE = 28;
+	private final BzstDipConfiguration configuration;
 	
-	private ReportableSellerCsvFileParser()
+	public ReportableSellerCsvFileParser(final BzstDipConfiguration configuration)
 	{
+		this.configuration = configuration;
 	}
 	
-	public static List<CorrectableReportableSellerType> parseCsvData(
-		final String csvData,
-		final BzstDipConfiguration configuration)
+	public List<CorrectableReportableSellerType> parseCsvData(final String csvData)
+		throws CsvParseException
 	{
-		return parseReportableSeller(readCSVFile(csvData), configuration);
-	}
-	
-	private static List<List<String>> readCSVFile(final String csvData)
-	{
-		final List<List<String>> records = new ArrayList<>();
-		
-		try(final StringReader stringReader = new StringReader(csvData))
+		try(final Reader reader = new StringReader(csvData))
 		{
-			final BufferedReader br = new BufferedReader(stringReader);
+			final CSVParser parser = new CSVParserBuilder()
+				.withSeparator(DEFAULT_DELIMITER)
+				.withIgnoreQuotations(true)
+				.build();
 			
-			String line;
-			String[] st;
-			
-			while((line = br.readLine()) != null)
+			try(
+				final CSVReader csvReader = new CSVReaderBuilder(reader)
+					.withSkipLines(1)
+					.withCSVParser(parser)
+					.build())
 			{
-				st = line.split(DELIMITER);
-				
-				records.add(Arrays.asList(st));
+				return this.parseCsvData(csvReader);
 			}
-			
-			return records;
 		}
-		catch(final IOException e)
+		catch(final Exception e)
 		{
-			LOGGER.error("Error occurred while reading the csv file.", e);
+			throw new CsvParseException("Could not parse CSV data.", e);
 		}
-		catch(final RuntimeException e)
+	}
+	
+	public List<CorrectableReportableSellerType> parseCsvData(final CSVReader csvReader)
+		throws CsvParseException
+	{
+		try
 		{
-			LOGGER.error("There is a null value in the csv file.", e);
+			return this.parseReportableSeller(this.readCSVFile(csvReader));
 		}
+		catch(final Exception e)
+		{
+			throw new CsvParseException("Could not parse CSV data.", e);
+		}
+	}
+	
+	private List<String[]> readCSVFile(final CSVReader csvReader) throws IOException, CsvValidationException
+	{
+		final List<String[]> records = new ArrayList<>();
 		
+		String[] line;
+		while((line = csvReader.readNext()) != null)
+		{
+			records.add(line);
+		}
 		return records;
 	}
 	
 	@SuppressWarnings("checkstyle:MagicNumber")
-	private static List<CorrectableReportableSellerType> parseReportableSeller(
-		final List<List<String>> data,
-		final BzstDipConfiguration configuration)
+	private List<CorrectableReportableSellerType> parseReportableSeller(final List<String[]> data)
+		throws CsvParseException
 	{
 		final List<CorrectableReportableSellerType> reportableSeller = new ArrayList<>();
 		final ReportableSellerCreator xmlDocBodyReportableSeller = new ReportableSellerCreator(
-			configuration);
+			this.configuration);
 		
 		LOGGER.debug("Looping through data now...");
-		for(final List<String> list : data.stream().skip(1).toList())
+		for(int lineIndex = 0; lineIndex < data.size(); lineIndex++)
 		{
+			final String[] lineData = data.get(lineIndex);
+			if(lineData.length != MAX_INDEX_IN_SINGLE_LINE)
+			{
+				throw new CsvParseException("Length of line %d is %d and not %d. Therefore it is not valid.".formatted(
+					lineIndex,
+					lineData.length,
+					MAX_INDEX_IN_SINGLE_LINE));
+			}
 			reportableSeller.add(xmlDocBodyReportableSeller.createReportableSeller(
 					// Ansässigkeitsstaat
-					CountryCodeType.valueOf(list.get(0)),
+				CountryCodeType.valueOf(lineData[0]),
 					// Steuer-ID & Issued by
-				ReportableSellerCsvFileParser.createTIN(
-						list.get(1),
-						CountryCodeType.valueOf(list.get(2))),
+				this.createTIN(
+					lineData[1],
+					CountryCodeType.valueOf(lineData[2])),
 					// Handelsregisternummer
-					list.get(3),
+				lineData[3],
 					// VAT
-					list.get(4),
+				lineData[4],
 					// First name
-					list.get(5),
+				lineData[5],
 					// Last name
-					list.get(6),
+				lineData[6],
 					// Birthdate
-					list.get(7),
+				lineData[7],
 					// AddressType
-				ReportableSellerCsvFileParser.createAddressType(list.get(8)),
+				this.createAddressType(lineData[8]),
 					// Address with city
-				ReportableSellerCsvFileParser.createAddressFixForReportableSeller(list.get(9)),
-				ReportableSellerCsvFileParser.createNumberOfActivities(
-						new BigInteger(list.get(10)),
-						new BigInteger(list.get(11)),
-						new BigInteger(list.get(12)),
-						new BigInteger(list.get(13))
+				this.createAddressFixForReportableSeller(lineData[9]),
+				this.createNumberOfActivities(
+					new BigInteger(lineData[10]),
+					new BigInteger(lineData[11]),
+					new BigInteger(lineData[12]),
+					new BigInteger(lineData[13])
 					),
-				ReportableSellerCsvFileParser.createConsiderationType(
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(14))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(15))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(16))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(17)))
+				this.createConsiderationType(
+					this.createMonAmntType(new BigInteger(lineData[14])),
+					this.createMonAmntType(new BigInteger(lineData[15])),
+					this.createMonAmntType(new BigInteger(lineData[16])),
+					this.createMonAmntType(new BigInteger(lineData[17]))
 					),
-				ReportableSellerCsvFileParser.createFeesType(
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(18))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(19))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(20))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(21)))
+				this.createFeesType(
+					this.createMonAmntType(new BigInteger(lineData[18])),
+					this.createMonAmntType(new BigInteger(lineData[19])),
+					this.createMonAmntType(new BigInteger(lineData[20])),
+					this.createMonAmntType(new BigInteger(lineData[21]))
 					),
-				ReportableSellerCsvFileParser.createTaxesType(
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(22))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(23))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(24))),
-					ReportableSellerCsvFileParser.createMonAmntType(new BigInteger(list.get(25)))
+				this.createTaxesType(
+					this.createMonAmntType(new BigInteger(lineData[22])),
+					this.createMonAmntType(new BigInteger(lineData[23])),
+					this.createMonAmntType(new BigInteger(lineData[24])),
+					this.createMonAmntType(new BigInteger(lineData[25]))
 					),
 					// Split Betriebsstättenstaaten
-					list.get(26),
-					list.get(27)
+				lineData[26],
+				lineData[27]
 				)
 			);
 		}
@@ -156,7 +237,7 @@ public final class ReportableSellerCsvFileParser
 		return reportableSeller;
 	}
 	
-	public static TINType createTIN(final String tin, final CountryCodeType issuedBy)
+	public TINType createTIN(final String tin, final CountryCodeType issuedBy)
 	{
 		final TINType tinType = new TINType();
 		tinType.setIssuedBy(issuedBy);
@@ -165,7 +246,7 @@ public final class ReportableSellerCsvFileParser
 		return tinType;
 	}
 	
-	private static OECDLegalAddressTypeEnumType createAddressType(final String addressType)
+	private OECDLegalAddressTypeEnumType createAddressType(final String addressType)
 	{
 		
 		return switch(addressType)
@@ -178,14 +259,14 @@ public final class ReportableSellerCsvFileParser
 		};
 	}
 	
-	private static AddressFixType createAddressFixForReportableSeller(final String city)
+	private AddressFixType createAddressFixForReportableSeller(final String city)
 	{
 		final AddressFixType addressFixType = new AddressFixType();
 		addressFixType.setCity(city);
 		return addressFixType;
 	}
 	
-	private static MonAmntType createMonAmntType(final BigInteger value)
+	private MonAmntType createMonAmntType(final BigInteger value)
 	{
 		final MonAmntType monAmntType = new MonAmntType();
 		monAmntType.setCurrCode(CurrCodeType.EUR);
@@ -194,7 +275,7 @@ public final class ReportableSellerCsvFileParser
 		return monAmntType;
 	}
 	
-	private static NumberOfActivitiesType createNumberOfActivities(
+	private NumberOfActivitiesType createNumberOfActivities(
 		final BigInteger numberOfActivitiesQ1,
 		final BigInteger numberOfActivitiesQ2,
 		final BigInteger numberOfActivitiesQ3,
@@ -209,7 +290,7 @@ public final class ReportableSellerCsvFileParser
 		return numberOfActivitiesType;
 	}
 	
-	private static TaxesType createTaxesType(
+	private TaxesType createTaxesType(
 		final MonAmntType taxQ1,
 		final MonAmntType taxQ2,
 		final MonAmntType taxQ3,
@@ -225,7 +306,7 @@ public final class ReportableSellerCsvFileParser
 		return taxesType;
 	}
 	
-	private static FeesType createFeesType(
+	private FeesType createFeesType(
 		final MonAmntType feesQ1,
 		final MonAmntType feesQ2,
 		final MonAmntType feesQ3,
@@ -241,7 +322,7 @@ public final class ReportableSellerCsvFileParser
 		return feesType;
 	}
 	
-	private static ConsiderationType createConsiderationType(
+	private ConsiderationType createConsiderationType(
 		final MonAmntType consQ1,
 		final MonAmntType consQ2,
 		final MonAmntType consQ3,

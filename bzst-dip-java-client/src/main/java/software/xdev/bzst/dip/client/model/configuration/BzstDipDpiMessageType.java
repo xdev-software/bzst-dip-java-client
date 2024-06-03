@@ -18,6 +18,10 @@ package software.xdev.bzst.dip.client.model.configuration;
 import software.xdev.bzst.dip.client.xmldocument.model.DPIMessageTypeIndicEnumType;
 
 
+/**
+ * Defines weather new information ({@link BzstDipDpiMessageType#DPI_401}, corrective information
+ * ({@link BzstDipDpiMessageType#DPI_402} or no information ({@link BzstDipDpiMessageType#DPI_403}) is contained.
+ */
 public enum BzstDipDpiMessageType
 {
 	/**
