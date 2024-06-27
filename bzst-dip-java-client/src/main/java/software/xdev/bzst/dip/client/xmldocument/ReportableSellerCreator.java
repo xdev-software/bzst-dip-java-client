@@ -57,6 +57,7 @@ public class ReportableSellerCreator
 		this.configuration = configuration;
 	}
 	
+	@SuppressWarnings("PMD.ExcessiveParameterList")
 	public CorrectableReportableSellerType createReportableSeller(
 		final CountryCodeType resCountryCode,
 		final TINType tin,

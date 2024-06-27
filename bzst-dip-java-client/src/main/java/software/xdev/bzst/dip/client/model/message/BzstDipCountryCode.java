@@ -18,7 +18,7 @@ package software.xdev.bzst.dip.client.model.message;
 import software.xdev.bzst.dip.client.xmldocument.model.CountryCodeType;
 
 
-@SuppressWarnings("checkstyle:MethodLength")
+@SuppressWarnings({"checkstyle:MethodLength", "PMD.CyclomaticComplexity"})
 public enum BzstDipCountryCode
 {
 	/**

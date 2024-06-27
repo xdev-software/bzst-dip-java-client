@@ -18,7 +18,8 @@ package software.xdev.bzst.dip.client.model.message;
 import software.xdev.bzst.dip.client.xmldocument.model.CurrCodeType;
 
 
-@SuppressWarnings("checkstyle:MethodLength")
+// CPD-OFF - Will be refactored in #14
+@SuppressWarnings({"checkstyle:MethodLength", "PMD.CyclomaticComplexity"})
 public enum BzstDipCurrency
 {
 	/**

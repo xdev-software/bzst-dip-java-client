@@ -143,6 +143,7 @@ public class BzstDipConfiguration
 	 */
 	private final BzstDipAddressFix platformOperatorAddress;
 	
+	@SuppressWarnings("PMD.ExcessiveParameterList")
 	public BzstDipConfiguration(
 		final String certificateKeystorePassword,
 		final String clientId,
