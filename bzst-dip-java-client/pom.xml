@@ -48,7 +48,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<jjwt.version>0.12.5</jjwt.version>
+		<jjwt.version>0.12.6</jjwt.version>
 		<jackson.version>2.17.1</jackson.version>
 	</properties>
 
