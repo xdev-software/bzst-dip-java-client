@@ -40,6 +40,11 @@ public class BzstDipConfiguration
 	 * Defines the password for the certificate keystore that is used to decrypt the local keystore.
 	 */
 	private final String certificateKeystorePassword;
+	
+	/**
+	 * Defines the alias of the private key within the key store.
+	 */
+	private final String keyStorePrivateKeyAlias;
 	/**
 	 * Is used for identifying this client to the BZST API.
 	 * A valid issuer/clientId is defined by the BZST and must have been received from them.
@@ -146,6 +151,7 @@ public class BzstDipConfiguration
 	@SuppressWarnings("PMD.ExcessiveParameterList")
 	public BzstDipConfiguration(
 		final String certificateKeystorePassword,
+		final String keyStorePrivateKeyAlias,
 		final String clientId,
 		final String taxID,
 		final String taxNumber,
@@ -163,6 +169,7 @@ public class BzstDipConfiguration
 		final BzstDipAddressFix platformOperatorAddress)
 	{
 		this.certificateKeystorePassword = certificateKeystorePassword;
+		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
 		this.clientId = clientId;
 		this.taxID = taxID;
 		this.taxNumber = taxNumber;
@@ -184,6 +191,12 @@ public class BzstDipConfiguration
 	{
 		return this.certificateKeystorePassword;
 	}
+	
+	public String getKeyStorePrivateKeyAlias()
+	{
+		return this.keyStorePrivateKeyAlias;
+	}
+	
 	public String getClientId()
 	{
 		return this.clientId;
