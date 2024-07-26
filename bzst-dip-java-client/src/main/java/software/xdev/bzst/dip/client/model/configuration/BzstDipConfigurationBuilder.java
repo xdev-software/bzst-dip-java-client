@@ -40,6 +40,10 @@ public class BzstDipConfigurationBuilder
 	 */
 	private String certificateKeystorePassword;
 	/**
+	 * @see BzstDipConfiguration#getKeyStorePrivateKeyAlias()
+	 */
+	private String keyStorePrivateKeyAlias;
+	/**
 	 * @see BzstDipConfiguration#getClientId()
 	 */
 	private String clientId;
@@ -125,6 +129,16 @@ public class BzstDipConfigurationBuilder
 	public BzstDipConfigurationBuilder setCertificateKeystorePassword(final String certificateKeystorePassword)
 	{
 		this.certificateKeystorePassword = certificateKeystorePassword;
+		return this;
+	}
+	
+	/**
+	 * @param keyStorePrivateKeyAlias {@link #keyStorePrivateKeyAlias}
+	 * @return itself
+	 */
+	public BzstDipConfigurationBuilder setKeyStorePrivateKeyAlias(final String keyStorePrivateKeyAlias)
+	{
+		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
 		return this;
 	}
 	
@@ -310,6 +324,10 @@ public class BzstDipConfigurationBuilder
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
 				""),
+			this.getSetPropertyOrReadFromFile(
+				this.keyStorePrivateKeyAlias,
+				PropertiesSupplier.PROPERTY_NAME_KEYSTORE_PRIVATE_KEY_ALIAS,
+				"certificate"),
 			this.getSetPropertyOrReadFromFile(this.clientId, PropertiesSupplier.PROPERTY_NAME_CLIENT_ID),
 			this.getSetPropertyOrReadFromFile(this.taxID, PropertiesSupplier.PROPERTY_NAME_TAX_ID),
 			this.getSetPropertyOrReadFromFile(this.taxNumber, PropertiesSupplier.PROPERTY_NAME_TAX_NUMBER),

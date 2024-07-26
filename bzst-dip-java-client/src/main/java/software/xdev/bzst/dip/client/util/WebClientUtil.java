@@ -65,6 +65,7 @@ public final class WebClientUtil
 		{
 			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
 				keystoreInputStream,
+				configuration.getKeyStorePrivateKeyAlias(),
 				configuration.getCertificateKeystorePassword(),
 				SigningUtil.KEYSTORE_TYPE
 			);

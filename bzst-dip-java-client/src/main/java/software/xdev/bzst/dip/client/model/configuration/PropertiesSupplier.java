@@ -30,6 +30,7 @@ import software.xdev.bzst.dip.client.exception.ConfigurationException;
 public class PropertiesSupplier
 {
 	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD = "certificate.keystore.password";
+	public static final String PROPERTY_NAME_KEYSTORE_PRIVATE_KEY_ALIAS = "certificate.keystore.private.key.alias";
 	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE = "certificate.keystore.file";
 	public static final String PROPERTY_NAME_CLIENT_ID = "client.id";
 	public static final String PROPERTY_NAME_TAX_ID = "tax.id";

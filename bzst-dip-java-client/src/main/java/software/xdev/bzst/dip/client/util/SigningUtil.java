@@ -101,6 +101,7 @@ public final class SigningUtil
 			final KeyStore.PrivateKeyEntry privateKeyEntry =
 				getPrivateKeyEntry(
 					keystoreInputStream,
+					configuration.getKeyStorePrivateKeyAlias(),
 					configuration.getCertificateKeystorePassword(),
 					KEYSTORE_TYPE
 				);
@@ -222,6 +223,7 @@ public final class SigningUtil
 	 */
 	public static KeyStore.PrivateKeyEntry getPrivateKeyEntry(
 		final InputStream keyStoreInputStream,
+		final String keystorePrivateKeyEntryAlias,
 		final String keyStorePassword,
 		final String type)
 	{
@@ -232,7 +234,7 @@ public final class SigningUtil
 			ks.load(keyStoreInputStream, keyStorePassword.toCharArray());
 			
 			final KeyStore.PrivateKeyEntry certificate = (KeyStore.PrivateKeyEntry)ks.getEntry(
-				"certificate",
+				keystorePrivateKeyEntryAlias,
 				new KeyStore.PasswordProtection(keyStorePassword.toCharArray()));
 			
 			if(certificate == null)
