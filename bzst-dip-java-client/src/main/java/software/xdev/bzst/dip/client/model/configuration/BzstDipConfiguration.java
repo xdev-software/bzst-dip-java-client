@@ -61,6 +61,11 @@ public class BzstDipConfiguration
 	 */
 	private final String taxID;
 	/**
+	 * If {@code true} the {@link #taxID} is validated by the {@link TaxNumberValidator}. Default value is
+	 * {@code true}.
+	 */
+	private final boolean validateTaxID;
+	/**
 	 * <p>
 	 *     Organizational characteristic for the specified provider. The Steueridentifikationsnummer
 	 *     (for identification in the portal via Elster) or the BZST number
@@ -154,6 +159,7 @@ public class BzstDipConfiguration
 		final String keyStorePrivateKeyAlias,
 		final String clientId,
 		final String taxID,
+		final boolean validateTaxID,
 		final String taxNumber,
 		final String realmEnvironmentBaseUrl,
 		final BzstDipEnvironment environment,
@@ -172,6 +178,7 @@ public class BzstDipConfiguration
 		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
 		this.clientId = clientId;
 		this.taxID = taxID;
+		this.validateTaxID = validateTaxID;
 		this.taxNumber = taxNumber;
 		this.realmEnvironmentBaseUrl = realmEnvironmentBaseUrl;
 		this.environment = environment;
@@ -270,5 +277,10 @@ public class BzstDipConfiguration
 	public BzstDipAddressFix getPlatformOperatorAddress()
 	{
 		return this.platformOperatorAddress;
+	}
+	
+	public boolean isValidateTaxID()
+	{
+		return this.validateTaxID;
 	}
 }

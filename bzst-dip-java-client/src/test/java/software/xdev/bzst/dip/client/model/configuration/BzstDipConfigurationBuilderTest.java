@@ -44,6 +44,7 @@ class BzstDipConfigurationBuilderTest
 			() -> new BzstDipConfigurationBuilder()
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
+				.setValidateTaxID(false)
 				.setTaxNumber("123")
 				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
 					.getResourceAsStream("DemoKeystore.jks"))

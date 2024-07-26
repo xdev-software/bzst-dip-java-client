@@ -34,6 +34,7 @@ public class PropertiesSupplier
 	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE = "certificate.keystore.file";
 	public static final String PROPERTY_NAME_CLIENT_ID = "client.id";
 	public static final String PROPERTY_NAME_TAX_ID = "tax.id";
+	public static final String PROPERTY_NAME_TAX_ID_VALIDATE = "tax.id.validate";
 	public static final String PROPERTY_NAME_TAX_NUMBER = "tax.number";
 	public static final String PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL = "base.url";
 	public static final String PROPERTY_NAME_ENVIRONMENT = "environment";
