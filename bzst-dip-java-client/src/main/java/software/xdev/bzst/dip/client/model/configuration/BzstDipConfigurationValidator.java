@@ -36,7 +36,10 @@ public final class BzstDipConfigurationValidator
 			PropertiesSupplier.PROPERTY_NAME_CLIENT_ID, configuration.getClientId());
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_TAX_ID, configuration.getTaxID());
-		TaxNumberValidator.validateTaxNumber(configuration.getTaxID());
+		if(configuration.isValidateTaxID())
+		{
+			TaxNumberValidator.validateTaxNumber(configuration.getTaxID());
+		}
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_TAX_NUMBER, configuration.getTaxNumber());
 		checkForNullOrBlank(

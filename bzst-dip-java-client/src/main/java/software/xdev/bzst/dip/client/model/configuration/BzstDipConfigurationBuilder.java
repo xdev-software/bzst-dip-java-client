@@ -40,6 +40,10 @@ public class BzstDipConfigurationBuilder
 	 */
 	private String certificateKeystorePassword;
 	/**
+	 * @see BzstDipConfiguration#getKeyStorePrivateKeyAlias()
+	 */
+	private String keyStorePrivateKeyAlias;
+	/**
 	 * @see BzstDipConfiguration#getClientId()
 	 */
 	private String clientId;
@@ -47,6 +51,10 @@ public class BzstDipConfigurationBuilder
 	 * @see BzstDipConfiguration#getTaxID()
 	 */
 	private String taxID;
+	/**
+	 * @see BzstDipConfiguration#isValidateTaxID()
+	 */
+	private Boolean validateTaxID;
 	/**
 	 * @see BzstDipConfiguration#getTaxNumber()
 	 */
@@ -129,6 +137,16 @@ public class BzstDipConfigurationBuilder
 	}
 	
 	/**
+	 * @param keyStorePrivateKeyAlias {@link #keyStorePrivateKeyAlias}
+	 * @return itself
+	 */
+	public BzstDipConfigurationBuilder setKeyStorePrivateKeyAlias(final String keyStorePrivateKeyAlias)
+	{
+		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
+		return this;
+	}
+	
+	/**
 	 * @param clientId {@link #clientId}
 	 * @return itself
 	 */
@@ -145,6 +163,16 @@ public class BzstDipConfigurationBuilder
 	public BzstDipConfigurationBuilder setTaxID(final String taxID)
 	{
 		this.taxID = taxID;
+		return this;
+	}
+	
+	/**
+	 * @param validateTaxID {@link #validateTaxID}
+	 * @return itself
+	 */
+	public BzstDipConfigurationBuilder setValidateTaxID(final Boolean validateTaxID)
+	{
+		this.validateTaxID = validateTaxID;
 		return this;
 	}
 	
@@ -310,8 +338,16 @@ public class BzstDipConfigurationBuilder
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
 				""),
+			this.getSetPropertyOrReadFromFile(
+				this.keyStorePrivateKeyAlias,
+				PropertiesSupplier.PROPERTY_NAME_KEYSTORE_PRIVATE_KEY_ALIAS,
+				"certificate"),
 			this.getSetPropertyOrReadFromFile(this.clientId, PropertiesSupplier.PROPERTY_NAME_CLIENT_ID),
 			this.getSetPropertyOrReadFromFile(this.taxID, PropertiesSupplier.PROPERTY_NAME_TAX_ID),
+			this.getSetPropertyOrReadFromFileBoolean(
+				this.validateTaxID,
+				PropertiesSupplier.PROPERTY_NAME_TAX_ID_VALIDATE,
+				true),
 			this.getSetPropertyOrReadFromFile(this.taxNumber, PropertiesSupplier.PROPERTY_NAME_TAX_NUMBER),
 			this.getSetPropertyOrReadFromFile(
 				this.realmEnvironmentBaseUrl,
@@ -445,6 +481,21 @@ public class BzstDipConfigurationBuilder
 			String.valueOf(defaultValue)));
 	}
 	
+	private Boolean getSetPropertyOrReadFromFileBoolean(
+		final Boolean builderProperty,
+		final String propertyNameInFile,
+		final Boolean defaultValue)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return Boolean.parseBoolean(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			String.valueOf(defaultValue)));
+	}
+	
 	private Duration getSetPropertyOrReadFromFileDuration(
 		final Duration builderProperty,
 		final String propertyNameInFile,
@@ -520,7 +571,6 @@ public class BzstDipConfigurationBuilder
 		final String propertyNameInFile,
 		final String defaultValue)
 	{
-		
 		if(builderProperty != null)
 		{
 			return builderProperty;
