@@ -24,7 +24,7 @@ See the [BZSt Information](https://www.bzst.de/EN/Service/Portalinformation/Logi
 We created this client to make it as easy as possible for the developer to use the BZSt DIP.
 Through usage of the builder pattern (see [Configuration](#configuration) below), DTOs and a typesafe data model we ensure high usability and readability.
 
-The BZSt provides [XSD](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf) that define the expected XML structure and make it possible to generate java classes ([BZSt Docs](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2)).
+The BZSt provides [XSD](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf) that define the expected XML structure and make it possible to generate java classes ([BZSt Docs](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2)).<br/>
 Our library validates each request through these XSD find errors before they are sent to the DIP.
 
 ## Installation
