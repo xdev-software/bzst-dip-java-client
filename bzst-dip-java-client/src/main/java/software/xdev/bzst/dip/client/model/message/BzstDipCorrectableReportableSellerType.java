@@ -51,7 +51,7 @@ public record BzstDipCorrectableReportableSellerType(
 			this.vat,
 			this.firstName,
 			this.lastName,
-			this.birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+			this.birthDate == null ? "NULL" : this.birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
 			this.legalAddress.toXmlType(),
 			this.addressFix.toXmlType(),
 			this.numberOfActivities.toXmlType(),
