@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1721994481735">
-    <module artifactId="bzst-dip-java-client" groupId="software.xdev" version="1.0.2"/>
+<licensePluginReport goal="FORMAT" timestamp="1729834246383">
+    <module artifactId="bzst-dip-java-client" groupId="software.xdev" version="1.0.3"/>
     <files>
         <file path="src/main/java/software/xdev/bzst/dip/client/BzstDipClient.java" result="NOOP"/>
         <file path="src/main/java/software/xdev/bzst/dip/client/exception/ConfigurationException.java" result="NOOP"/>
