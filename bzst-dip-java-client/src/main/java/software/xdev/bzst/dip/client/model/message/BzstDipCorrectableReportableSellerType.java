@@ -49,9 +49,11 @@ public record BzstDipCorrectableReportableSellerType(
 			this.tin.toXmlType(),
 			this.handelsregisternummer,
 			this.vat,
-			this.firstName,
+			this.firstName == null ? ReportableSellerCreator.NULL_STRING : this.firstName,
 			this.lastName,
-			this.birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+			this.birthDate == null
+				? ReportableSellerCreator.NULL_STRING
+				: this.birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
 			this.legalAddress.toXmlType(),
 			this.addressFix.toXmlType(),
 			this.numberOfActivities.toXmlType(),

@@ -1,3 +1,7 @@
+# 1.0.3
+
+* ReportableSellerCreator can now create "Rechtsträger" like a company.
+
 # 1.0.2
 
 * The alias for the private key in the keystore is now configurable (
