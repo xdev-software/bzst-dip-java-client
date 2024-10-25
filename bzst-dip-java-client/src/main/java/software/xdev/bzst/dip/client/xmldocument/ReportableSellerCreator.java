@@ -50,6 +50,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 public class ReportableSellerCreator
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCreator.class);
+	public static final String NULL_STRING = "NULL";
 	private final BzstDipConfiguration configuration;
 	
 	public ReportableSellerCreator(final BzstDipConfiguration configuration)
@@ -337,7 +338,7 @@ public class ReportableSellerCreator
 	 */
 	public static boolean isNULLAsString(final String checkNULLString)
 	{
-		return checkNULLString.equals("NULL");
+		return checkNULLString.equals(NULL_STRING);
 	}
 	
 	private static OrganisationINType createIN(final String in)
