@@ -27,6 +27,24 @@ import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
  */
 public class BzstDipConfiguration
 {
+	public enum SupportedApplicationCode
+	{
+		// TODO: Describe
+		DAC7("DAC7"),
+		// TODO: Describe
+		CESOP("CESOP");
+		
+		String value;
+		
+		SupportedApplicationCode(final String value)
+		{
+			this.value = value;
+		}
+	}
+	
+	
+	final String applicationCode;
+	
 	/**
 	 * This is the provided production endpoint url of the BZST.
 	 */
@@ -155,6 +173,7 @@ public class BzstDipConfiguration
 	
 	@SuppressWarnings("PMD.ExcessiveParameterList")
 	public BzstDipConfiguration(
+		final String applicationCode,
 		final String certificateKeystorePassword,
 		final String keyStorePrivateKeyAlias,
 		final String clientId,
@@ -174,6 +193,7 @@ public class BzstDipConfiguration
 		final String platformOperatorPlatformName,
 		final BzstDipAddressFix platformOperatorAddress)
 	{
+		this.applicationCode = applicationCode;
 		this.certificateKeystorePassword = certificateKeystorePassword;
 		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
 		this.clientId = clientId;
@@ -282,5 +302,10 @@ public class BzstDipConfiguration
 	public boolean isValidateTaxID()
 	{
 		return this.validateTaxID;
+	}
+	
+	public String getApplicationCode()
+	{
+		return applicationCode;
 	}
 }

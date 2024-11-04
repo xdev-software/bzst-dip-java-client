@@ -43,6 +43,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.NexusEnumType;
 import software.xdev.bzst.dip.client.xmldocument.model.OECDLegalAddressTypeEnumType;
 import software.xdev.bzst.dip.client.xmldocument.model.ObjectFactory;
 import software.xdev.bzst.dip.client.xmldocument.model.TINType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.CESOP;
 
 
 public class XMLDocumentBodyCreator
@@ -82,13 +83,28 @@ public class XMLDocumentBodyCreator
 	{
 		LOGGER.debug("Creating data...");
 		
-		final DPIOECD dpioecd = new DPIOECD();
-		dpioecd.setMessageSpec(this.createMessageSpec());
-		dpioecd.getDPIBody().add(this.createDPIBody(correctableReportableSellerTypes, platformOperatorType));
-		dpioecd.setVersion("1.0");
-		
 		final DataType dataType = new DataType();
-		dataType.setDpioecd(dpioecd);
+		
+		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.DAC7))
+		{
+			final DPIOECD dpioecd = new DPIOECD();
+			dpioecd.setMessageSpec(this.createMessageSpec());
+			dpioecd.getDPIBody().add(this.createDPIBody(correctableReportableSellerTypes, platformOperatorType));
+			dpioecd.setVersion("1.0");
+			dataType.setDpioecd(dpioecd);
+		}
+		else if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.CESOP))
+		{
+			final CESOP cesop = new CESOP();
+			// TODO
+			dataType.setCesop(cesop);
+		}
+		else
+		{
+			throw new IllegalArgumentException(
+				"Unsupported application code: " + this.configuration.getApplicationCode()
+			);
+		}
 		
 		return dataType;
 	}
