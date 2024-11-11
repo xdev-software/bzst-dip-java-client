@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model.message;
+package software.xdev.bzst.dip.client.model.message.dac7;
 
-import software.xdev.bzst.dip.client.xmldocument.model.ConsiderationType;
+import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 
 
 /**
@@ -24,22 +24,24 @@ import software.xdev.bzst.dip.client.xmldocument.model.ConsiderationType;
  * -xml-schema-user-guide-for-tax-administrations.pdf" >Model Rules for Reporting by Digital Platform
  * Operators</a>:<br>
  * <p>
- * This element contains information on the Consideration received by a Reportable Seller in the fourth quarter.
+ * The Taxes element specifies the taxes that a Reporting Platform Operator has withheld in respect of a Reportable
+ * Seller. It is further split into four elements, representing the quarters in respect of which reporting of taxes
+ * withheld by the Reporting Platform Operator.
  */
-public record BzstDipConsiderations(
-	BzstDipMonetaryAmount considerationQuarter1,
-	BzstDipMonetaryAmount considerationQuarter2,
-	BzstDipMonetaryAmount considerationQuarter3,
-	BzstDipMonetaryAmount considerationQuarter4
+public record BzstDipTaxes(
+	BzstDipMonetaryAmount taxesQuarter1,
+	BzstDipMonetaryAmount taxesQuarter2,
+	BzstDipMonetaryAmount taxesQuarter3,
+	BzstDipMonetaryAmount taxesQuarter4
 )
 {
-	public ConsiderationType toXmlType()
+	public TaxesType toXmlType()
 	{
-		final ConsiderationType considerationType = new ConsiderationType();
-		considerationType.setConsQ1(this.considerationQuarter1.toXmlType());
-		considerationType.setConsQ2(this.considerationQuarter2.toXmlType());
-		considerationType.setConsQ3(this.considerationQuarter3.toXmlType());
-		considerationType.setConsQ4(this.considerationQuarter4.toXmlType());
-		return considerationType;
+		final TaxesType taxesType = new TaxesType();
+		taxesType.setTaxQ1(this.taxesQuarter1().toXmlType());
+		taxesType.setTaxQ2(this.taxesQuarter2().toXmlType());
+		taxesType.setTaxQ3(this.taxesQuarter3().toXmlType());
+		taxesType.setTaxQ4(this.taxesQuarter4().toXmlType());
+		return taxesType;
 	}
 }

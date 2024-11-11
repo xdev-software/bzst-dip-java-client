@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 
 
 /**
@@ -306,6 +306,6 @@ public class BzstDipConfiguration
 	
 	public String getApplicationCode()
 	{
-		return applicationCode;
+		return this.applicationCode;
 	}
 }

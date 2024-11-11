@@ -10,7 +10,7 @@ import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedExceptio
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.PropertiesSupplier;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")

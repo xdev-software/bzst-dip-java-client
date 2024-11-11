@@ -34,8 +34,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.model.message.BzstDipRequestStatusResult;
-import software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipRequestStatusResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipSingleTransferResult;
 import software.xdev.bzst.dip.client.util.WebClientUtil;
 
 

@@ -33,6 +33,10 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import software.xdev.bzst.dip.client.exception.CsvParseException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipConsiderations;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipFees;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipNumberOfActivities;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTaxes;
 import software.xdev.bzst.dip.client.xmldocument.ReportableSellerCreator;
 import software.xdev.bzst.dip.client.xmldocument.model.AddressFixType;
 import software.xdev.bzst.dip.client.xmldocument.model.ConsiderationType;
@@ -65,37 +69,37 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
  *     <li>Birthdate</li>
  *     <li>AddressType</li>
  *     <li>Address with city</li>
- *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
  *     1st quarter</li>
- *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
  *     2nd quarter</li>
- *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
  *     3rd quarter</li>
- *     <li>NumberOfActivities (see {@link software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities}):
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
  *     4th quarter</li>
- *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
  *     1st quarter</li>
- *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
  *     2nd quarter</li>
- *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
  *     3rd quarter</li>
- *     <li>ConsiderationType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipConsiderations}):
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
  *     4th quarter</li>
- *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     <li>FeesType (see {@link BzstDipFees}):
  *     1st quarter</li>
- *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     <li>FeesType (see {@link BzstDipFees}):
  *     2nd quarter</li>
- *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     <li>FeesType (see {@link BzstDipFees}):
  *     3rd quarter</li>
- *     <li>FeesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipFees}):
+ *     <li>FeesType (see {@link BzstDipFees}):
  *     4th quarter</li>
- *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
  *     1st quarter</li>
- *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
  *     2nd quarter</li>
- *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
  *     3rd quarter</li>
- *     <li>TaxesType (see {@link software.xdev.bzst.dip.client.model.message.BzstDipTaxes}):
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
  *     4th quarter</li>
  *     <li>Permanent establishments</li>
  *     <li>docRefUUID</li>

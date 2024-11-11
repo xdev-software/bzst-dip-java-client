@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model.message;
+package software.xdev.bzst.dip.client.model.message.dac7;
 
-public record BzstDipSendingResult(String dataTransferNumber)
+import java.util.List;
+
+
+public record BzstDipRequestStatusResult(List<BzstDipSingleTransferResult> singleTransferResults)
 {
 }

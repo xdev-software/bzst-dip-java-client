@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model.message;
+package software.xdev.bzst.dip.client.model.message.dac7;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public record BzstDipCompleteResult(String dataTransferNumber, List<BzstDipSingl
 	/**
 	 * @return {@code true} if the set {@link #dataTransferNumber} is found in the results and the status
 	 * of the result is
-	 * {@link software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult.StatusCodeMeaning#OK}.
+	 * {@link BzstDipSingleTransferResult.StatusCodeMeaning#OK}.
 	 */
 	public boolean isSuccessful()
 	{

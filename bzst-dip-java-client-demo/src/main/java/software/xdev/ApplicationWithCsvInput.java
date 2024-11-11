@@ -14,7 +14,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")

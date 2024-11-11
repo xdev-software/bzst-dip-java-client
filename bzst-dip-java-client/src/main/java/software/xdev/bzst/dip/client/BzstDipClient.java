@@ -25,11 +25,11 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
-import software.xdev.bzst.dip.client.model.message.BzstDipMessage;
-import software.xdev.bzst.dip.client.model.message.BzstDipRequestStatusResult;
-import software.xdev.bzst.dip.client.model.message.BzstDipSendingResult;
-import software.xdev.bzst.dip.client.model.message.BzstDipSingleTransferResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipMessage;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipRequestStatusResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipSendingResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipSingleTransferResult;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
 import software.xdev.bzst.dip.client.util.SigningUtil;
 import software.xdev.bzst.dip.client.webclient.WebClient;

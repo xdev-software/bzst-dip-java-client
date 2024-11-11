@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 
 
 @SuppressWarnings("MethodName")

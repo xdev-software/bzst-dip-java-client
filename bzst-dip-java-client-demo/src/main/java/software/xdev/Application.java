@@ -14,19 +14,19 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
-import software.xdev.bzst.dip.client.model.message.BzstDipConsiderations;
-import software.xdev.bzst.dip.client.model.message.BzstDipCorrectableReportableSellerType;
-import software.xdev.bzst.dip.client.model.message.BzstDipCountryCode;
-import software.xdev.bzst.dip.client.model.message.BzstDipCurrency;
-import software.xdev.bzst.dip.client.model.message.BzstDipFees;
-import software.xdev.bzst.dip.client.model.message.BzstDipMessage;
-import software.xdev.bzst.dip.client.model.message.BzstDipMonetaryAmount;
-import software.xdev.bzst.dip.client.model.message.BzstDipNumberOfActivities;
-import software.xdev.bzst.dip.client.model.message.BzstDipOecdLegalAddressType;
-import software.xdev.bzst.dip.client.model.message.BzstDipTaxes;
-import software.xdev.bzst.dip.client.model.message.BzstDipTin;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipConsiderations;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCorrectableReportableSellerType;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCurrency;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipFees;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipMessage;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipMonetaryAmount;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipNumberOfActivities;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipOecdLegalAddressType;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTaxes;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTin;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -50,6 +50,7 @@ public final class Application
 	public static BzstDipConfiguration createConfiguration()
 	{
 		return new BzstDipConfigurationBuilder()
+			.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.DAC7)
 			.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 			.setTaxID("86095742719")
 			.setTaxNumber("123")

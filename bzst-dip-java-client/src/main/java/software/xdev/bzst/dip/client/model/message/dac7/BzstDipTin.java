@@ -13,11 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.model.message;
+package software.xdev.bzst.dip.client.model.message.dac7;
 
-import java.util.List;
+import software.xdev.bzst.dip.client.xmldocument.model.TINType;
 
 
-public record BzstDipRequestStatusResult(List<BzstDipSingleTransferResult> singleTransferResults)
+public record BzstDipTin(
+	String steuerId,
+	BzstDipCountryCode issuedBy,
+	Boolean unknown
+)
 {
+	public TINType toXmlType()
+	{
+		final TINType tinType = new TINType();
+		tinType.setIssuedBy(this.issuedBy.toXmlType());
+		tinType.setValue(this.steuerId);
+		tinType.setUnknown(this.unknown);
+		return tinType;
+	}
 }

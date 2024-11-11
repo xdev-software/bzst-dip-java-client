@@ -88,7 +88,7 @@ public class XMLDocumentBodyCreator
 		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.DAC7))
 		{
 			final DPIOECD dpioecd = new DPIOECD();
-			dpioecd.setMessageSpec(this.createMessageSpec());
+			dpioecd.setMessageSpec(this.createMessageSpecDac7());
 			dpioecd.getDPIBody().add(this.createDPIBody(correctableReportableSellerTypes, platformOperatorType));
 			dpioecd.setVersion("1.0");
 			dataType.setDpioecd(dpioecd);
@@ -96,6 +96,7 @@ public class XMLDocumentBodyCreator
 		else if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.CESOP))
 		{
 			final CESOP cesop = new CESOP();
+			cesop.setMessageSpec(this.createMessageSpecCesop());
 			// TODO
 			dataType.setCesop(cesop);
 		}
@@ -213,8 +214,14 @@ public class XMLDocumentBodyCreator
 		return addressType;
 	}
 	
+	private software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType createMessageSpecCesop()
+	{
+		LOGGER.debug("Creating messageSpec...");
+		
+		// TODO
+	}
 	
-	private MessageSpecType createMessageSpec()
+	private MessageSpecType createMessageSpecDac7()
 	{
 		LOGGER.debug("Creating messageSpec...");
 		

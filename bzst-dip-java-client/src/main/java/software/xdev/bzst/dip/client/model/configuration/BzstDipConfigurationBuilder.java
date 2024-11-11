@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 
 
 /**
@@ -334,6 +334,8 @@ public class BzstDipConfigurationBuilder
 	public BzstDipConfiguration buildAndValidate()
 	{
 		final BzstDipConfiguration configuration = new BzstDipConfiguration(
+			// TODO Read from file or property (see below)
+			"",
 			this.getSetPropertyOrReadFromFile(
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
