@@ -27,11 +27,23 @@ import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
  */
 public class BzstDipConfiguration
 {
+	/**
+	 * DAC7 and CESOP both EU regulatory frameworks aimed at improving tax transparency and combating tax evasion
+	 * within
+	 * the European Union. This data is shared with EU tax authorities to ensure proper taxation of digital econmy
+	 * participants across member states
+	 * <p>
+	 * DAC7: requires digital platform (e.g. facilitating e-commerce, short term rental) to report income earned by
+	 * sellers using their services.
+	 * <p>
+	 * CESOP: requires payment service providers (e.g. banks and payment platforms) to report cross-border payments
+	 * involving EU businesses to a central EU system. This data helps tax authorities and monitor transactions more
+	 * effectively across borders.
+	 */
 	public enum SupportedApplicationCode
 	{
-		// TODO: Describe
 		DAC7("DAC7"),
-		// TODO: Describe
+		
 		CESOP("CESOP");
 		
 		String value;
@@ -64,12 +76,12 @@ public class BzstDipConfiguration
 	 */
 	private final String keyStorePrivateKeyAlias;
 	/**
-	 * Is used for identifying this client to the BZST API.
-	 * A valid issuer/clientId is defined by the BZST and must have been received from them.
+	 * Is used for identifying this client to the BZST API. A valid issuer/clientId is defined by the BZST and must
+	 * have
+	 * been received from them.
 	 * <p>
-	 * See
-	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9">Kommunikationshandbuch
-	 * DIP-Standard 1.4</a> - Section 2.2.1:<br>
+	 * See <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip
+	 * .pdf?__blob=publicationFile&v=9">Kommunikationshandbuch DIP-Standard 1.4</a> - Section 2.2.1:<br>
 	 * <i>DIP-ID des Kunden, welche bei der Freischaltung vergeben wurde</i>
 	 * </p>
 	 */
@@ -85,14 +97,12 @@ public class BzstDipConfiguration
 	private final boolean validateTaxID;
 	/**
 	 * <p>
-	 *     Organizational characteristic for the specified provider. The Steueridentifikationsnummer
-	 *     (for identification in the portal via Elster) or the BZST number
-	 *     and the associated type (ELSTER or BZSTCERT) are used.
+	 * Organizational characteristic for the specified provider. The Steueridentifikationsnummer (for identification in
+	 * the portal via Elster) or the BZST number and the associated type (ELSTER or BZSTCERT) are used.
 	 * </p>
 	 * <p>
-	 * See
-	 * <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip.pdf?__blob=publicationFile&v=9">Kommunikationshandbuch
-	 * DIP-Standard 1.4</a> - Section 5.1.3:
+	 * See <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip
+	 * .pdf?__blob=publicationFile&v=9">Kommunikationshandbuch DIP-Standard 1.4</a> - Section 5.1.3:
 	 * </p>
 	 */
 	private final String taxNumber;
@@ -111,8 +121,8 @@ public class BzstDipConfiguration
 	
 	/**
 	 * Defines weather the message that is to send contains new information ({@link BzstDipDpiMessageType#DPI_401},
-	 * corrective information ({@link BzstDipDpiMessageType#DPI_402} or
-	 * no information ({@link BzstDipDpiMessageType#DPI_403}).
+	 * corrective information ({@link BzstDipDpiMessageType#DPI_402} or no information
+	 * ({@link BzstDipDpiMessageType#DPI_403}).
 	 */
 	private final BzstDipDpiMessageType messageTypeIndic;
 	
@@ -122,12 +132,12 @@ public class BzstDipConfiguration
 	 * E.g. for the year 2023 this would be {@code LocalDate.of(2023,12,31)}
 	 * </p>
 	 * <p>
-	 *     Date must be in the past or current date.<br>
-	 *     See
-	 *     <a href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/kommunikationshandbuch_dac7_dpi.pdf?__blob=publicationFile&v=9">
-	 *         Kommunikationshandbuch Meldepflichten digitaler Plattformbetreiber (Section 2.2)
-	 *     </a>
-	 *     <i>"Eine Lieferung von Daten zu in der Zukunft liegenden Meldejahren ist nicht möglich, d.h. das
+	 * Date must be in the past or current date.<br> See <a
+	 * href="https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/kommunikationshandbuch_dac7_dpi
+	 * .pdf?__blob=publicationFile&v=9"> Kommunikationshandbuch Meldepflichten digitaler Plattformbetreiber (Section
+	 * 2.2)
+	 * </a>
+	 * <i>"Eine Lieferung von Daten zu in der Zukunft liegenden Meldejahren ist nicht möglich, d.h. das
 	 * Kalenderjahr in ReportingPeriod muss kleiner gleich dem aktuellen Kalenderjahr sein.</i>
 	 * </p>
 	 */
@@ -143,10 +153,9 @@ public class BzstDipConfiguration
 	 */
 	private final Supplier<InputStream> certificateKeystoreInputStream;
 	
-
 	/**
-	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/>
-	 * The id references the xml document which is supposed to be overwritten.
+	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/> The id references the xml document
+	 * which is supposed to be overwritten.
 	 */
 	private final String platformOperatorDocRefId;
 	/**
