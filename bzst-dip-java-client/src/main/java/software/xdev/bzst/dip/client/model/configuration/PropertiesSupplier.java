@@ -63,6 +63,14 @@ public class PropertiesSupplier
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_POST_CODE =
 		"platform.operator.address.post.code";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_CITY = "platform.operator.address.city";
+	public static final String PROPERTY_NAME_APPLICATION_CODE = "application.code";
+	public static final String PROPERTY_NAME_TRANSMITTING_COUNTRY = "transmittingCountry";
+	public static final String PROPERTY_NAME_MESSAGE_TYPE = "messageType";
+	public static final String PROPERTY_NAME_MESSAGE_REF_ID = "messageRefId";
+	public static final String PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR = "reportingPeriodCesop.year";
+	public static final String PROPERTY_NAME_REPORTING_PERIOD_CESOP_QUARTER = "reportingPeriodCesop.quarter";
+	public static final String PROPERTY_NAME_TIMESTAMP = "timestamp";
+	public static final String PROPERTY_NAME_MESSAGE_TYPE_INDIC_CESOP = "message.type.indic.cesop";
 	
 	private final Properties properties;
 	
