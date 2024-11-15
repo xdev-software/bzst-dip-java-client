@@ -24,7 +24,7 @@ public final class ApplicationWithConfigurationFromProperties
 		final BzstDipConfiguration configuration = createConfigurationFromProperties();
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
 		final BzstDipCompleteResult bzstDipCompleteResult =
-			bzstDipClient.sendDipAndQueryResult(Application.createMessage());
+			bzstDipClient.sendDipAndQueryResult(ApplicationWithDac7.createMessage());
 		LOGGER.info(
 			"Sending dip message with transfer number {} {}",
 			bzstDipCompleteResult.dataTransferNumber(),

@@ -25,7 +25,7 @@ public final class ApplicationWithCsvInput
 	public static void main(final String[] args)
 		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException, CsvValidationException
 	{
-		final BzstDipConfiguration configuration = Application.createConfiguration();
+		final BzstDipConfiguration configuration = ApplicationWithDac7.createConfiguration();
 		
 		final String csvData = getResourceFileAsString("DemoCsvData.csv");
 		

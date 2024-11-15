@@ -30,9 +30,9 @@ import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTin;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
-public final class Application
+public final class ApplicationWithDac7
 {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationWithDac7.class);
 	
 	public static void main(final String[] args)
 		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException
@@ -113,7 +113,7 @@ public final class Application
 		);
 	}
 	
-	private Application()
+	private ApplicationWithDac7()
 	{
 	}
 }
