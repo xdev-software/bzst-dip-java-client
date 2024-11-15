@@ -59,14 +59,48 @@ public class BzstDipConfiguration
 	}
 	
 	
+	/**
+	 * Country Code. {@link BzstDipCountryCode}
+	 */
 	private final BzstDipCountryCode transmittingCountry;
+	
+	/**
+	 * The element declares the type of message such as
+	 * Payment data or validation result {@link BzstCesopMessageTypeEnum}
+	 */
 	private final BzstCesopMessageTypeEnum messageType;
+	
+	/**
+	 * Contains a unique identifier for the message in the form of a UUID version 4
+	 */
 	private final String messageRefId;
+	
+	/**
+	 * Stands for the year to which the payment data relates
+	 */
 	private final String reportingPeriodCesopYear;
+	
+	/**
+	 * Stands for the quarter to which the payment data relates
+	 */
 	private final int reportingPeriodCesopQuarter;
+	
+	/**
+	 * The exact date and time at which the PSP generated the message
+	 */
 	private final ZonedDateTime timestamp;
+	
+	/**
+	 * Indicates whether the message contains new data, corrections/deletions to previously sent data or whether no
+	 * data is to be reported
+	 * {@link BzstCesopMessageTypeIndicEnum}
+	 */
 	private final BzstCesopMessageTypeIndicEnum messageTypeIndicEnum;
 	
+	/**
+	 * Describes if the format is DAC7 or CESOP.
+	 * {@link SupportedApplicationCode}
+	 */
 	private final String applicationCode;
 	
 	/**

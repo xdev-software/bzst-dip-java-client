@@ -24,7 +24,6 @@ import java.util.function.Supplier;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
-import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopReportingPeriod;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
 
@@ -125,13 +124,39 @@ public class BzstDipConfigurationBuilder
 	 */
 	private BzstDipConfiguration.SupportedApplicationCode applicationCode;
 	
+	/**
+	 * @see BzstDipConfiguration#getTransmittingCountry()
+	 */
 	private BzstDipCountryCode transmittingCountry;
+	
+	/**
+	 * @see BzstDipConfiguration#getMessageType()
+	 */
 	private BzstCesopMessageTypeEnum messageType;
+	
+	/**
+	 * @see BzstDipConfiguration#getMessageRefId()
+	 */
 	private String messageRefId;
-	private BzstCesopReportingPeriod reportingPeriodCESOP;
+	
+	/**
+	 * @see BzstDipConfiguration#getTimestamp()
+	 */
 	private ZonedDateTime timestamp;
+	
+	/**
+	 * @see BzstDipConfiguration#getReportingPeriodCesopQuarter()
+	 */
 	private int reportingPeriodCesopQuarter;
+	
+	/**
+	 * @see BzstDipConfiguration#getReportingPeriodCesopYear()
+	 */
 	private String reportingPeriodCesopYear;
+	
+	/**
+	 * @see BzstDipConfiguration#getMessageTypeIndicEnum()
+	 */
 	private BzstCesopMessageTypeIndicEnum messageTypeIndicCesop;
 	
 	public void setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
