@@ -18,6 +18,8 @@ package software.xdev.bzst.dip.client;
 import java.io.IOException;
 import java.util.List;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopPaymentDataBody;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipMessage;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipRequestStatusResult;
@@ -37,6 +40,7 @@ import software.xdev.bzst.dip.client.xmldocument.XMLDocumentBodyCreator;
 import software.xdev.bzst.dip.client.xmldocument.XMLDocumentCreator;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectablePlatformOperatorType;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.PaymentDataBodyType;
 
 
 /**
@@ -136,6 +140,12 @@ public class BzstDipClient
 		return this.sendDipAndQueryResult(message.toXmlType(this.configuration));
 	}
 	
+	public BzstDipCompleteResult sendDipAndQueryResult(final BzstCesopPaymentDataBody message)
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException, DatatypeConfigurationException
+	{
+		return this.sendDipAndQueryResult(message.toXmlType());
+	}
+	
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
@@ -213,6 +223,24 @@ public class BzstDipClient
 		}
 	}
 	
+	public BzstDipCompleteResult sendDipAndQueryResult(
+		final PaymentDataBodyType paymentDataBodyType
+	)
+		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+	{
+		try(final WebClient client = new WebClient(this.configuration))
+		{
+			final BzstDipSendingResult sendingResult =
+				this.sendDipOnlyInternal(paymentDataBodyType, client);
+			
+			Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
+			
+			final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(client, sendingResult);
+			
+			return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
+		}
+	}
+	
 	/**
 	 * Queries for a DIP result. We recommend using the
 	 * {@link #sendDipAndQueryResult(BzstDipMessage)} counterpart and
@@ -239,6 +267,31 @@ public class BzstDipClient
 				xmlDocumentCreator.buildXMLDocument(
 					correctableReportableSellerTypes,
 					correctablePlatformOperatorType
+				),
+				this.configuration);
+		LOGGER.debug("Created following XML-Document:\n{}", signedXML);
+		
+		LOGGER.debug("XML data will now be uploaded...");
+		final String dataTransferNumber = client.getDataTransferNumber();
+		LOGGER.debug("Data transfer number: {}", dataTransferNumber);
+		
+		client.uploadMassData(dataTransferNumber, signedXML);
+		
+		client.closeSubmission(dataTransferNumber);
+		
+		return new BzstDipSendingResult(dataTransferNumber);
+	}
+	
+	private BzstDipSendingResult sendDipOnlyInternal(
+		final PaymentDataBodyType paymentDataBodyType,
+		final WebClient client
+	) throws HttpStatusCodeNotExceptedException
+	{
+		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
+		final String signedXML =
+			SigningUtil.signXMLDocument(
+				xmlDocumentCreator.buildXMLDocument(
+					paymentDataBodyType
 				),
 				this.configuration);
 		LOGGER.debug("Created following XML-Document:\n{}", signedXML);

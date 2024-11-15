@@ -15,10 +15,16 @@
  */
 package software.xdev.bzst.dip.client.xmldocument;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +50,11 @@ import software.xdev.bzst.dip.client.xmldocument.model.OECDLegalAddressTypeEnumT
 import software.xdev.bzst.dip.client.xmldocument.model.ObjectFactory;
 import software.xdev.bzst.dip.client.xmldocument.model.TINType;
 import software.xdev.bzst.dip.client.xmldocument.model.cesop.CESOP;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.MSCountryCodeType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageTypeIndicType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageTypeType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.PaymentDataBodyType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.ReportingPeriodType;
 
 
 public class XMLDocumentBodyCreator
@@ -58,7 +69,7 @@ public class XMLDocumentBodyCreator
 	
 	public DipBodyType createBody(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
-		final CorrectablePlatformOperatorType platformOperatorType)
+		final CorrectablePlatformOperatorType platformOperatorType) throws DatatypeConfigurationException
 	{
 		final DipBodyType dipBodyType = new DipBodyType();
 		dipBodyType.getConsignmentItem()
@@ -66,13 +77,32 @@ public class XMLDocumentBodyCreator
 		return dipBodyType;
 	}
 	
+	public DipBodyType createBody(
+		final PaymentDataBodyType paymentDataBodyType) throws DatatypeConfigurationException
+	{
+		final DipBodyType dipBodyType = new DipBodyType();
+		dipBodyType.getConsignmentItem()
+			.add(this.createConsignmentItem(paymentDataBodyType));
+		return dipBodyType;
+	}
+	
 	private ConsignmentItemType createConsignmentItem(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
 		final CorrectablePlatformOperatorType platformOperatorType
-	)
+	) throws DatatypeConfigurationException
 	{
 		final ConsignmentItemType consignmentItem = new ConsignmentItemType();
 		consignmentItem.setData(this.createData(correctableReportableSellerTypes, platformOperatorType));
+		
+		return consignmentItem;
+	}
+	
+	private ConsignmentItemType createConsignmentItem(
+		final PaymentDataBodyType paymentDataBodyType
+	) throws DatatypeConfigurationException
+	{
+		final ConsignmentItemType consignmentItem = new ConsignmentItemType();
+		consignmentItem.setData(this.createData(paymentDataBodyType));
 		
 		return consignmentItem;
 	}
@@ -93,11 +123,28 @@ public class XMLDocumentBodyCreator
 			dpioecd.setVersion("1.0");
 			dataType.setDpioecd(dpioecd);
 		}
-		else if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.CESOP))
+		else
+		{
+			throw new IllegalArgumentException(
+				"Unsupported application code: " + this.configuration.getApplicationCode()
+			);
+		}
+		
+		return dataType;
+	}
+	
+	private Object createData(
+		final PaymentDataBodyType paymentDataBodyType) throws DatatypeConfigurationException
+	{
+		LOGGER.debug("Creating data...");
+		
+		final DataType dataType = new DataType();
+		
+		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.CESOP))
 		{
 			final CESOP cesop = new CESOP();
 			cesop.setMessageSpec(this.createMessageSpecCesop());
-			// TODO
+			cesop.setVersion(new BigDecimal("1.0"));
 			dataType.setCesop(cesop);
 		}
 		else
@@ -135,8 +182,6 @@ public class XMLDocumentBodyCreator
 		
 		return dpiBodyType;
 	}
-	
-	
 	
 	private static DocSpecType createPlatformDocSpec(final BzstDipConfiguration configuration)
 	{
@@ -198,8 +243,6 @@ public class XMLDocumentBodyCreator
 		return correctablePlatformOperatorType;
 	}
 	
-	
-	
 	protected static AddressType createAddress(
 		final AddressFixType address,
 		final OECDLegalAddressTypeEnumType legalAddressTypeEnumType)
@@ -215,10 +258,32 @@ public class XMLDocumentBodyCreator
 	}
 	
 	private software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType createMessageSpecCesop()
+		throws DatatypeConfigurationException
 	{
 		LOGGER.debug("Creating messageSpec...");
 		
-		// TODO
+		final software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType messageSpecType =
+			new software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType();
+		
+		messageSpecType.setTransmittingCountry(MSCountryCodeType.fromValue(this.configuration.getTransmittingCountry()
+			.name()));
+		messageSpecType.setMessageType(MessageTypeType.fromValue(this.configuration.getMessageType().value()));
+		messageSpecType.setMessageTypeIndic(MessageTypeIndicType.fromValue(this.configuration.getMessageTypeIndic()
+			.name()));
+		messageSpecType.setMessageRefId(this.configuration.getMessageRefId());
+		
+		final ReportingPeriodType reportingPeriodType = new ReportingPeriodType();
+		reportingPeriodType.setQuarter(this.configuration.getReportingPeriodCesopQuarter());
+		reportingPeriodType.setYear(this.configuration.getReportingPeriodCesopYear());
+		messageSpecType.setReportingPeriod(reportingPeriodType);
+		
+		final GregorianCalendar gregorianCalendar = GregorianCalendar.from(this.configuration.getTimestamp());
+		final XMLGregorianCalendar xmlGregorianCalendar =
+			DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+		
+		messageSpecType.setTimestamp(xmlGregorianCalendar);
+		
+		return messageSpecType;
 	}
 	
 	private MessageSpecType createMessageSpecDac7()
