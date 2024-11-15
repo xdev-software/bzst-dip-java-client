@@ -17,9 +17,13 @@ package software.xdev.bzst.dip.client.model.configuration;
 
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.function.Supplier;
 
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
 
 
 /**
@@ -55,7 +59,15 @@ public class BzstDipConfiguration
 	}
 	
 	
-	final String applicationCode;
+	private final BzstDipCountryCode transmittingCountry;
+	private final BzstCesopMessageTypeEnum messageType;
+	private final String messageRefId;
+	private final String reportingPeriodCesopYear;
+	private final int reportingPeriodCesopQuarter;
+	private final ZonedDateTime timestamp;
+	private final BzstCesopMessageTypeIndicEnum messageTypeIndicEnum;
+	
+	private final String applicationCode;
 	
 	/**
 	 * This is the provided production endpoint url of the BZST.
@@ -182,6 +194,13 @@ public class BzstDipConfiguration
 	
 	@SuppressWarnings("PMD.ExcessiveParameterList")
 	public BzstDipConfiguration(
+		final BzstDipCountryCode transmittingCountry,
+		final BzstCesopMessageTypeEnum messageType,
+		final String messageRefId,
+		final String reportingPeriodCesopYear,
+		final int reportingPeriodCesopQuarter,
+		final ZonedDateTime timestamp,
+		final BzstCesopMessageTypeIndicEnum messageTypeIndicEnum,
 		final String applicationCode,
 		final String certificateKeystorePassword,
 		final String keyStorePrivateKeyAlias,
@@ -202,6 +221,13 @@ public class BzstDipConfiguration
 		final String platformOperatorPlatformName,
 		final BzstDipAddressFix platformOperatorAddress)
 	{
+		this.transmittingCountry = transmittingCountry;
+		this.messageType = messageType;
+		this.messageRefId = messageRefId;
+		this.reportingPeriodCesopYear = reportingPeriodCesopYear;
+		this.reportingPeriodCesopQuarter = reportingPeriodCesopQuarter;
+		this.timestamp = timestamp;
+		this.messageTypeIndicEnum = messageTypeIndicEnum;
 		this.applicationCode = applicationCode;
 		this.certificateKeystorePassword = certificateKeystorePassword;
 		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
@@ -316,5 +342,40 @@ public class BzstDipConfiguration
 	public String getApplicationCode()
 	{
 		return this.applicationCode;
+	}
+	
+	public BzstDipCountryCode getTransmittingCountry()
+	{
+		return this.transmittingCountry;
+	}
+	
+	public BzstCesopMessageTypeEnum getMessageType()
+	{
+		return this.messageType;
+	}
+	
+	public String getMessageRefId()
+	{
+		return this.messageRefId;
+	}
+	
+	public int getReportingPeriodCesopQuarter()
+	{
+		return this.reportingPeriodCesopQuarter;
+	}
+	
+	public String getReportingPeriodCesopYear()
+	{
+		return this.reportingPeriodCesopYear;
+	}
+	
+	public ZonedDateTime getTimestamp()
+	{
+		return this.timestamp;
+	}
+	
+	public BzstCesopMessageTypeIndicEnum getMessageTypeIndicEnum()
+	{
+		return this.messageTypeIndicEnum;
 	}
 }

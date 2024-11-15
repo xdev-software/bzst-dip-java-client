@@ -18,10 +18,15 @@ package software.xdev.bzst.dip.client.model.configuration;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopReportingPeriod;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
 
 
 /**
@@ -115,6 +120,66 @@ public class BzstDipConfigurationBuilder
 	 * @see BzstDipConfiguration#getPlatformOperatorAddress()
 	 */
 	private BzstDipAddressFix platformOperatorAddress;
+	/**
+	 * @see BzstDipConfiguration#getApplicationCode()
+	 */
+	private BzstDipConfiguration.SupportedApplicationCode applicationCode;
+	
+	private BzstDipCountryCode transmittingCountry;
+	private BzstCesopMessageTypeEnum messageType;
+	private String messageRefId;
+	private BzstCesopReportingPeriod reportingPeriodCESOP;
+	private ZonedDateTime timestamp;
+	private int reportingPeriodCesopQuarter;
+	private String reportingPeriodCesopYear;
+	private BzstCesopMessageTypeIndicEnum messageTypeIndicCesop;
+	
+	public void setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
+	{
+		this.retryQueryResultsAmount = retryQueryResultsAmount;
+	}
+	
+	public BzstDipConfigurationBuilder setReportingPeriodCesopQuarter(final int reportingPeriodCesopQuarter)
+	{
+		this.reportingPeriodCesopQuarter = reportingPeriodCesopQuarter;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setMessageTypeIndicCesop(final BzstCesopMessageTypeIndicEnum messageTypeIndicCesop)
+	{
+		this.messageTypeIndicCesop = messageTypeIndicCesop;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setReportingPeriodCesopYear(final String reportingPeriodCesopYear)
+	{
+		this.reportingPeriodCesopYear = reportingPeriodCesopYear;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setTransmittingCountry(final BzstDipCountryCode transmittingCountry)
+	{
+		this.transmittingCountry = transmittingCountry;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setMessageType(final BzstCesopMessageTypeEnum messageType)
+	{
+		this.messageType = messageType;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setMessageRefId(final String messageRefId)
+	{
+		this.messageRefId = messageRefId;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setTimestamp(final ZonedDateTime timestamp)
+	{
+		this.timestamp = timestamp;
+		return this;
+	}
 	
 	public BzstDipConfigurationBuilder(final PropertiesSupplier propertiesSupplier)
 	{
@@ -329,13 +394,53 @@ public class BzstDipConfigurationBuilder
 	}
 	
 	/**
+	 * @param applicationCode {@link #applicationCode}
+	 * @return itself
+	 */
+	public BzstDipConfigurationBuilder setApplicationCode(final BzstDipConfiguration.SupportedApplicationCode applicationCode)
+	{
+		this.applicationCode = applicationCode;
+		return this;
+	}
+	
+	/**
 	 * @return a new created {@link BzstDipConfiguration} with the values provided by this builder.
 	 */
 	public BzstDipConfiguration buildAndValidate()
 	{
 		final BzstDipConfiguration configuration = new BzstDipConfiguration(
-			// TODO Read from file or property (see below)
-			"",
+			this.getSetPropertyOrReadFromFileTransmittingCountry(
+				this.transmittingCountry,
+				PropertiesSupplier.PROPERTY_NAME_TRANSMITTING_COUNTRY
+			),
+			this.getSetPropertyOrReadFromFileMessageType(
+				this.messageType,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE
+			),
+			this.getSetPropertyOrReadFromFile(
+				this.messageRefId,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_REF_ID
+			),
+			this.getSetPropertyOrReadFromFile(
+				this.reportingPeriodCesopYear,
+				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR
+			),
+			this.getSetPropertyOrReadFromFileInteger(
+				this.reportingPeriodCesopQuarter,
+				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_QUARTER,
+				1
+			),
+			this.getSetPropertyOrReadFromFileTimestamp(
+				this.timestamp,
+				PropertiesSupplier.PROPERTY_NAME_TIMESTAMP
+			),
+			this.getSetPropertyOrReadFromFileMessageTypeIndicCesop(
+				this.messageTypeIndicCesop,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC_CESOP
+			),
+			this.getSetPropertyOrReadFromFile(
+				this.applicationCode.value,
+				PropertiesSupplier.PROPERTY_NAME_APPLICATION_CODE),
 			this.getSetPropertyOrReadFromFile(
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
@@ -583,5 +688,55 @@ public class BzstDipConfigurationBuilder
 			return defaultValue;
 		}
 		return propertyFromFile;
+	}
+	
+	private ZonedDateTime getSetPropertyOrReadFromFileTimestamp(
+		final ZonedDateTime builderProperty,
+		final String propertyNameInFile)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return ZonedDateTime.parse(this.getSetPropertyOrReadFromFile(null, propertyNameInFile));
+	}
+	
+	private BzstDipCountryCode getSetPropertyOrReadFromFileTransmittingCountry(
+		final BzstDipCountryCode builderProperty,
+		final String propertyNameInFile)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstDipCountryCode.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile));
+	}
+	
+	private BzstCesopMessageTypeEnum getSetPropertyOrReadFromFileMessageType(
+		final BzstCesopMessageTypeEnum builderProperty,
+		final String propertyNameInFile)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstCesopMessageTypeEnum.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile));
+	}
+	
+	private BzstCesopMessageTypeIndicEnum getSetPropertyOrReadFromFileMessageTypeIndicCesop(
+		final BzstCesopMessageTypeIndicEnum builderProperty,
+		final String propertyNameInFile)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstCesopMessageTypeIndicEnum.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile));
 	}
 }
