@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// CPD-OFF
 package software.xdev.bzst.dip.client.xmldocument.model.cesop;
 
 import jakarta.xml.bind.annotation.XmlEnum;
@@ -1802,10 +1802,11 @@ public enum CountryCodeType {
     XX;
 
     public String value() {
-        return name();
+        return this.name();
     }
-
-    public static CountryCodeType fromValue(String v) {
+    
+    public static CountryCodeType fromValue(final String v)
+    {
         return valueOf(v);
     }
 
