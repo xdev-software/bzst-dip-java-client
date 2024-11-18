@@ -1326,10 +1326,11 @@ public enum LanguageCodeType {
     ZU;
 
     public String value() {
-        return name();
+        return this.name();
     }
-
-    public static LanguageCodeType fromValue(String v) {
+    
+    public static LanguageCodeType fromValue(final String v)
+    {
         return valueOf(v);
     }
 

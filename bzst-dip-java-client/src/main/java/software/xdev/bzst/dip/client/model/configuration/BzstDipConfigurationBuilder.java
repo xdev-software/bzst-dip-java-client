@@ -170,7 +170,8 @@ public class BzstDipConfigurationBuilder
 		return this;
 	}
 	
-	public BzstDipConfigurationBuilder setMessageTypeIndicCesop(final BzstCesopMessageTypeIndicEnum messageTypeIndicCesop)
+	public BzstDipConfigurationBuilder setMessageTypeIndicCesop(
+		final BzstCesopMessageTypeIndicEnum messageTypeIndicCesop)
 	{
 		this.messageTypeIndicCesop = messageTypeIndicCesop;
 		return this;
@@ -422,7 +423,8 @@ public class BzstDipConfigurationBuilder
 	 * @param applicationCode {@link #applicationCode}
 	 * @return itself
 	 */
-	public BzstDipConfigurationBuilder setApplicationCode(final BzstDipConfiguration.SupportedApplicationCode applicationCode)
+	public BzstDipConfigurationBuilder setApplicationCode(
+		final BzstDipConfiguration.SupportedApplicationCode applicationCode)
 	{
 		this.applicationCode = applicationCode;
 		return this;
