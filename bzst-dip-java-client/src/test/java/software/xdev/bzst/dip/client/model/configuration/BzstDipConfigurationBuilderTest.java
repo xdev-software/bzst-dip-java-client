@@ -191,6 +191,29 @@ class BzstDipConfigurationBuilderTest
 	}
 	
 	@Test
+	void buildAndValidate_cesop()
+	{
+		Assertions.assertDoesNotThrow(
+			() -> new BzstDipConfigurationBuilder()
+				.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.CESOP)
+				// TODO
+				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
+				.setTaxID("86095742719")
+				.setTaxNumber("123")
+				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
+					.getResourceAsStream("DemoKeystore.jks"))
+				.setCertificateKeystorePassword("test123")
+				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
+				.setReportingPeriod(LocalDate.now())
+				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
+				.setPlatformOperatorOrganizationName("TestOrg")
+				.setPlatformOperatorPlatformName("TestApp")
+				.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
+				.buildAndValidate()
+		);
+	}
+	
+	@Test
 	void buildAndValidate_missingMessageTypeIndic()
 	{
 		Assertions.assertThrows(

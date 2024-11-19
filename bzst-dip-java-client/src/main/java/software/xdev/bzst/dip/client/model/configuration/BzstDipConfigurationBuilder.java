@@ -438,7 +438,8 @@ public class BzstDipConfigurationBuilder
 		final BzstDipConfiguration configuration = new BzstDipConfiguration(
 			this.getSetPropertyOrReadFromFileTransmittingCountry(
 				this.transmittingCountry,
-				PropertiesSupplier.PROPERTY_NAME_TRANSMITTING_COUNTRY
+				PropertiesSupplier.PROPERTY_NAME_TRANSMITTING_COUNTRY,
+				BzstDipCountryCode.DE
 			),
 			this.getSetPropertyOrReadFromFileMessageType(
 				this.messageType,
@@ -730,7 +731,8 @@ public class BzstDipConfigurationBuilder
 	
 	private BzstDipCountryCode getSetPropertyOrReadFromFileTransmittingCountry(
 		final BzstDipCountryCode builderProperty,
-		final String propertyNameInFile)
+		final String propertyNameInFile,
+		final BzstDipCountryCode defaultProperty)
 	{
 		if(builderProperty != null)
 		{
@@ -738,7 +740,8 @@ public class BzstDipConfigurationBuilder
 		}
 		return BzstDipCountryCode.valueOf(this.getSetPropertyOrReadFromFile(
 			null,
-			propertyNameInFile));
+			propertyNameInFile,
+			defaultProperty.toString()));
 	}
 	
 	private BzstCesopMessageTypeEnum getSetPropertyOrReadFromFileMessageType(
