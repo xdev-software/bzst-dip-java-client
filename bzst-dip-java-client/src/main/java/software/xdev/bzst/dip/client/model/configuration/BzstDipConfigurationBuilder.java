@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
@@ -443,15 +444,18 @@ public class BzstDipConfigurationBuilder
 			),
 			this.getSetPropertyOrReadFromFileMessageType(
 				this.messageType,
-				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE,
+				BzstCesopMessageTypeEnum.PMT
 			),
 			this.getSetPropertyOrReadFromFile(
 				this.messageRefId,
-				PropertiesSupplier.PROPERTY_NAME_MESSAGE_REF_ID
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_REF_ID,
+				UUID.randomUUID().toString()
 			),
 			this.getSetPropertyOrReadFromFile(
 				this.reportingPeriodCesopYear,
-				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR
+				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR,
+				String.valueOf(LocalDate.now().getYear())
 			),
 			this.getSetPropertyOrReadFromFileInteger(
 				this.reportingPeriodCesopQuarter,
@@ -460,11 +464,13 @@ public class BzstDipConfigurationBuilder
 			),
 			this.getSetPropertyOrReadFromFileTimestamp(
 				this.timestamp,
-				PropertiesSupplier.PROPERTY_NAME_TIMESTAMP
+				PropertiesSupplier.PROPERTY_NAME_TIMESTAMP,
+				ZonedDateTime.now()
 			),
 			this.getSetPropertyOrReadFromFileMessageTypeIndicCesop(
 				this.messageTypeIndicCesop,
-				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC_CESOP
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC_CESOP,
+				BzstCesopMessageTypeIndicEnum.CESOP_100
 			),
 			this.getSetPropertyOrReadFromFile(
 				this.applicationCode.value,
@@ -720,13 +726,17 @@ public class BzstDipConfigurationBuilder
 	
 	private ZonedDateTime getSetPropertyOrReadFromFileTimestamp(
 		final ZonedDateTime builderProperty,
-		final String propertyNameInFile)
+		final String propertyNameInFile,
+		final ZonedDateTime defaultProperty)
 	{
 		if(builderProperty != null)
 		{
 			return builderProperty;
 		}
-		return ZonedDateTime.parse(this.getSetPropertyOrReadFromFile(null, propertyNameInFile));
+		return ZonedDateTime.parse(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
 	}
 	
 	private BzstDipCountryCode getSetPropertyOrReadFromFileTransmittingCountry(
@@ -746,7 +756,8 @@ public class BzstDipConfigurationBuilder
 	
 	private BzstCesopMessageTypeEnum getSetPropertyOrReadFromFileMessageType(
 		final BzstCesopMessageTypeEnum builderProperty,
-		final String propertyNameInFile)
+		final String propertyNameInFile,
+		final BzstCesopMessageTypeEnum defaultProperty)
 	{
 		if(builderProperty != null)
 		{
@@ -754,12 +765,14 @@ public class BzstDipConfigurationBuilder
 		}
 		return BzstCesopMessageTypeEnum.valueOf(this.getSetPropertyOrReadFromFile(
 			null,
-			propertyNameInFile));
+			propertyNameInFile,
+			defaultProperty.toString()));
 	}
 	
 	private BzstCesopMessageTypeIndicEnum getSetPropertyOrReadFromFileMessageTypeIndicCesop(
 		final BzstCesopMessageTypeIndicEnum builderProperty,
-		final String propertyNameInFile)
+		final String propertyNameInFile,
+		final BzstCesopMessageTypeIndicEnum defaultProperty)
 	{
 		if(builderProperty != null)
 		{
@@ -767,6 +780,7 @@ public class BzstDipConfigurationBuilder
 		}
 		return BzstCesopMessageTypeIndicEnum.valueOf(this.getSetPropertyOrReadFromFile(
 			null,
-			propertyNameInFile));
+			propertyNameInFile,
+			defaultProperty.toString()));
 	}
 }
