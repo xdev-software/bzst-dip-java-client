@@ -235,7 +235,7 @@ public class BzstDipConfiguration
 		final int reportingPeriodCesopQuarter,
 		final ZonedDateTime timestamp,
 		final BzstCesopMessageTypeIndicEnum messageTypeIndicEnum,
-		final String applicationCode,
+		final SupportedApplicationCode applicationCode,
 		final String certificateKeystorePassword,
 		final String keyStorePrivateKeyAlias,
 		final String clientId,
@@ -262,7 +262,7 @@ public class BzstDipConfiguration
 		this.reportingPeriodCesopQuarter = reportingPeriodCesopQuarter;
 		this.timestamp = timestamp;
 		this.messageTypeIndicEnum = messageTypeIndicEnum;
-		this.applicationCode = applicationCode;
+		this.applicationCode = applicationCode.value;
 		this.certificateKeystorePassword = certificateKeystorePassword;
 		this.keyStorePrivateKeyAlias = keyStorePrivateKeyAlias;
 		this.clientId = clientId;

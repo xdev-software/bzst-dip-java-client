@@ -472,9 +472,10 @@ public class BzstDipConfigurationBuilder
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC_CESOP,
 				BzstCesopMessageTypeIndicEnum.CESOP_100
 			),
-			this.getSetPropertyOrReadFromFile(
-				this.applicationCode.value,
-				PropertiesSupplier.PROPERTY_NAME_APPLICATION_CODE),
+			this.getSetPropertyOrReadFromFileApplicationCode(
+				this.applicationCode,
+				PropertiesSupplier.PROPERTY_NAME_APPLICATION_CODE,
+				BzstDipConfiguration.SupportedApplicationCode.DAC7),
 			this.getSetPropertyOrReadFromFile(
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
@@ -779,6 +780,21 @@ public class BzstDipConfigurationBuilder
 			return builderProperty;
 		}
 		return BzstCesopMessageTypeIndicEnum.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
+	}
+	
+	private BzstDipConfiguration.SupportedApplicationCode getSetPropertyOrReadFromFileApplicationCode(
+		final BzstDipConfiguration.SupportedApplicationCode builderProperty,
+		final String propertyNameInFile,
+		final BzstDipConfiguration.SupportedApplicationCode defaultProperty)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstDipConfiguration.SupportedApplicationCode.valueOf(this.getSetPropertyOrReadFromFile(
 			null,
 			propertyNameInFile,
 			defaultProperty.toString()));
