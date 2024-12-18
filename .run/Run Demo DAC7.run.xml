@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run Demo" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="software.xdev.Application" />
+  <configuration default="false" name="Run Demo DAC7" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="software.xdev.ApplicationWithDac7" />
     <module name="bzst-dip-java-client-demo" />
     <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
     <extension name="coverage">
@@ -8,11 +8,6 @@
         <option name="PATTERN" value="software.xdev.*" />
         <option name="ENABLED" value="true" />
       </pattern>
-    </extension>
-    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
-      <option name="credential" />
-      <option name="region" />
-      <option name="useCurrentConnection" value="false" />
     </extension>
     <method v="2">
       <option name="Make" enabled="true" />
