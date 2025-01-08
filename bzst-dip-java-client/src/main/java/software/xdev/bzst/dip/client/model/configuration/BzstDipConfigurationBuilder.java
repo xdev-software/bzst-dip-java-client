@@ -469,7 +469,7 @@ public class BzstDipConfigurationBuilder
 			),
 			this.getSetPropertyOrReadFromFileMessageTypeIndicCesop(
 				this.messageTypeIndicCesop,
-				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC_CESOP,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC,
 				BzstCesopMessageTypeIndicEnum.CESOP_100
 			),
 			this.getSetPropertyOrReadFromFileApplicationCode(
@@ -689,9 +689,15 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
-		return BzstDipDpiMessageType.valueOf(this.getSetPropertyOrReadFromFile(
+		final String propertyValue = this.getSetPropertyOrReadFromFile(
 			null,
-			propertyNameInFile));
+			propertyNameInFile,
+			null);
+		if(propertyValue != null)
+		{
+			return BzstDipDpiMessageType.valueOf(propertyValue);
+		}
+		return null;
 	}
 	
 	private String getSetPropertyOrReadFromFile(final String builderProperty, final String propertyNameInFile)

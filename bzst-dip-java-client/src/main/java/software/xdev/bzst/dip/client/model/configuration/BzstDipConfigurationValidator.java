@@ -45,7 +45,6 @@ public final class BzstDipConfigurationValidator
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL, configuration.getRealmEnvironmentBaseUrl());
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_ENVIRONMENT, configuration.getEnvironment());
-		checkForNull(PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC, configuration.getMessageTypeIndic());
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC, configuration.getDocType());
 		checkForNull("certificate keystore input", configuration.getCertificateKeystoreInputStream());
 		checkForNullOrBlank(

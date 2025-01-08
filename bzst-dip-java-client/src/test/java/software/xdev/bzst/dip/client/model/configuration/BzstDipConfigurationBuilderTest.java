@@ -214,28 +214,6 @@ class BzstDipConfigurationBuilderTest
 	}
 	
 	@Test
-	void buildAndValidate_missingMessageTypeIndic()
-	{
-		Assertions.assertThrows(
-			ConfigurationException.class,
-			() -> new BzstDipConfigurationBuilder()
-				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
-				.setTaxID("86095742719")
-				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
-				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
-				.setReportingPeriod(LocalDate.now())
-				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
-				.setPlatformOperatorOrganizationName("TestOrg")
-				.setPlatformOperatorPlatformName("TestApp")
-				.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
-				.buildAndValidate()
-		);
-	}
-	
-	@Test
 	void buildAndValidate_wrongReportingPeriod()
 	{
 		Assertions.assertThrows(

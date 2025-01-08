@@ -17,7 +17,6 @@ import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
-import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopAccountIdentifier;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopAccountIdentifierTypeEnum;
@@ -81,7 +80,7 @@ public final class ApplicationWithCesop
 				.getResourceAsStream("DemoKeystore.jks"))
 			.setCertificateKeystorePassword("test123")
 			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
-			.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
+			.setMessageTypeIndicCesop(BzstCesopMessageTypeIndicEnum.CESOP_101)
 			.setReportingPeriod(LocalDate.now())
 			.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
 			.setPlatformOperatorOrganizationName("TestOrg")
@@ -92,7 +91,6 @@ public final class ApplicationWithCesop
 			.setReportingPeriodCesopQuarter(2)
 			.setReportingPeriodCesopYear("2024")
 			.setMessageRefId(UUID.randomUUID().toString())
-			.setMessageTypeIndicCesop(BzstCesopMessageTypeIndicEnum.CESOP_100)
 			.setTimestamp(ZonedDateTime.parse("2024-05-08T14:02:53Z", DateTimeFormatter.ISO_ZONED_DATE_TIME))
 			.buildAndValidate();
 	}

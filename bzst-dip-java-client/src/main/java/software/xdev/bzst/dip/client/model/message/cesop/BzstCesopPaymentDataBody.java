@@ -118,19 +118,19 @@ public record BzstCesopPaymentDataBody(BzstCesopReportingPSP reportingPSP, List<
 			reportedTransactionType.setAmount(amountType);
 			reportedTransactionType.setTransactionIdentifier(reportedPayee.reportedTransaction()
 				.transactionIdentifier());
-			paymentMethodType.setPaymentMethodType(PaymentMethodTypeType.valueOf(reportedPayee.reportedTransaction()
+			paymentMethodType.setPaymentMethodType(PaymentMethodTypeType.fromValue(reportedPayee.reportedTransaction()
 				.paymentMethod()
 				.paymentMethodEnum()
 				.value()));
-			payerMSType.setPayerMSSource(AccountIdentifierTypeType.valueOf(reportedPayee.reportedTransaction()
+			payerMSType.setPayerMSSource(AccountIdentifierTypeType.fromValue(reportedPayee.reportedTransaction()
 				.payerMS()
 				.accountIdentifierType()
 				.value()));
-			payerMSType.setValue(MSCountryCodeType.valueOf(reportedPayee.reportedTransaction()
+			payerMSType.setValue(MSCountryCodeType.fromValue(reportedPayee.reportedTransaction()
 				.payerMS()
 				.msCountryCodeType()
 				.value()));
-			pspRoleType.setPSPRoleType(PSPRoleTypeType.valueOf(reportedPayee.reportedTransaction()
+			pspRoleType.setPSPRoleType(PSPRoleTypeType.fromValue(reportedPayee.reportedTransaction()
 				.pspRole()
 				.pspRoleType()
 				.value()));
@@ -148,7 +148,7 @@ public record BzstCesopPaymentDataBody(BzstCesopReportingPSP reportingPSP, List<
 			
 			transactionDateType.setValue(xmlGregorianCalendar);
 			transactionDateType.setTransactionDateType(
-				TransactionDateTypeType.valueOf(reportedPayee.reportedTransaction()
+				TransactionDateTypeType.fromValue(reportedPayee.reportedTransaction()
 				.transactionDateType()
 				.transactionDateTypeEnum()
 				.value()));

@@ -115,7 +115,7 @@ public class XMLDocumentBodyCreator
 		
 		final DataType dataType = new DataType();
 		
-		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.DAC7))
+		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.DAC7.name()))
 		{
 			final DPIOECD dpioecd = new DPIOECD();
 			dpioecd.setMessageSpec(this.createMessageSpecDac7());
@@ -140,7 +140,7 @@ public class XMLDocumentBodyCreator
 		
 		final DataType dataType = new DataType();
 		
-		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.CESOP))
+		if(this.configuration.getApplicationCode().equals(BzstDipConfiguration.SupportedApplicationCode.CESOP.name()))
 		{
 			final CESOP cesop = new CESOP();
 			cesop.setMessageSpec(this.createMessageSpecCesop());
@@ -268,8 +268,8 @@ public class XMLDocumentBodyCreator
 		messageSpecType.setTransmittingCountry(MSCountryCodeType.fromValue(this.configuration.getTransmittingCountry()
 			.name()));
 		messageSpecType.setMessageType(MessageTypeType.fromValue(this.configuration.getMessageType().value()));
-		messageSpecType.setMessageTypeIndic(MessageTypeIndicType.fromValue(this.configuration.getMessageTypeIndic()
-			.name()));
+		messageSpecType.setMessageTypeIndic(MessageTypeIndicType.fromValue(this.configuration.getMessageTypeIndicEnum()
+			.value()));
 		messageSpecType.setMessageRefId(this.configuration.getMessageRefId());
 		
 		final ReportingPeriodType reportingPeriodType = new ReportingPeriodType();
