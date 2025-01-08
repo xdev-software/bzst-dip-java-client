@@ -561,6 +561,9 @@
 							<rulesets>
 								<ruleset>../.config/pmd/ruleset.xml</ruleset>
 							</rulesets>
+							<excludes>
+								<exclude>**/generated/**/*.java</exclude>
+							</excludes>
 						</configuration>
 						<dependencies>
 							<dependency>
