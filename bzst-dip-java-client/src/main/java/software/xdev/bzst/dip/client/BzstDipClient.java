@@ -33,7 +33,7 @@ import software.xdev.bzst.dip.client.model.message.dac7.BzstDipRequestStatusResu
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipSendingResult;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipSingleTransferResult;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
-import software.xdev.bzst.dip.client.util.SigningUtil;
+import software.xdev.bzst.dip.client.signing.XmlSigner;
 import software.xdev.bzst.dip.client.webclient.WebClient;
 import software.xdev.bzst.dip.client.xmldocument.XMLDocumentBodyCreator;
 import software.xdev.bzst.dip.client.xmldocument.XMLDocumentCreator;
@@ -267,13 +267,13 @@ public class BzstDipClient
 	)
 	{
 		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
-		final String signedXML =
-			SigningUtil.signXMLDocument(
+		final String signedXML = new XmlSigner(this.configuration.getSigningProvider())
+			.signXMLDocument(
 				xmlDocumentCreator.buildXMLDocument(
 					correctableReportableSellerTypes,
 					correctablePlatformOperatorType
-				),
-				this.configuration);
+				)
+			);
 		LOGGER.debug("Created following XML-Document:\n{}", signedXML);
 		
 		LOGGER.debug("XML data will now be uploaded...");
@@ -293,12 +293,12 @@ public class BzstDipClient
 	)
 	{
 		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
-		final String signedXML =
-			SigningUtil.signXMLDocument(
+		final String signedXML = new XmlSigner(this.configuration.getSigningProvider())
+			.signXMLDocument(
 				xmlDocumentCreator.buildXMLDocument(
 					paymentDataBodyType
-				),
-				this.configuration);
+				)
+			);
 		LOGGER.debug("Created following XML-Document:\n{}", signedXML);
 		
 		LOGGER.debug("XML data will now be uploaded...");

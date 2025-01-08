@@ -16,6 +16,7 @@
 package software.xdev.bzst.dip.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static software.xdev.bzst.dip.client.ConfigurationTestUtil.getConfigurationWithJksSigning;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -41,12 +42,14 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
+import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 
 
 @SuppressWarnings("MethodName")
 class ReportableSellerCsvFileParserTest
 {
+
 	public static final String TEST_CSV_FILE = "src/test/resources/TestCsvData.csv";
 	public static final String TEST_CSV_FILE_WITH_COMMA_SEPERATOR =
 		"src/test/resources/TestCsvDataWithCommaSeperator.csv";
@@ -57,8 +60,7 @@ class ReportableSellerCsvFileParserTest
 		.setTaxID("86095742719")
 		.setTaxNumber("123")
 		.setCertificateKeystorePassword("test123")
-		.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-			.getResourceAsStream("DemoKeystore.jks"))
+		.setSigningProvider(new SigningProviderByPem("DemoKey.pem", "DemoCert.pem"))
 		.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 		.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 		.setReportingPeriod(LocalDate.now())
@@ -78,7 +80,8 @@ class ReportableSellerCsvFileParserTest
 		final String csvData = Files.readString(Path.of(resourceName));
 		
 		final List<CorrectableReportableSellerType> reportableSeller =
-			new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData);
+			new ReportableSellerCsvFileParser(getConfigurationWithJksSigning())
+				.parseCsvData(csvData);
 		
 		// Check size
 		assertEquals(2, reportableSeller.size());

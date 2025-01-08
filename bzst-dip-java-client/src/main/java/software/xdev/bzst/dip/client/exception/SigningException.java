@@ -15,11 +15,11 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
-import software.xdev.bzst.dip.client.util.SigningUtil;
+import software.xdev.bzst.dip.client.signing.XmlSigner;
 
 
 /**
- * Is used while signing HTTP requests in {@link SigningUtil}.
+ * Is used while signing HTTP requests in {@link XmlSigner}.
  */
 public class SigningException extends RuntimeException
 {

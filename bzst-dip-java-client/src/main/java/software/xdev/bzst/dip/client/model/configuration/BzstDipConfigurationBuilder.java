@@ -15,24 +15,26 @@
  */
 package software.xdev.bzst.dip.client.model.configuration;
 
-import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
-import java.util.function.Supplier;
 
+import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.signing.SigningProvider;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
+import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
 /**
  * Builder construct for the {@link BzstDipConfiguration}.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue", "PMD.GodClass"})
 public class BzstDipConfigurationBuilder
 {
 	public static final int DEFAULT_DELAY_BEFORE_CHECKING_RESULTS_IN_MILLIS = 1_000;
@@ -93,9 +95,9 @@ public class BzstDipConfigurationBuilder
 	 */
 	private String platformOperatorCorrDocRefId;
 	/**
-	 * @see BzstDipConfiguration#getCertificateKeystoreInputStream()
+	 * @see BzstDipConfiguration#getSigningProvider()
 	 */
-	private Supplier<InputStream> certificateKeystoreInputStream;
+	private SigningProvider signingProvider;
 	/**
 	 * @see BzstDipQueryResultConfiguration#delayBeforeCheckingResults
 	 */
@@ -159,11 +161,6 @@ public class BzstDipConfigurationBuilder
 	 * @see BzstDipConfiguration#getMessageTypeIndicEnum()
 	 */
 	private BzstCesopMessageTypeIndicEnum messageTypeIndicCesop;
-	
-	public void setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
-	{
-		this.retryQueryResultsAmount = retryQueryResultsAmount;
-	}
 	
 	public BzstDipConfigurationBuilder setReportingPeriodCesopQuarter(final int reportingPeriodCesopQuarter)
 	{
@@ -362,7 +359,7 @@ public class BzstDipConfigurationBuilder
 	 * @param retryQueryResultsAmount {@link #retryQueryResultsAmount}
 	 * @return itself
 	 */
-	public BzstDipConfigurationBuilder setRetryQueryResultsAmount(final int retryQueryResultsAmount)
+	public BzstDipConfigurationBuilder setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
 	{
 		this.retryQueryResultsAmount = retryQueryResultsAmount;
 		return this;
@@ -379,13 +376,12 @@ public class BzstDipConfigurationBuilder
 	}
 	
 	/**
-	 * @param certificateKeystoreInputStream {@link #certificateKeystoreInputStream}
+	 * @param signingProvider {@link #signingProvider}
 	 * @return itself
 	 */
-	public BzstDipConfigurationBuilder setCertificateKeystoreInputStream(
-		final Supplier<InputStream> certificateKeystoreInputStream)
+	public BzstDipConfigurationBuilder setSigningProvider(final SigningProvider signingProvider)
 	{
-		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
+		this.signingProvider = signingProvider;
 		return this;
 	}
 	
@@ -440,38 +436,31 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFileTransmittingCountry(
 				this.transmittingCountry,
 				PropertiesSupplier.PROPERTY_NAME_TRANSMITTING_COUNTRY,
-				BzstDipCountryCode.DE
-			),
+				BzstDipCountryCode.DE),
 			this.getSetPropertyOrReadFromFileMessageType(
 				this.messageType,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE,
-				BzstCesopMessageTypeEnum.PMT
-			),
+				BzstCesopMessageTypeEnum.PMT),
 			this.getSetPropertyOrReadFromFile(
 				this.messageRefId,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_REF_ID,
-				UUID.randomUUID().toString()
-			),
+				UUID.randomUUID().toString()),
 			this.getSetPropertyOrReadFromFile(
 				this.reportingPeriodCesopYear,
 				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR,
-				String.valueOf(LocalDate.now().getYear())
-			),
+				String.valueOf(LocalDate.now().getYear())),
 			this.getSetPropertyOrReadFromFileInteger(
 				this.reportingPeriodCesopQuarter,
 				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_QUARTER,
-				1
-			),
+				1),
 			this.getSetPropertyOrReadFromFileTimestamp(
 				this.timestamp,
 				PropertiesSupplier.PROPERTY_NAME_TIMESTAMP,
-				ZonedDateTime.now()
-			),
+				ZonedDateTime.now()),
 			this.getSetPropertyOrReadFromFileMessageTypeIndicCesop(
 				this.messageTypeIndicCesop,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC,
-				BzstCesopMessageTypeIndicEnum.CESOP_100
-			),
+				BzstCesopMessageTypeIndicEnum.CESOP_100),
 			this.getSetPropertyOrReadFromFileApplicationCode(
 				this.applicationCode,
 				PropertiesSupplier.PROPERTY_NAME_APPLICATION_CODE,
@@ -508,6 +497,7 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFileOecdDocType(
 				this.docTypeIndic,
 				PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC),
+			this.getSigningProvider(this.signingProvider),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorDocRefId,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
@@ -516,9 +506,6 @@ public class BzstDipConfigurationBuilder
 				this.platformOperatorCorrDocRefId,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_CORR_DOC_REF_ID,
 				""),
-			this.getInputStreamSupplier(
-				this.certificateKeystoreInputStream,
-				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE),
 			new BzstDipQueryResultConfiguration(
 				this.getSetPropertyOrReadFromFileDuration(
 					this.delayBeforeCheckingResults,
@@ -531,30 +518,103 @@ public class BzstDipConfigurationBuilder
 				this.getSetPropertyOrReadFromFileDuration(
 					this.delayInBetweenResultChecks,
 					PropertiesSupplier.PROPERTY_NAME_DELAY_IN_BETWEEN_RESULT_CHECKS_IN_MS,
-					Duration.ofMillis(DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS))
-			),
+					Duration.ofMillis(DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS))),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorOrganizationName,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_ORGANIZATION),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorPlatformName,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM),
-			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress)
-		);
+			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress));
 		BzstDipConfigurationValidator.validateConfiguration(configuration);
 		return configuration;
 	}
 	
-	private Supplier<InputStream> getInputStreamSupplier(
-		final Supplier<InputStream> builderProperty,
-		final String propertyNameInFile)
+	private void validateConfiguration(final BzstDipConfiguration configuration)
+	{
+		if(configuration.getDocType().isNewTransmission() && (configuration.getPlatformOperatorDocRefId() == null
+			|| configuration.getPlatformOperatorDocRefId().isBlank()))
+		{
+			throw new ConfigurationException(
+				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
+				"When sending a new transmission (OECD_0) a DocRefId must be set!");
+		}
+	}
+	
+	private SigningProvider getSigningProvider(final SigningProvider builderProperty)
 	{
 		if(builderProperty != null)
 		{
 			return builderProperty;
 		}
-		final String inputFile = this.getSetPropertyOrReadFromFile(null, propertyNameInFile);
-		return () -> ClassLoader.getSystemClassLoader().getResourceAsStream(inputFile);
+		final SigningProviderByJks signingProviderByJks = this.createJksKeyProvider();
+		if(signingProviderByJks != null)
+		{
+			return signingProviderByJks;
+		}
+		
+		final SigningProviderByPem signingProviderByPem = this.createPemKeyProvider();
+		if(signingProviderByPem != null)
+		{
+			return signingProviderByPem;
+		}
+		throw new ConfigurationException("A signing provider must be set");
+	}
+	
+	private SigningProviderByJks createJksKeyProvider()
+	{
+		final String jksKeystorePassword =
+			this.propertiesSupplier.getPropertyFromConfig(
+				PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_PASSWORD
+			);
+		final String jksKeystoreFile =
+			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_FILE);
+		if(jksKeystorePassword == null && jksKeystoreFile == null)
+		{
+			return null;
+		}
+		if(jksKeystorePassword != null && jksKeystoreFile != null)
+		{
+			return new SigningProviderByJks(jksKeystoreFile, jksKeystorePassword);
+		}
+		if(jksKeystoreFile == null)
+		{
+			throw new ConfigurationException(
+				"Invalid configuration of JKS Keystore: Keystore password is set, but the keystore file is not.");
+		}
+		throw new ConfigurationException(
+			"Invalid configuration of JKS Keystore: Keystore file is set, but the keystore password is not.");
+	}
+	
+	private SigningProviderByPem createPemKeyProvider()
+	{
+		final String signatureAlgorithm = this.getSetPropertyOrReadFromFile(
+			null,
+			PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_SIGNATURE_ALGORITHM,
+			SigningProviderByPem.DEFAULT_PRIVATE_KEY_ALGORITHM);
+		final String pemCertificateFile =
+			this.propertiesSupplier.getPropertyFromConfig(
+				PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_CERTIFICATE_FILE
+			);
+		final String pemPrivateKeyFile =
+			this.propertiesSupplier.getPropertyFromConfig(
+				PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_PRIVATE_KEY_FILE
+			);
+		if(pemCertificateFile == null && pemPrivateKeyFile == null)
+		{
+			return null;
+		}
+		if(pemCertificateFile != null && pemPrivateKeyFile != null)
+		{
+			return new SigningProviderByPem(pemCertificateFile, pemPrivateKeyFile, signatureAlgorithm);
+		}
+		if(pemCertificateFile == null)
+		{
+			throw new ConfigurationException(
+				"Invalid configuration of PEM Signature: The private key is set, but the certificate file is not.");
+		}
+		throw new ConfigurationException(
+			"Invalid configuration of PEM Signature: The certificate file is set, but the private key is not.");
 	}
 	
 	private BzstDipAddressFix getSetPropertyOrReadFromFileAddress(final BzstDipAddressFix builderProperty)
@@ -593,8 +653,7 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFile(
 				null,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_CITY),
-			null
-		);
+			null);
 	}
 	
 	private LocalDate getSetPropertyOrReadFromFileDate(
@@ -676,9 +735,7 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
-		return BzstDipOecdDocType.valueOf(this.getSetPropertyOrReadFromFile(
-			null,
-			propertyNameInFile));
+		return BzstDipOecdDocType.valueOf(this.getSetPropertyOrReadFromFile(null, propertyNameInFile));
 	}
 	
 	private BzstDipDpiMessageType getSetPropertyOrReadFromFileDpiMessageType(
@@ -689,10 +746,7 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
-		final String propertyValue = this.getSetPropertyOrReadFromFile(
-			null,
-			propertyNameInFile,
-			null);
+		final String propertyValue = this.getSetPropertyOrReadFromFile(null, propertyNameInFile, null);
 		if(propertyValue != null)
 		{
 			return BzstDipDpiMessageType.valueOf(propertyValue);

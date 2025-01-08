@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.util;
+package software.xdev.bzst.dip.client.signing;
 
 import static java.util.Collections.singletonList;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,33 +59,32 @@ import org.w3c.dom.NodeList;
 import software.xdev.bzst.dip.client.exception.SigningException;
 import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryNoExternalEntities;
 import software.xdev.bzst.dip.client.factory.TransformerFactoryExtension;
-import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
 /**
  * Helps with signing XML-Documents
  */
-public final class SigningUtil
+public final class XmlSigner
 {
-	private static final Logger LOGGER = LoggerFactory.getLogger(SigningUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(XmlSigner.class);
 	private static final String DIGEST_METHOD = DigestMethod.SHA256;
 	private static final String SIGNATURE_METHOD = SignatureMethod.SHA256_RSA_MGF1;
-	public static final String KEYSTORE_TYPE = "JKS";
 	
-	private SigningUtil()
+	private final SigningProvider certAndKeyProvider;
+	
+	public XmlSigner(final SigningProvider certAndKeyProvider)
 	{
+		this.certAndKeyProvider = certAndKeyProvider;
 	}
 	
 	/**
-	 * Signs an unsigned xml string with the corresponding keystore from the
-	 * {@link BzstDipConfiguration#certificateKeystoreInputStream}
+	 * Signs an unsigned xml string with the corresponding {@link SigningProvider}.
 	 *
 	 * @return the signed xml document as string
 	 */
-	public static String signXMLDocument(final String unsignedXmlString, final BzstDipConfiguration configuration)
+	public String signXMLDocument(final String unsignedXmlString)
 	{
-		try(final InputStream keystoreInputStream = configuration.getCertificateKeystoreInputStream().get();
-			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try(final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			final ByteArrayInputStream unsignedXmlByteArrayInputStream =
 				new ByteArrayInputStream(unsignedXmlString.getBytes(StandardCharsets.UTF_8)))
 		{
@@ -97,23 +95,17 @@ public final class SigningUtil
 			final Document newDocument = dbf.newDocumentBuilder().newDocument();
 			final XMLSignatureFactory xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
 			
-			// Get private key
-			final KeyStore.PrivateKeyEntry privateKeyEntry =
-				getPrivateKeyEntry(
-					keystoreInputStream,
-					configuration.getKeyStorePrivateKeyAlias(),
-					configuration.getCertificateKeystorePassword(),
-					KEYSTORE_TYPE
-				);
+			final X509Certificate certificate = this.certAndKeyProvider.getCertificate();
+			final PrivateKey privateKey = this.certAndKeyProvider.getPrivateKey();
 			
 			// Sign context
-			createDomSignContext(privateKeyEntry, newDocument, xmlSignatureFactory, dipXmlDocument);
+			this.createDomSignContext(certificate, privateKey, newDocument, xmlSignatureFactory, dipXmlDocument);
 			
 			final Result outputTarget = new StreamResult(outputStream);
 			final TransformerFactory transformerFactory = TransformerFactoryExtension.newInstance();
 			transformerFactory.newTransformer().transform(new DOMSource(newDocument), outputTarget);
 			
-			if(!validateSignature(newDocument, xmlSignatureFactory, privateKeyEntry))
+			if(!this.validateSignature(newDocument, xmlSignatureFactory, certificate))
 			{
 				throw new SigningException("The validation of the signature from the XML document has failed.");
 			}
@@ -126,8 +118,9 @@ public final class SigningUtil
 		}
 	}
 	
-	private static void createDomSignContext(
-		final KeyStore.PrivateKeyEntry privateKeyEntry,
+	private void createDomSignContext(
+		final X509Certificate certificate,
+		final PrivateKey privateKey,
 		final Document newDocument,
 		final XMLSignatureFactory xmlSignatureFactory,
 		final Document dipXmlDocument
@@ -140,16 +133,16 @@ public final class SigningUtil
 	{
 		
 		// Sign info
-		final SignedInfo signedInfo = createSignedInfo(xmlSignatureFactory);
+		final SignedInfo signedInfo = this.createSignedInfo(xmlSignatureFactory);
 		
 		// Key info
-		final KeyInfo keyInfo = createKeyInfo(privateKeyEntry, xmlSignatureFactory);
+		final KeyInfo keyInfo = this.createKeyInfo(certificate, xmlSignatureFactory);
 		
 		final DOMStructure content = new DOMStructure(dipXmlDocument.getDocumentElement());
 		final XMLObject signedObject = xmlSignatureFactory.newXMLObject(Collections.singletonList(content), "object",
 			null, null);
 		
-		final DOMSignContext domSignContext = new DOMSignContext(privateKeyEntry.getPrivateKey(), newDocument);
+		final DOMSignContext domSignContext = new DOMSignContext(privateKey, newDocument);
 		domSignContext.setDefaultNamespacePrefix("ds");
 		
 		final XMLSignature xmlSignature = xmlSignatureFactory.newXMLSignature(signedInfo, keyInfo,
@@ -157,7 +150,7 @@ public final class SigningUtil
 		xmlSignature.sign(domSignContext);
 	}
 	
-	private static SignedInfo createSignedInfo(final XMLSignatureFactory xmlSignatureFactory)
+	private SignedInfo createSignedInfo(final XMLSignatureFactory xmlSignatureFactory)
 		throws InvalidAlgorithmParameterException, NoSuchAlgorithmException
 	{
 		
@@ -173,25 +166,24 @@ public final class SigningUtil
 		);
 	}
 	
-	private static KeyInfo createKeyInfo(
-		final KeyStore.PrivateKeyEntry privateKeyEntry,
+	private KeyInfo createKeyInfo(
+		final X509Certificate certificate,
 		final XMLSignatureFactory xmlSignatureFactory)
 	{
-		final X509Certificate cert = (X509Certificate)privateKeyEntry.getCertificate();
 		final KeyInfoFactory kif = xmlSignatureFactory.getKeyInfoFactory();
 		
 		final List<Object> x509Content = new ArrayList<>();
-		x509Content.add(cert.getSubjectX500Principal().getName());
-		x509Content.add(cert);
+		x509Content.add(certificate.getSubjectX500Principal().getName());
+		x509Content.add(certificate);
 		
 		final X509Data xd = kif.newX509Data(x509Content);
 		return kif.newKeyInfo(singletonList(xd));
 	}
 	
-	private static boolean validateSignature(
+	private boolean validateSignature(
 		final Document doc,
 		final XMLSignatureFactory fac,
-		final KeyStore.PrivateKeyEntry privateKeyEntry)
+		final X509Certificate certificate)
 		throws MarshalException, XMLSignatureException
 	{
 		LOGGER.debug("Validating xml signature...");
@@ -206,7 +198,7 @@ public final class SigningUtil
 		// Create a DOMValidateContext and specify a KeySelector
 		// and document context.
 		final DOMValidateContext valContext = new DOMValidateContext(
-			privateKeyEntry.getCertificate().getPublicKey(),
+			certificate.getPublicKey(),
 			nl.item(0));
 		
 		// Unmarshal the XMLSignature.
@@ -215,39 +207,5 @@ public final class SigningUtil
 		LOGGER.debug("Finished validating xml signature.");
 		// Validate the XMLSignature.
 		return s.validate(valContext);
-	}
-	
-	/**
-	 * Reads the given {@link InputStream} with the corresponding password
-	 * and returns it as {@link KeyStore.PrivateKeyEntry}.
-	 */
-	public static KeyStore.PrivateKeyEntry getPrivateKeyEntry(
-		final InputStream keyStoreInputStream,
-		final String keystorePrivateKeyEntryAlias,
-		final String keyStorePassword,
-		final String type)
-	{
-		try
-		{
-			LOGGER.debug("Loading keystore file...");
-			final KeyStore ks = KeyStore.getInstance(type);
-			ks.load(keyStoreInputStream, keyStorePassword.toCharArray());
-			
-			final KeyStore.PrivateKeyEntry certificate = (KeyStore.PrivateKeyEntry)ks.getEntry(
-				keystorePrivateKeyEntryAlias,
-				new KeyStore.PasswordProtection(keyStorePassword.toCharArray()));
-			
-			if(certificate == null)
-			{
-				throw new SigningException("The private key entry in the keystore is null.");
-			}
-			return certificate;
-		}
-		catch(final Exception e)
-		{
-			throw new SigningException(
-				"Something wrong happened while getting the private key entry from the keystore.",
-				e);
-		}
 	}
 }

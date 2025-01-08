@@ -13,23 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package software.xdev.bzst.dip.client.exception;
+package software.xdev.bzst.dip.client.signing;
 
-import software.xdev.bzst.dip.client.webclient.BearerTokenRequester;
+import java.security.PrivateKey;
+import java.security.cert.X509Certificate;
 
 
 /**
- * Is used for exception that occur during encryption in {@link BearerTokenRequester#getAccessToken()}.
+ * Provides a certificate and a private key to use in the {@link XmlSigner}.
  */
-public class EncryptionException extends RuntimeException
+public interface SigningProvider
 {
-	public EncryptionException(final String message)
-	{
-		super(message);
-	}
+	X509Certificate getCertificate();
 	
-	public EncryptionException(final String message, final Throwable cause)
-	{
-		super(message, cause);
-	}
+	PrivateKey getPrivateKey();
 }

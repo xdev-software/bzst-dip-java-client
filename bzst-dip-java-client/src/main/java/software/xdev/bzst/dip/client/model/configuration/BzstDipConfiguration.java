@@ -15,15 +15,16 @@
  */
 package software.xdev.bzst.dip.client.model.configuration;
 
-import java.io.InputStream;
+import java.security.PrivateKey;
+import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.signing.SigningProvider;
 
 
 /**
@@ -123,8 +124,7 @@ public class BzstDipConfiguration
 	private final String keyStorePrivateKeyAlias;
 	/**
 	 * Is used for identifying this client to the BZST API. A valid issuer/clientId is defined by the BZST and must
-	 * have
-	 * been received from them.
+	 * have been received from them.
 	 * <p>
 	 * See <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip
 	 * .pdf?__blob=publicationFile&v=9">Kommunikationshandbuch DIP-Standard 1.4</a> - Section 2.2.1:<br>
@@ -195,9 +195,14 @@ public class BzstDipConfiguration
 	private final BzstDipOecdDocType docType;
 	
 	/**
-	 * Defines the input of which the keystore is read. This can be any input as long as it is an {@link InputStream}.
+	 * Defines a way to get a {@link X509Certificate} and an {@link PrivateKey} for signing the xml to send.
+	 * <p>
+	 *     This can be done by providing two PEM files ({@link SigningProviderByPem},
+	 *     a JKS file ({@link SigningProviderByJks}) or by implementing a custom
+	 *     {@link SigningProvider}.
+	 * </p>
 	 */
-	private final Supplier<InputStream> certificateKeystoreInputStream;
+	private final SigningProvider signingProvider;
 	
 	/**
 	 * Must get set if {@link #docType} is {@link BzstDipOecdDocType#OECD_0}.<br/> The id references the xml document
@@ -247,9 +252,9 @@ public class BzstDipConfiguration
 		final BzstDipDpiMessageType messageTypeIndic,
 		final LocalDate reportingPeriod,
 		final BzstDipOecdDocType docType,
+		final SigningProvider signingProvider,
 		final String platformOperatorDocRefId,
 		final String platformOperatorCorrDocRefId,
-		final Supplier<InputStream> certificateKeystoreInputStream,
 		final BzstDipQueryResultConfiguration queryResultConfiguration,
 		final String platformOperatorOrganizationName,
 		final String platformOperatorPlatformName,
@@ -274,9 +279,9 @@ public class BzstDipConfiguration
 		this.messageTypeIndic = messageTypeIndic;
 		this.reportingPeriod = reportingPeriod;
 		this.docType = docType;
+		this.signingProvider = signingProvider;
 		this.platformOperatorDocRefId = platformOperatorDocRefId;
 		this.platformOperatorCorrDocRefId = platformOperatorCorrDocRefId;
-		this.certificateKeystoreInputStream = certificateKeystoreInputStream;
 		this.queryResultConfiguration = queryResultConfiguration;
 		this.platformOperatorOrganizationName = platformOperatorOrganizationName;
 		this.platformOperatorPlatformName = platformOperatorPlatformName;
@@ -343,9 +348,9 @@ public class BzstDipConfiguration
 		return this.platformOperatorCorrDocRefId;
 	}
 	
-	public Supplier<InputStream> getCertificateKeystoreInputStream()
+	public SigningProvider getSigningProvider()
 	{
-		return this.certificateKeystoreInputStream;
+		return this.signingProvider;
 	}
 	
 	public BzstDipQueryResultConfiguration getQueryResultConfiguration()

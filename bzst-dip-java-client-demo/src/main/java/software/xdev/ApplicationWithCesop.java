@@ -48,6 +48,7 @@ import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCurrency;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -75,8 +76,7 @@ public final class ApplicationWithCesop
 			.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 			.setTaxID("86095742719")
 			.setTaxNumber("123")
-			.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-				.getResourceAsStream("DemoKeystore.jks"))
+			.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 			.setCertificateKeystorePassword("test123")
 			.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 			.setMessageTypeIndicCesop(BzstCesopMessageTypeIndicEnum.CESOP_101)
