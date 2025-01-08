@@ -105,6 +105,7 @@ public class BearerTokenRequester
 		{
 			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
 				keystoreInputStream,
+				this.configuration.getKeyStorePrivateKeyAlias(),
 				this.configuration.getCertificateKeystorePassword(),
 				SigningUtil.KEYSTORE_TYPE
 			);

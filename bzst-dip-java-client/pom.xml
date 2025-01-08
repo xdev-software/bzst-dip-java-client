@@ -493,7 +493,7 @@
 					<plugin>
 						<groupId>software.xdev</groupId>
 						<artifactId>find-and-replace-maven-plugin</artifactId>
-						<version>1.0.0</version>
+						<version>1.0.3</version>
 						<executions>
 							<execution>
 								<!-- Remove so that we don't need additional dependency -->
@@ -542,10 +542,17 @@
 									<replaceAll>false</replaceAll>
 									<replaceLineBased>false</replaceLineBased>
 								</configuration>
-							</execution> 
+							</execution>
+						</executions>
 					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>pmd</id>
+			<build>
+				<plugins>
 					<plugin>
-						<id>pmd</id>
 						<artifactId>maven-pmd-plugin</artifactId>
 						<version>3.26.0</version>
 						<configuration>

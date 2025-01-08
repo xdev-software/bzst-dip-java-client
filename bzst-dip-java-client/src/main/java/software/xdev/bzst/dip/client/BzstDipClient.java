@@ -23,8 +23,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opencsv.exceptions.CsvValidationException;
-
 import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
 import software.xdev.bzst.dip.client.generated.client.ApiClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
@@ -91,14 +89,14 @@ public class BzstDipClient
 	}
 	
 	/**
-	 * Sends the message without querying for a response. We recommend using the
-	 * {@link #sendDipAndQueryResult(String)} counterpart and
-	 * suggest only using this method, if specifically needed.
+	 * Sends the message without querying for a response. We recommend using the {@link #sendDipAndQueryResult(String)}
+	 * counterpart and suggest only using this method, if specifically needed.
+	 *
 	 * @param csvData which will be parsed by the {@link ReportableSellerCsvFileParser}.
 	 * @return the result which only contains the dataTransferNumber
 	 */
 	public BzstDipSendingResult sendDipOnly(final String csvData)
-		throws HttpStatusCodeNotExceptedException, CsvValidationException, IOException
+		throws IOException
 	{
 		return this.sendDipOnly(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
@@ -138,13 +136,14 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#getQueryResultConfiguration()}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(BzstDipMessage)} can be used, if the result is not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(BzstDipMessage)} can be used, if the result is not needed, or the results
+	 * should be queried in some other way.
 	 * </p>
+	 *
 	 * @param message with the data for the BZST DIP API.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
@@ -155,7 +154,7 @@ public class BzstDipClient
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(final BzstCesopPaymentDataBody message)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException, DatatypeConfigurationException
+		throws InterruptedException, IOException, DatatypeConfigurationException
 	{
 		return this.sendDipAndQueryResult(message.toXmlType());
 	}
@@ -163,13 +162,14 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#getQueryResultConfiguration()}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(String)} can be used, if the result is not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(String)} can be used, if the result is not needed, or the results should be
+	 * queried in some other way.
 	 * </p>
+	 *
 	 * @param csvData which will be parsed by the {@link ReportableSellerCsvFileParser}.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
@@ -182,13 +182,14 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#getQueryResultConfiguration()}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(List)} can be used, if the result is not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(List)} can be used, if the result is not needed, or the results should be
+	 * queried in some other way.
 	 * </p>
+	 *
 	 * @param correctableReportableSellerTypes with the data for the BZST DIP API.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
@@ -206,16 +207,16 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#getQueryResultConfiguration()}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(List, CorrectablePlatformOperatorType)} can be used, if the result is
-	 *     not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(List, CorrectablePlatformOperatorType)} can be used, if the result is not
+	 * needed, or the results should be queried in some other way.
 	 * </p>
+	 *
 	 * @param correctableReportableSellerTypes with the data for the BZST DIP API.
-	 * @param correctablePlatformOperatorType with the information about the platform operator.
+	 * @param correctablePlatformOperatorType  with the information about the platform operator.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
 	public BzstDipCompleteResult sendDipAndQueryResult(
@@ -224,38 +225,35 @@ public class BzstDipClient
 	)
 		throws InterruptedException, IOException
 	{
-			final BzstDipSendingResult sendingResult =
-				this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType);
-			
-			Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
+		final BzstDipSendingResult sendingResult =
+			this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType);
+		
+		Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
 		
 		final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(sendingResult);
-			
-			return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
+		
+		return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(
 		final PaymentDataBodyType paymentDataBodyType
 	)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
-		try(final WebClient client = new WebClient(this.configuration))
-		{
-			final BzstDipSendingResult sendingResult =
-				this.sendDipOnlyInternal(paymentDataBodyType, client);
-			
-			Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
-			
-			final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(client, sendingResult);
-			
-			return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
-		}
+		final WebClient client = new WebClient(this.configuration);
+		final BzstDipSendingResult sendingResult = this.sendDipOnlyInternal(paymentDataBodyType, client);
+		
+		Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
+		
+		final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(sendingResult);
+		
+		return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
 	}
 	
 	/**
-	 * Queries for a DIP result. We recommend using the
-	 * {@link #sendDipAndQueryResult(BzstDipMessage)} counterpart and
+	 * Queries for a DIP result. We recommend using the {@link #sendDipAndQueryResult(BzstDipMessage)} counterpart and
 	 * suggest only using this method, if specifically needed.
+	 *
 	 * @return all found {@link BzstDipSingleTransferResult}s
 	 */
 	public BzstDipRequestStatusResult queryDipResult() throws IOException
@@ -292,7 +290,7 @@ public class BzstDipClient
 	private BzstDipSendingResult sendDipOnlyInternal(
 		final PaymentDataBodyType paymentDataBodyType,
 		final WebClient client
-	) throws HttpStatusCodeNotExceptedException
+	)
 	{
 		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
 		final String signedXML =

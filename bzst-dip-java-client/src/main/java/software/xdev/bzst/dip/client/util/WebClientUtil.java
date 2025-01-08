@@ -15,10 +15,18 @@
  */
 package software.xdev.bzst.dip.client.util;
 
+import static software.xdev.bzst.dip.client.webclient.BearerTokenRequester.MDS_POSTFIX;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,7 +41,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import io.jsonwebtoken.Jwts;
+import software.xdev.bzst.dip.client.exception.EncryptionException;
 import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryNoExternalEntities;
+import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
 /**
