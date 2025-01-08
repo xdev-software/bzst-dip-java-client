@@ -12,7 +12,13 @@ Client for using the [Mass data transmission DIP (mass data interface)](https://
 
 The BZSt (Bundeszentralamt für Steuern / Federal Central Tax Office) provides the Digital Inbox (DIP) as a service for payment service providers to transmit financial data.
 
-Clients need to register / login at [BZSt online.portal](https://www.bzst.de/DE/Service/Portalinformation/Massendaten/DIP/dip.html?nn=68828) through [Elster](https://www.elster.de/elsterweb/start), [BundID](https://id.bund.de/de) or [BZSt Online-Portal (BOP)](https://www.elster.de/bportal/start).
+This library uses a [generated](./bzst-dip-java-client/pom.xml) client from an [``openapi.yml``](./openapi/openapi.yml)
+using [OpenAPI Generator](https://openapi-generator.tech/).
+
+Clients need to register / login
+at [BZSt online.portal](https://www.bzst.de/DE/Service/Portalinformation/Massendaten/DIP/dip.html?nn=68828)
+through [Elster](https://www.elster.de/elsterweb/start), [BundID](https://id.bund.de/de)
+or [BZSt Online-Portal (BOP)](https://www.elster.de/bportal/start).
 
 See the [BZSt Information](https://www.bzst.de/EN/Service/Portalinformation/Login/login_node.html) for more information.
 

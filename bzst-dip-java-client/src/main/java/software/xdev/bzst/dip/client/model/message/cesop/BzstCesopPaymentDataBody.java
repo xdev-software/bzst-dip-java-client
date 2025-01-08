@@ -53,7 +53,7 @@ import software.xdev.bzst.dip.client.xmldocument.model.cesop.VATIdType;
 /**
  * @param reportingPSP  The reportingPSP element clearly defines the payment service provider that reports the payment
  *                      data to the national tax administration. {@link BzstCesopReportingPSP}
- * @param reportedPayee defines the payee to whom the data transmitted by the payment service provider
+ * @param reportedPayees defines the payees to whom the data transmitted by the payment service provider
  */
 public record BzstCesopPaymentDataBody(BzstCesopReportingPSP reportingPSP, List<BzstCesopReportedPayee> reportedPayees)
 {

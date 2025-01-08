@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.BzstDipClient;
-import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
@@ -35,7 +34,7 @@ public final class ApplicationWithDac7
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationWithDac7.class);
 	
 	public static void main(final String[] args)
-		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException
+		throws InterruptedException, IOException
 	{
 		final BzstDipConfiguration configuration = createConfiguration();
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);

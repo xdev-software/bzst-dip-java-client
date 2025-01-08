@@ -23,9 +23,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opencsv.exceptions.CsvValidationException;
-
-import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
+import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
+import software.xdev.bzst.dip.client.generated.client.ApiClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopPaymentDataBody;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
@@ -51,10 +50,29 @@ public class BzstDipClient
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BzstDipClient.class);
 	private final BzstDipConfiguration configuration;
+	private final WebClient webClient;
 	
 	public BzstDipClient(final BzstDipConfiguration configuration)
 	{
+		this(configuration, new WebClient(configuration));
+	}
+	
+	public BzstDipClient(final BzstDipConfiguration configuration, final ApiClient apiClient)
+	{
+		this(configuration, new WebClient(configuration, apiClient));
+	}
+	
+	public BzstDipClient(
+		final BzstDipConfiguration configuration,
+		final MdEinreichenProviderApi mdEinreichenProviderApi)
+	{
+		this(configuration, new WebClient(configuration, mdEinreichenProviderApi));
+	}
+	
+	public BzstDipClient(final BzstDipConfiguration configuration, final WebClient webClient)
+	{
 		this.configuration = configuration;
+		this.webClient = webClient;
 	}
 	
 	/**
@@ -66,20 +84,19 @@ public class BzstDipClient
 	 * @return the result which only contains the dataTransferNumber
 	 */
 	public BzstDipSendingResult sendDipOnly(final BzstDipMessage message)
-		throws HttpStatusCodeNotExceptedException
 	{
 		return this.sendDipOnly(message.toXmlType(this.configuration));
 	}
 	
 	/**
-	 * Sends the message without querying for a response. We recommend using the
-	 * {@link #sendDipAndQueryResult(String)} counterpart and
-	 * suggest only using this method, if specifically needed.
+	 * Sends the message without querying for a response. We recommend using the {@link #sendDipAndQueryResult(String)}
+	 * counterpart and suggest only using this method, if specifically needed.
+	 *
 	 * @param csvData which will be parsed by the {@link ReportableSellerCsvFileParser}.
 	 * @return the result which only contains the dataTransferNumber
 	 */
 	public BzstDipSendingResult sendDipOnly(final String csvData)
-		throws HttpStatusCodeNotExceptedException, CsvValidationException, IOException
+		throws IOException
 	{
 		return this.sendDipOnly(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
@@ -93,7 +110,6 @@ public class BzstDipClient
 	 */
 	public BzstDipSendingResult sendDipOnly(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes)
-		throws HttpStatusCodeNotExceptedException
 	{
 		return this.sendDipOnly(
 			correctableReportableSellerTypes,
@@ -113,35 +129,32 @@ public class BzstDipClient
 	public BzstDipSendingResult sendDipOnly(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
 		final CorrectablePlatformOperatorType correctablePlatformOperatorType)
-		throws HttpStatusCodeNotExceptedException
 	{
-		try(final WebClient client = new WebClient(this.configuration))
-		{
-			return this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType, client);
-		}
+		return this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType);
 	}
 	
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#queryResultConfiguration}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(BzstDipMessage)} can be used, if the result is not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(BzstDipMessage)} can be used, if the result is not needed, or the results
+	 * should be queried in some other way.
 	 * </p>
+	 *
 	 * @param message with the data for the BZST DIP API.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
 	public BzstDipCompleteResult sendDipAndQueryResult(final BzstDipMessage message)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(message.toXmlType(this.configuration));
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(final BzstCesopPaymentDataBody message)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException, DatatypeConfigurationException
+		throws InterruptedException, IOException, DatatypeConfigurationException
 	{
 		return this.sendDipAndQueryResult(message.toXmlType());
 	}
@@ -149,18 +162,19 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#queryResultConfiguration}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(String)} can be used, if the result is not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(String)} can be used, if the result is not needed, or the results should be
+	 * queried in some other way.
 	 * </p>
+	 *
 	 * @param csvData which will be parsed by the {@link ReportableSellerCsvFileParser}.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
 	public BzstDipCompleteResult sendDipAndQueryResult(final String csvData)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(new ReportableSellerCsvFileParser(this.configuration).parseCsvData(csvData));
 	}
@@ -168,20 +182,21 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#queryResultConfiguration}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(List)} can be used, if the result is not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(List)} can be used, if the result is not needed, or the results should be
+	 * queried in some other way.
 	 * </p>
+	 *
 	 * @param correctableReportableSellerTypes with the data for the BZST DIP API.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
 	public BzstDipCompleteResult sendDipAndQueryResult(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes
 	)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
 		return this.sendDipAndQueryResult(
 			correctableReportableSellerTypes,
@@ -192,74 +207,64 @@ public class BzstDipClient
 	/**
 	 * Sends the message and queries a result.
 	 * <p>
-	 *     Querying the result might take a few seconds and is configured in
-	 *     {@link BzstDipConfiguration#queryResultConfiguration}.
+	 * Querying the result might take a few seconds and is configured in
+	 * {@link BzstDipConfiguration#getQueryResultConfiguration()}.
 	 * </p>
 	 * <p>
-	 *     In special cases {@link #sendDipOnly(List, CorrectablePlatformOperatorType)} can be used, if the result is
-	 *     not needed,
-	 *     or the results should be queried in some other way.
+	 * In special cases {@link #sendDipOnly(List, CorrectablePlatformOperatorType)} can be used, if the result is not
+	 * needed, or the results should be queried in some other way.
 	 * </p>
+	 *
 	 * @param correctableReportableSellerTypes with the data for the BZST DIP API.
-	 * @param correctablePlatformOperatorType with the information about the platform operator.
+	 * @param correctablePlatformOperatorType  with the information about the platform operator.
 	 * @return the result which contains the dataTransferNumber and all found responses in the API.
 	 */
 	public BzstDipCompleteResult sendDipAndQueryResult(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
 		final CorrectablePlatformOperatorType correctablePlatformOperatorType
 	)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
-		try(final WebClient client = new WebClient(this.configuration))
-		{
-			final BzstDipSendingResult sendingResult =
-				this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType, client);
-			
-			Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
-			
-			final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(client, sendingResult);
-			
-			return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
-		}
+		final BzstDipSendingResult sendingResult =
+			this.sendDipOnlyInternal(correctableReportableSellerTypes, correctablePlatformOperatorType);
+		
+		Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
+		
+		final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(sendingResult);
+		
+		return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
 	}
 	
 	public BzstDipCompleteResult sendDipAndQueryResult(
 		final PaymentDataBodyType paymentDataBodyType
 	)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
-		try(final WebClient client = new WebClient(this.configuration))
-		{
-			final BzstDipSendingResult sendingResult =
-				this.sendDipOnlyInternal(paymentDataBodyType, client);
-			
-			Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
-			
-			final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(client, sendingResult);
-			
-			return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
-		}
+		final WebClient client = new WebClient(this.configuration);
+		final BzstDipSendingResult sendingResult = this.sendDipOnlyInternal(paymentDataBodyType, client);
+		
+		Thread.sleep(this.configuration.getQueryResultConfiguration().delayBeforeCheckingResults().toMillis());
+		
+		final BzstDipRequestStatusResult requestStatusResult = this.queryDipResultWithRetry(sendingResult);
+		
+		return BzstDipCompleteResult.fromResult(sendingResult, requestStatusResult);
 	}
 	
 	/**
-	 * Queries for a DIP result. We recommend using the
-	 * {@link #sendDipAndQueryResult(BzstDipMessage)} counterpart and
+	 * Queries for a DIP result. We recommend using the {@link #sendDipAndQueryResult(BzstDipMessage)} counterpart and
 	 * suggest only using this method, if specifically needed.
+	 *
 	 * @return all found {@link BzstDipSingleTransferResult}s
 	 */
-	public BzstDipRequestStatusResult queryDipResult() throws HttpStatusCodeNotExceptedException, IOException
+	public BzstDipRequestStatusResult queryDipResult() throws IOException
 	{
-		try(final WebClient client = new WebClient(this.configuration))
-		{
-			return client.readAndConfirmDataTransferNumbers();
-		}
+		return this.webClient.readAndConfirmDataTransferNumbers();
 	}
 	
 	private BzstDipSendingResult sendDipOnlyInternal(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
-		final CorrectablePlatformOperatorType correctablePlatformOperatorType,
-		final WebClient client
-	) throws HttpStatusCodeNotExceptedException
+		final CorrectablePlatformOperatorType correctablePlatformOperatorType
+	)
 	{
 		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
 		final String signedXML =
@@ -272,12 +277,12 @@ public class BzstDipClient
 		LOGGER.debug("Created following XML-Document:\n{}", signedXML);
 		
 		LOGGER.debug("XML data will now be uploaded...");
-		final String dataTransferNumber = client.getDataTransferNumber();
+		final String dataTransferNumber = this.webClient.getDataTransferNumber();
 		LOGGER.debug("Data transfer number: {}", dataTransferNumber);
 		
-		client.uploadMassData(dataTransferNumber, signedXML);
+		this.webClient.uploadMassData(dataTransferNumber, signedXML);
 		
-		client.closeSubmission(dataTransferNumber);
+		this.webClient.closeSubmission(dataTransferNumber);
 		
 		return new BzstDipSendingResult(dataTransferNumber);
 	}
@@ -285,7 +290,7 @@ public class BzstDipClient
 	private BzstDipSendingResult sendDipOnlyInternal(
 		final PaymentDataBodyType paymentDataBodyType,
 		final WebClient client
-	) throws HttpStatusCodeNotExceptedException
+	)
 	{
 		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
 		final String signedXML =
@@ -308,9 +313,8 @@ public class BzstDipClient
 	}
 	
 	private BzstDipRequestStatusResult queryDipResultWithRetry(
-		final WebClient webClient,
 		final BzstDipSendingResult sendingResult)
-		throws HttpStatusCodeNotExceptedException, InterruptedException, IOException
+		throws InterruptedException, IOException
 	{
 		BzstDipRequestStatusResult requestStatusResult;
 		int retryCounter = 0;
@@ -323,7 +327,7 @@ public class BzstDipClient
 				LOGGER.debug("Waiting {}ms for next query...", delayInMilliseconds);
 				Thread.sleep(delayInMilliseconds);
 			}
-			requestStatusResult = webClient.readAndConfirmDataTransferNumbers();
+			requestStatusResult = this.webClient.readAndConfirmDataTransferNumbers();
 			retryCounter++;
 		}
 		while(

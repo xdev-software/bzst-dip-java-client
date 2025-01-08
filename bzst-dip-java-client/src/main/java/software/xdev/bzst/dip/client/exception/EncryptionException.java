@@ -15,12 +15,11 @@
  */
 package software.xdev.bzst.dip.client.exception;
 
-import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.webclient.BearerTokenRequester;
 
 
 /**
- * Is used for exception that occur during encryption in
- * {@link software.xdev.bzst.dip.client.util.WebClientUtil#createRequestToken(BzstDipConfiguration)}.
+ * Is used for exception that occur during encryption in {@link BearerTokenRequester#getAccessToken()}.
  */
 public class EncryptionException extends RuntimeException
 {

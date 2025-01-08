@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import software.xdev.bzst.dip.client.BzstDipClient;
-import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
@@ -57,7 +56,7 @@ public final class ApplicationWithCesop
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationWithCesop.class);
 	
 	public static void main(final String[] args)
-		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException, DatatypeConfigurationException
+		throws InterruptedException, IOException, DatatypeConfigurationException
 	{
 		final BzstDipConfiguration configuration = createConfiguration();
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
