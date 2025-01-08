@@ -14,7 +14,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -25,7 +25,7 @@ public final class ApplicationWithCsvInput
 	public static void main(final String[] args)
 		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException, CsvValidationException
 	{
-		final BzstDipConfiguration configuration = Application.createConfiguration();
+		final BzstDipConfiguration configuration = ApplicationWithDac7.createConfiguration();
 		
 		final String csvData = getResourceFileAsString("DemoCsvData.csv");
 		

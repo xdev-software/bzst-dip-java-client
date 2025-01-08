@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 
 
 @SuppressWarnings("MethodName")
@@ -191,18 +191,19 @@ class BzstDipConfigurationBuilderTest
 	}
 	
 	@Test
-	void buildAndValidate_missingMessageTypeIndic()
+	void buildAndValidate_cesop()
 	{
-		Assertions.assertThrows(
-			ConfigurationException.class,
+		Assertions.assertDoesNotThrow(
 			() -> new BzstDipConfigurationBuilder()
+				.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.CESOP)
+				// TODO
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
 				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
 					.getResourceAsStream("DemoKeystore.jks"))
 				.setCertificateKeystorePassword("test123")
-				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
+				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
 				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
 				.setPlatformOperatorOrganizationName("TestOrg")

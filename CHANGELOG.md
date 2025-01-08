@@ -1,3 +1,7 @@
+# 2.0.0
+
+* Now supports the CESOP-Format (and the DAC7-Format).
+
 # 1.0.3
 
 * ReportableSellerCreator can now create "Rechtsträger" like a company.

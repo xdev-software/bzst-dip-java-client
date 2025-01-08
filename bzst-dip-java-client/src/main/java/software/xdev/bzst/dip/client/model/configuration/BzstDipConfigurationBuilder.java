@@ -18,10 +18,15 @@ package software.xdev.bzst.dip.client.model.configuration;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
 
 
 /**
@@ -115,6 +120,93 @@ public class BzstDipConfigurationBuilder
 	 * @see BzstDipConfiguration#getPlatformOperatorAddress()
 	 */
 	private BzstDipAddressFix platformOperatorAddress;
+	/**
+	 * @see BzstDipConfiguration#getApplicationCode()
+	 */
+	private BzstDipConfiguration.SupportedApplicationCode applicationCode;
+	
+	/**
+	 * @see BzstDipConfiguration#getTransmittingCountry()
+	 */
+	private BzstDipCountryCode transmittingCountry;
+	
+	/**
+	 * @see BzstDipConfiguration#getMessageType()
+	 */
+	private BzstCesopMessageTypeEnum messageType;
+	
+	/**
+	 * @see BzstDipConfiguration#getMessageRefId()
+	 */
+	private String messageRefId;
+	
+	/**
+	 * @see BzstDipConfiguration#getTimestamp()
+	 */
+	private ZonedDateTime timestamp;
+	
+	/**
+	 * @see BzstDipConfiguration#getReportingPeriodCesopQuarter()
+	 */
+	private int reportingPeriodCesopQuarter;
+	
+	/**
+	 * @see BzstDipConfiguration#getReportingPeriodCesopYear()
+	 */
+	private String reportingPeriodCesopYear;
+	
+	/**
+	 * @see BzstDipConfiguration#getMessageTypeIndicEnum()
+	 */
+	private BzstCesopMessageTypeIndicEnum messageTypeIndicCesop;
+	
+	public void setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
+	{
+		this.retryQueryResultsAmount = retryQueryResultsAmount;
+	}
+	
+	public BzstDipConfigurationBuilder setReportingPeriodCesopQuarter(final int reportingPeriodCesopQuarter)
+	{
+		this.reportingPeriodCesopQuarter = reportingPeriodCesopQuarter;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setMessageTypeIndicCesop(
+		final BzstCesopMessageTypeIndicEnum messageTypeIndicCesop)
+	{
+		this.messageTypeIndicCesop = messageTypeIndicCesop;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setReportingPeriodCesopYear(final String reportingPeriodCesopYear)
+	{
+		this.reportingPeriodCesopYear = reportingPeriodCesopYear;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setTransmittingCountry(final BzstDipCountryCode transmittingCountry)
+	{
+		this.transmittingCountry = transmittingCountry;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setMessageType(final BzstCesopMessageTypeEnum messageType)
+	{
+		this.messageType = messageType;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setMessageRefId(final String messageRefId)
+	{
+		this.messageRefId = messageRefId;
+		return this;
+	}
+	
+	public BzstDipConfigurationBuilder setTimestamp(final ZonedDateTime timestamp)
+	{
+		this.timestamp = timestamp;
+		return this;
+	}
 	
 	public BzstDipConfigurationBuilder(final PropertiesSupplier propertiesSupplier)
 	{
@@ -329,11 +421,61 @@ public class BzstDipConfigurationBuilder
 	}
 	
 	/**
+	 * @param applicationCode {@link #applicationCode}
+	 * @return itself
+	 */
+	public BzstDipConfigurationBuilder setApplicationCode(
+		final BzstDipConfiguration.SupportedApplicationCode applicationCode)
+	{
+		this.applicationCode = applicationCode;
+		return this;
+	}
+	
+	/**
 	 * @return a new created {@link BzstDipConfiguration} with the values provided by this builder.
 	 */
 	public BzstDipConfiguration buildAndValidate()
 	{
 		final BzstDipConfiguration configuration = new BzstDipConfiguration(
+			this.getSetPropertyOrReadFromFileTransmittingCountry(
+				this.transmittingCountry,
+				PropertiesSupplier.PROPERTY_NAME_TRANSMITTING_COUNTRY,
+				BzstDipCountryCode.DE
+			),
+			this.getSetPropertyOrReadFromFileMessageType(
+				this.messageType,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE,
+				BzstCesopMessageTypeEnum.PMT
+			),
+			this.getSetPropertyOrReadFromFile(
+				this.messageRefId,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_REF_ID,
+				UUID.randomUUID().toString()
+			),
+			this.getSetPropertyOrReadFromFile(
+				this.reportingPeriodCesopYear,
+				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR,
+				String.valueOf(LocalDate.now().getYear())
+			),
+			this.getSetPropertyOrReadFromFileInteger(
+				this.reportingPeriodCesopQuarter,
+				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_QUARTER,
+				1
+			),
+			this.getSetPropertyOrReadFromFileTimestamp(
+				this.timestamp,
+				PropertiesSupplier.PROPERTY_NAME_TIMESTAMP,
+				ZonedDateTime.now()
+			),
+			this.getSetPropertyOrReadFromFileMessageTypeIndicCesop(
+				this.messageTypeIndicCesop,
+				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC,
+				BzstCesopMessageTypeIndicEnum.CESOP_100
+			),
+			this.getSetPropertyOrReadFromFileApplicationCode(
+				this.applicationCode,
+				PropertiesSupplier.PROPERTY_NAME_APPLICATION_CODE,
+				BzstDipConfiguration.SupportedApplicationCode.DAC7),
 			this.getSetPropertyOrReadFromFile(
 				this.certificateKeystorePassword,
 				PropertiesSupplier.PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD,
@@ -547,9 +689,15 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
-		return BzstDipDpiMessageType.valueOf(this.getSetPropertyOrReadFromFile(
+		final String propertyValue = this.getSetPropertyOrReadFromFile(
 			null,
-			propertyNameInFile));
+			propertyNameInFile,
+			null);
+		if(propertyValue != null)
+		{
+			return BzstDipDpiMessageType.valueOf(propertyValue);
+		}
+		return null;
 	}
 	
 	private String getSetPropertyOrReadFromFile(final String builderProperty, final String propertyNameInFile)
@@ -581,5 +729,80 @@ public class BzstDipConfigurationBuilder
 			return defaultValue;
 		}
 		return propertyFromFile;
+	}
+	
+	private ZonedDateTime getSetPropertyOrReadFromFileTimestamp(
+		final ZonedDateTime builderProperty,
+		final String propertyNameInFile,
+		final ZonedDateTime defaultProperty)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return ZonedDateTime.parse(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
+	}
+	
+	private BzstDipCountryCode getSetPropertyOrReadFromFileTransmittingCountry(
+		final BzstDipCountryCode builderProperty,
+		final String propertyNameInFile,
+		final BzstDipCountryCode defaultProperty)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstDipCountryCode.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
+	}
+	
+	private BzstCesopMessageTypeEnum getSetPropertyOrReadFromFileMessageType(
+		final BzstCesopMessageTypeEnum builderProperty,
+		final String propertyNameInFile,
+		final BzstCesopMessageTypeEnum defaultProperty)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstCesopMessageTypeEnum.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
+	}
+	
+	private BzstCesopMessageTypeIndicEnum getSetPropertyOrReadFromFileMessageTypeIndicCesop(
+		final BzstCesopMessageTypeIndicEnum builderProperty,
+		final String propertyNameInFile,
+		final BzstCesopMessageTypeIndicEnum defaultProperty)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstCesopMessageTypeIndicEnum.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
+	}
+	
+	private BzstDipConfiguration.SupportedApplicationCode getSetPropertyOrReadFromFileApplicationCode(
+		final BzstDipConfiguration.SupportedApplicationCode builderProperty,
+		final String propertyNameInFile,
+		final BzstDipConfiguration.SupportedApplicationCode defaultProperty)
+	{
+		if(builderProperty != null)
+		{
+			return builderProperty;
+		}
+		return BzstDipConfiguration.SupportedApplicationCode.valueOf(this.getSetPropertyOrReadFromFile(
+			null,
+			propertyNameInFile,
+			defaultProperty.toString()));
 	}
 }
