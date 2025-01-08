@@ -15,18 +15,28 @@
  */
 package software.xdev.bzst.dip.client.parser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+
+import software.xdev.bzst.dip.client.exception.CsvParseException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipConsiderations;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipFees;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipNumberOfActivities;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTaxes;
 import software.xdev.bzst.dip.client.xmldocument.ReportableSellerCreator;
 import software.xdev.bzst.dip.client.xmldocument.model.AddressFixType;
 import software.xdev.bzst.dip.client.xmldocument.model.ConsiderationType;
@@ -46,11 +56,60 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
  * <p>
  * See {@code test/resources/TestCsvData.csv}
  * </p>
+ * If the CSV data is formatted differently, it is also possible to parse the data through a {@link CSVReader}, see
+ * {@link #parseCsvData(CSVReader)}. The data must be in the following order:
+ * <ol>
+ *     <li>{@link CountryCodeType}</li>
+ *     <li>TIN</li>
+ *     <li>TIN Issued by</li>
+ *     <li>Handelsregisternummer</li>
+ *     <li>VAT</li>
+ *     <li>First name</li>
+ *     <li>Last name</li>
+ *     <li>Birthdate</li>
+ *     <li>AddressType</li>
+ *     <li>Address with city</li>
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
+ *     1st quarter</li>
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
+ *     2nd quarter</li>
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
+ *     3rd quarter</li>
+ *     <li>NumberOfActivities (see {@link BzstDipNumberOfActivities}):
+ *     4th quarter</li>
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
+ *     1st quarter</li>
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
+ *     2nd quarter</li>
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
+ *     3rd quarter</li>
+ *     <li>ConsiderationType (see {@link BzstDipConsiderations}):
+ *     4th quarter</li>
+ *     <li>FeesType (see {@link BzstDipFees}):
+ *     1st quarter</li>
+ *     <li>FeesType (see {@link BzstDipFees}):
+ *     2nd quarter</li>
+ *     <li>FeesType (see {@link BzstDipFees}):
+ *     3rd quarter</li>
+ *     <li>FeesType (see {@link BzstDipFees}):
+ *     4th quarter</li>
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
+ *     1st quarter</li>
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
+ *     2nd quarter</li>
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
+ *     3rd quarter</li>
+ *     <li>TaxesType (see {@link BzstDipTaxes}):
+ *     4th quarter</li>
+ *     <li>Permanent establishments</li>
+ *     <li>docRefUUID</li>
+ * </ol>
  */
 public final class ReportableSellerCsvFileParser
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCsvFileParser.class);
-	private static final String DELIMITER = ";";
+	private static final char DEFAULT_DELIMITER = ';';
+	public static final int MAX_INDEX_IN_SINGLE_LINE = 28;
 	private final BzstDipConfiguration configuration;
 	
 	public ReportableSellerCsvFileParser(final BzstDipConfiguration configuration)
@@ -59,100 +118,122 @@ public final class ReportableSellerCsvFileParser
 	}
 	
 	public List<CorrectableReportableSellerType> parseCsvData(final String csvData)
+		throws CsvParseException
 	{
-		return this.parseReportableSeller(this.readCSVFile(csvData));
+		try(final Reader reader = new StringReader(csvData))
+		{
+			final CSVParser parser = new CSVParserBuilder()
+				.withSeparator(DEFAULT_DELIMITER)
+				.withIgnoreQuotations(true)
+				.build();
+			
+			try(
+				final CSVReader csvReader = new CSVReaderBuilder(reader)
+					.withSkipLines(1)
+					.withCSVParser(parser)
+					.build())
+			{
+				return this.parseCsvData(csvReader);
+			}
+		}
+		catch(final Exception e)
+		{
+			throw new CsvParseException("Could not parse CSV data.", e);
+		}
 	}
 	
-	private List<List<String>> readCSVFile(final String csvData)
+	public List<CorrectableReportableSellerType> parseCsvData(final CSVReader csvReader)
+		throws CsvParseException
 	{
-		final List<List<String>> records = new ArrayList<>();
+		try
+		{
+			return this.parseReportableSeller(this.readCSVFile(csvReader));
+		}
+		catch(final Exception e)
+		{
+			throw new CsvParseException("Could not parse CSV data.", e);
+		}
+	}
+	
+	private List<String[]> readCSVFile(final CSVReader csvReader) throws IOException, CsvValidationException
+	{
+		final List<String[]> records = new ArrayList<>();
 		
-		try(final StringReader stringReader = new StringReader(csvData))
+		String[] line;
+		while((line = csvReader.readNext()) != null)
 		{
-			final BufferedReader br = new BufferedReader(stringReader);
-			
-			String line;
-			String[] st;
-			
-			while((line = br.readLine()) != null)
-			{
-				st = line.split(DELIMITER);
-				
-				records.add(Arrays.asList(st));
-			}
-			
-			return records;
+			records.add(line);
 		}
-		catch(final IOException e)
-		{
-			LOGGER.error("Error occurred while reading the csv file.", e);
-		}
-		catch(final RuntimeException e)
-		{
-			LOGGER.error("There is a null value in the csv file.", e);
-		}
-		
 		return records;
 	}
 	
 	@SuppressWarnings("checkstyle:MagicNumber")
-	private List<CorrectableReportableSellerType> parseReportableSeller(final List<List<String>> data)
+	private List<CorrectableReportableSellerType> parseReportableSeller(final List<String[]> data)
+		throws CsvParseException
 	{
 		final List<CorrectableReportableSellerType> reportableSeller = new ArrayList<>();
 		final ReportableSellerCreator xmlDocBodyReportableSeller = new ReportableSellerCreator(
 			this.configuration);
 		
 		LOGGER.debug("Looping through data now...");
-		for(final List<String> list : data.stream().skip(1).toList())
+		for(int lineIndex = 0; lineIndex < data.size(); lineIndex++)
 		{
+			final String[] lineData = data.get(lineIndex);
+			if(lineData.length != MAX_INDEX_IN_SINGLE_LINE)
+			{
+				throw new CsvParseException("Length of line %d is %d and not %d. Therefore it is not valid.".formatted(
+					lineIndex,
+					lineData.length,
+					MAX_INDEX_IN_SINGLE_LINE));
+			}
 			reportableSeller.add(xmlDocBodyReportableSeller.createReportableSeller(
 					// Ansässigkeitsstaat
-					CountryCodeType.valueOf(list.get(0)),
+				CountryCodeType.valueOf(lineData[0]),
 					// Steuer-ID & Issued by
 				this.createTIN(
-						list.get(1),
-						CountryCodeType.valueOf(list.get(2))),
+					lineData[1],
+					CountryCodeType.valueOf(lineData[2])),
 					// Handelsregisternummer
-					list.get(3),
+				lineData[3],
 					// VAT
-					list.get(4),
+				lineData[4],
 					// First name
-					list.get(5),
+				lineData[5],
 					// Last name
-					list.get(6),
+				lineData[6],
 					// Birthdate
-					list.get(7),
+				lineData[7],
 					// AddressType
-				this.createAddressType(list.get(8)),
+				this.createAddressType(lineData[8]),
 					// Address with city
-				this.createAddressFixForReportableSeller(list.get(9)),
+				this.createAddressFixForReportableSeller(lineData[9]),
 				this.createNumberOfActivities(
-						new BigInteger(list.get(10)),
-						new BigInteger(list.get(11)),
-						new BigInteger(list.get(12)),
-						new BigInteger(list.get(13))
+					new BigInteger(lineData[10]),
+					new BigInteger(lineData[11]),
+					new BigInteger(lineData[12]),
+					new BigInteger(lineData[13])
 					),
 				this.createConsiderationType(
-					this.createMonAmntType(new BigInteger(list.get(14))),
-					this.createMonAmntType(new BigInteger(list.get(15))),
-					this.createMonAmntType(new BigInteger(list.get(16))),
-					this.createMonAmntType(new BigInteger(list.get(17)))
+					this.createMonAmntType(new BigInteger(lineData[14])),
+					this.createMonAmntType(new BigInteger(lineData[15])),
+					this.createMonAmntType(new BigInteger(lineData[16])),
+					this.createMonAmntType(new BigInteger(lineData[17]))
 					),
 				this.createFeesType(
-					this.createMonAmntType(new BigInteger(list.get(18))),
-					this.createMonAmntType(new BigInteger(list.get(19))),
-					this.createMonAmntType(new BigInteger(list.get(20))),
-					this.createMonAmntType(new BigInteger(list.get(21)))
+					this.createMonAmntType(new BigInteger(lineData[18])),
+					this.createMonAmntType(new BigInteger(lineData[19])),
+					this.createMonAmntType(new BigInteger(lineData[20])),
+					this.createMonAmntType(new BigInteger(lineData[21]))
 					),
 				this.createTaxesType(
-					this.createMonAmntType(new BigInteger(list.get(22))),
-					this.createMonAmntType(new BigInteger(list.get(23))),
-					this.createMonAmntType(new BigInteger(list.get(24))),
-					this.createMonAmntType(new BigInteger(list.get(25)))
+					this.createMonAmntType(new BigInteger(lineData[22])),
+					this.createMonAmntType(new BigInteger(lineData[23])),
+					this.createMonAmntType(new BigInteger(lineData[24])),
+					this.createMonAmntType(new BigInteger(lineData[25]))
 					),
 					// Split Betriebsstättenstaaten
-					list.get(26),
-					list.get(27)
+				lineData[26],
+				lineData[27]
 				)
 			);
 		}

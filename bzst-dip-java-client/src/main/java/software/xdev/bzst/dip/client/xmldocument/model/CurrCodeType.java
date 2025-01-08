@@ -19,7 +19,7 @@ package software.xdev.bzst.dip.client.xmldocument.model;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlType;
 
-
+// CPD-OFF - Will be refactored in #14
 /**
  * <p>Java class for currCode_Type.
  *

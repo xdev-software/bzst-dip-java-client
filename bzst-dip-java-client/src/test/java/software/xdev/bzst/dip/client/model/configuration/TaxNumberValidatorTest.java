@@ -23,6 +23,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import software.xdev.bzst.dip.client.exception.TaxNumberException;
 
 
+@SuppressWarnings("MethodName")
 class TaxNumberValidatorTest
 {
 	/**

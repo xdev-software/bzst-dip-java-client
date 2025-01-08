@@ -20,13 +20,18 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.CESOP;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "data")
 public class DataType
 {
-	@XmlElement(name = "DPI_OECD", namespace = "urn:oecd:ties:dpi:v1", required = true)
+	@XmlElement(name = "DPI_OECD", namespace = "urn:oecd:ties:dpi:v1")
 	protected DPIOECD dpioecd;
+	
+	@XmlElement(name = "CESOP", namespace = "urn:ec.europa.eu:taxud:fiscalis:cesop:v1")
+	protected CESOP cesop;
 	
 	public DPIOECD getDpioecd()
 	{
@@ -36,5 +41,15 @@ public class DataType
 	public void setDpioecd(final DPIOECD dpioecd)
 	{
 		this.dpioecd = dpioecd;
+	}
+	
+	public CESOP getCesop()
+	{
+		return cesop;
+	}
+	
+	public void setCesop(final CESOP cesop)
+	{
+		this.cesop = cesop;
 	}
 }

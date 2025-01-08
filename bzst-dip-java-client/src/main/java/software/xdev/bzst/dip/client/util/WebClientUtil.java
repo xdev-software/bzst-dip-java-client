@@ -48,7 +48,6 @@ public final class WebClientUtil
 	{
 	}
 	
-	
 	public static List<String> extractTransferNumberFromXml(final String xmlString) throws IOException
 	{
 		try

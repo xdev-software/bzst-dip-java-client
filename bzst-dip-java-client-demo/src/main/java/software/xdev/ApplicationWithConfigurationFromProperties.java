@@ -9,7 +9,7 @@ import software.xdev.bzst.dip.client.BzstDipClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.PropertiesSupplier;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -23,7 +23,7 @@ public final class ApplicationWithConfigurationFromProperties
 		final BzstDipConfiguration configuration = createConfigurationFromProperties();
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
 		final BzstDipCompleteResult bzstDipCompleteResult =
-			bzstDipClient.sendDipAndQueryResult(Application.createMessage());
+			bzstDipClient.sendDipAndQueryResult(ApplicationWithDac7.createMessage());
 		LOGGER.info(
 			"Sending dip message with transfer number {} {}",
 			bzstDipCompleteResult.dataTransferNumber(),
