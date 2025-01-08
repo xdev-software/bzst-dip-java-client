@@ -19,12 +19,12 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.signing.SigningProvider;
 
 
 /**

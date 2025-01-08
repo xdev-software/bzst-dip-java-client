@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
-import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
+import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
 @SuppressWarnings("MethodName")
@@ -169,9 +169,8 @@ class BzstDipConfigurationBuilderTest
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
 				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByPem("DemoKey.pem", "DemoCert.pem"))
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
 				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)

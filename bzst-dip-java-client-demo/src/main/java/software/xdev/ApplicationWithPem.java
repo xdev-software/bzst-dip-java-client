@@ -11,8 +11,8 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
@@ -27,7 +27,7 @@ public final class ApplicationWithPem
 		final BzstDipConfiguration configuration = createConfiguration();
 		final BzstDipClient bzstDipClient = new BzstDipClient(configuration);
 		final BzstDipCompleteResult bzstDipCompleteResult =
-			bzstDipClient.sendDipAndQueryResult(Application.createMessage());
+			bzstDipClient.sendDipAndQueryResult(ApplicationWithDac7.createMessage());
 		LOGGER.info(
 			"Sending dip message with transfer number {} {}",
 			bzstDipCompleteResult.dataTransferNumber(),

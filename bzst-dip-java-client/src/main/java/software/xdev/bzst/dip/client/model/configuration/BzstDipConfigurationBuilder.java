@@ -19,18 +19,16 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.exception.PropertyNotSetException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
-import software.xdev.bzst.dip.client.signing.SigningProvider;
-import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
-import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.signing.SigningProvider;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
+import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
 /**
@@ -163,11 +161,6 @@ public class BzstDipConfigurationBuilder
 	 * @see BzstDipConfiguration#getMessageTypeIndicEnum()
 	 */
 	private BzstCesopMessageTypeIndicEnum messageTypeIndicCesop;
-	
-	public void setRetryQueryResultsAmount(final Integer retryQueryResultsAmount)
-	{
-		this.retryQueryResultsAmount = retryQueryResultsAmount;
-	}
 	
 	public BzstDipConfigurationBuilder setReportingPeriodCesopQuarter(final int reportingPeriodCesopQuarter)
 	{

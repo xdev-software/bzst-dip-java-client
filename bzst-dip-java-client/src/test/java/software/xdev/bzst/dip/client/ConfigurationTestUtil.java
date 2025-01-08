@@ -21,12 +21,12 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfigurationBuilder;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
-public class ConfigurationTestUtil
+public final class ConfigurationTestUtil
 {
 	private ConfigurationTestUtil()
 	{

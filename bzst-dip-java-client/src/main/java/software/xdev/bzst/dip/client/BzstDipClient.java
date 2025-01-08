@@ -293,12 +293,12 @@ public class BzstDipClient
 	)
 	{
 		final XMLDocumentCreator xmlDocumentCreator = new XMLDocumentCreator(this.configuration);
-		final String signedXML =
-			SigningUtil.signXMLDocument(
+		final String signedXML = new XmlSigner(this.configuration.getSigningProvider())
+			.signXMLDocument(
 				xmlDocumentCreator.buildXMLDocument(
 					paymentDataBodyType
-				),
-				this.configuration);
+				)
+			);
 		LOGGER.debug("Created following XML-Document:\n{}", signedXML);
 		
 		LOGGER.debug("XML data will now be uploaded...");

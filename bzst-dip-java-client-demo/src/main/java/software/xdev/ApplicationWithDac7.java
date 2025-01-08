@@ -26,6 +26,7 @@ import software.xdev.bzst.dip.client.model.message.dac7.BzstDipNumberOfActivitie
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipOecdLegalAddressType;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTaxes;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipTin;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")

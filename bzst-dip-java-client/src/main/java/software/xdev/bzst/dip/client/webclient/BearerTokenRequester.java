@@ -113,35 +113,5 @@ public class BearerTokenRequester
 			.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
 			.signWith(privateKey, Jwts.SIG.RS256)
 			.compact();
-		try(final InputStream keystoreInputStream = this.configuration.getCertificateKeystoreInputStream().get())
-		{
-			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
-				keystoreInputStream,
-				this.configuration.getKeyStorePrivateKeyAlias(),
-				this.configuration.getCertificateKeystorePassword(),
-				SigningUtil.KEYSTORE_TYPE
-			);
-			
-			final PrivateKey privateKey = privateKeyEntry.getPrivateKey();
-			final String clientId = this.configuration.getClientId();
-			LOGGER.debug("Using client id: {}", clientId);
-			
-			return Jwts.builder()
-				.issuer(clientId)
-				.subject(clientId)
-				.audience().add(
-					this.configuration.getRealmEnvironmentBaseUrl() + MDS_POSTFIX)
-				.and()
-				.issuedAt(new Date())
-				.expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()))
-				.id(UUID.randomUUID().toString())
-				.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
-				.signWith(privateKey, Jwts.SIG.RS256)
-				.compact();
-		}
-		catch(final IOException ioException)
-		{
-			throw new EncryptionException("An error occurred while creating the request token.", ioException);
-		}
 	}
 }
