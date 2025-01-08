@@ -30,13 +30,15 @@ import software.xdev.bzst.dip.client.exception.ConfigurationException;
 public class PropertiesSupplier
 {
 	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_PASSWORD = "certificate.keystore.password";
+	public static final String PROPERTY_NAME_KEYSTORE_PRIVATE_KEY_ALIAS = "certificate.keystore.private.key.alias";
 	public static final String PROPERTY_NAME_CERTIFICATE_KEYSTORE_FILE = "certificate.keystore.file";
 	public static final String PROPERTY_NAME_CLIENT_ID = "client.id";
 	public static final String PROPERTY_NAME_TAX_ID = "tax.id";
+	public static final String PROPERTY_NAME_TAX_ID_VALIDATE = "tax.id.validate";
 	public static final String PROPERTY_NAME_TAX_NUMBER = "tax.number";
 	public static final String PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL = "base.url";
 	public static final String PROPERTY_NAME_ENVIRONMENT = "environment";
-	public static final String PROPERTY_NAME_MESSAGE_TYPE_INDIC = "message.type";
+	public static final String PROPERTY_NAME_MESSAGE_TYPE_INDIC = "message.type.indic";
 	public static final String PROPERTY_NAME_REPORTING_PERIOD = "reporting.period";
 	public static final String PROPERTY_NAME_DOC_TYPE_INDIC = "doc.type";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID = "platform.operator.doc.ref.id";
@@ -61,6 +63,13 @@ public class PropertiesSupplier
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_POST_CODE =
 		"platform.operator.address.post.code";
 	public static final String PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_CITY = "platform.operator.address.city";
+	public static final String PROPERTY_NAME_APPLICATION_CODE = "application.code";
+	public static final String PROPERTY_NAME_TRANSMITTING_COUNTRY = "transmitting.country";
+	public static final String PROPERTY_NAME_MESSAGE_TYPE = "message.type";
+	public static final String PROPERTY_NAME_MESSAGE_REF_ID = "message.ref.id";
+	public static final String PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR = "reporting.period.cesop.year";
+	public static final String PROPERTY_NAME_REPORTING_PERIOD_CESOP_QUARTER = "reporting.period.cesop.quarter";
+	public static final String PROPERTY_NAME_TIMESTAMP = "timestamp";
 	
 	private final Properties properties;
 	

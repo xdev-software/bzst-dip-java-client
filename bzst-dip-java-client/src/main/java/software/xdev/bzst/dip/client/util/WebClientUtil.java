@@ -48,6 +48,40 @@ public final class WebClientUtil
 	{
 	}
 	
+	public static String createRequestToken(final BzstDipConfiguration configuration)
+	{
+		LOGGER.debug("Creating jwt token...");
+		try(final InputStream keystoreInputStream = configuration.getCertificateKeystoreInputStream().get())
+		{
+			final KeyStore.PrivateKeyEntry privateKeyEntry = SigningUtil.getPrivateKeyEntry(
+				keystoreInputStream,
+				configuration.getKeyStorePrivateKeyAlias(),
+				configuration.getCertificateKeystorePassword(),
+				SigningUtil.KEYSTORE_TYPE
+			);
+			
+			final PrivateKey privateKey = privateKeyEntry.getPrivateKey();
+			final String clientId = configuration.getClientId();
+			LOGGER.debug("Using client id: {}", clientId);
+			
+			return Jwts.builder()
+				.issuer(clientId)
+				.subject(clientId)
+				.audience().add(
+					configuration.getRealmEnvironmentBaseUrl() + MDS_POSTFIX)
+				.and()
+				.issuedAt(new Date())
+				.expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()))
+				.id(UUID.randomUUID().toString())
+				.notBefore(new Date(System.currentTimeMillis() - Duration.ofMinutes(1).toMillis()))
+				.signWith(privateKey, Jwts.SIG.RS256)
+				.compact();
+		}
+		catch(final IOException ioException)
+		{
+			throw new EncryptionException("An error occurred while creating the request token.", ioException);
+		}
+	}
 	
 	public static List<String> extractTransferNumberFromXml(final String xmlString) throws IOException
 	{

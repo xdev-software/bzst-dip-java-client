@@ -21,8 +21,12 @@ import java.time.LocalDate;
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 
 
-public class BzstDipConfigurationValidator
+public final class BzstDipConfigurationValidator
 {
+	private BzstDipConfigurationValidator()
+	{
+	}
+	
 	public static void validateConfiguration(final BzstDipConfiguration configuration)
 	{
 		checkForNullOrBlank(
@@ -32,13 +36,15 @@ public class BzstDipConfigurationValidator
 			PropertiesSupplier.PROPERTY_NAME_CLIENT_ID, configuration.getClientId());
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_TAX_ID, configuration.getTaxID());
-		TaxNumberValidator.validateTaxNumber(configuration.getTaxID());
+		if(configuration.isValidateTaxID())
+		{
+			TaxNumberValidator.validateTaxNumber(configuration.getTaxID());
+		}
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_TAX_NUMBER, configuration.getTaxNumber());
 		checkForNullOrBlank(
 			PropertiesSupplier.PROPERTY_NAME_REALM_ENVIRONMENT_BASE_URL, configuration.getRealmEnvironmentBaseUrl());
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_ENVIRONMENT, configuration.getEnvironment());
-		checkForNull(PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC, configuration.getMessageTypeIndic());
 		checkForNull(PropertiesSupplier.PROPERTY_NAME_DOC_TYPE_INDIC, configuration.getDocType());
 		checkForNull("certificate keystore input", configuration.getCertificateKeystoreInputStream());
 		checkForNullOrBlank(

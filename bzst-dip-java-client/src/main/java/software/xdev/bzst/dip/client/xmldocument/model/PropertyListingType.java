@@ -24,7 +24,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 
-
+// CPD-OFF - Will be refactored in #14
 /**
  * <p>Java class for PropertyListingType complex type.
  *
