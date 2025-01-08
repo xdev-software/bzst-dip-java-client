@@ -42,7 +42,6 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipDpiMessageType;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipOecdDocType;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.parser.ReportableSellerCsvFileParser;
-import software.xdev.bzst.dip.client.signing.SigningProvider;
 import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 

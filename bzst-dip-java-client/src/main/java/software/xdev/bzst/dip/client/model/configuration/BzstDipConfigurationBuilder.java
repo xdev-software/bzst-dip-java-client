@@ -34,7 +34,7 @@ import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 /**
  * Builder construct for the {@link BzstDipConfiguration}.
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue", "PMD.GodClass"})
 public class BzstDipConfigurationBuilder
 {
 	public static final int DEFAULT_DELAY_BEFORE_CHECKING_RESULTS_IN_MILLIS = 1_000;
@@ -436,38 +436,31 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFileTransmittingCountry(
 				this.transmittingCountry,
 				PropertiesSupplier.PROPERTY_NAME_TRANSMITTING_COUNTRY,
-				BzstDipCountryCode.DE
-			),
+				BzstDipCountryCode.DE),
 			this.getSetPropertyOrReadFromFileMessageType(
 				this.messageType,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE,
-				BzstCesopMessageTypeEnum.PMT
-			),
+				BzstCesopMessageTypeEnum.PMT),
 			this.getSetPropertyOrReadFromFile(
 				this.messageRefId,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_REF_ID,
-				UUID.randomUUID().toString()
-			),
+				UUID.randomUUID().toString()),
 			this.getSetPropertyOrReadFromFile(
 				this.reportingPeriodCesopYear,
 				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_YEAR,
-				String.valueOf(LocalDate.now().getYear())
-			),
+				String.valueOf(LocalDate.now().getYear())),
 			this.getSetPropertyOrReadFromFileInteger(
 				this.reportingPeriodCesopQuarter,
 				PropertiesSupplier.PROPERTY_NAME_REPORTING_PERIOD_CESOP_QUARTER,
-				1
-			),
+				1),
 			this.getSetPropertyOrReadFromFileTimestamp(
 				this.timestamp,
 				PropertiesSupplier.PROPERTY_NAME_TIMESTAMP,
-				ZonedDateTime.now()
-			),
+				ZonedDateTime.now()),
 			this.getSetPropertyOrReadFromFileMessageTypeIndicCesop(
 				this.messageTypeIndicCesop,
 				PropertiesSupplier.PROPERTY_NAME_MESSAGE_TYPE_INDIC,
-				BzstCesopMessageTypeIndicEnum.CESOP_100
-			),
+				BzstCesopMessageTypeIndicEnum.CESOP_100),
 			this.getSetPropertyOrReadFromFileApplicationCode(
 				this.applicationCode,
 				PropertiesSupplier.PROPERTY_NAME_APPLICATION_CODE,
@@ -525,32 +518,26 @@ public class BzstDipConfigurationBuilder
 				this.getSetPropertyOrReadFromFileDuration(
 					this.delayInBetweenResultChecks,
 					PropertiesSupplier.PROPERTY_NAME_DELAY_IN_BETWEEN_RESULT_CHECKS_IN_MS,
-					Duration.ofMillis(DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS))
-			),
+					Duration.ofMillis(DEFAULT_DELAY_IN_BETWEEN_RESULTS_CHECKS_IN_MILLIS))),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorOrganizationName,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_ORGANIZATION),
 			this.getSetPropertyOrReadFromFile(
 				this.platformOperatorPlatformName,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_PLATFORM),
-			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress)
-		);
+			this.getSetPropertyOrReadFromFileAddress(this.platformOperatorAddress));
 		BzstDipConfigurationValidator.validateConfiguration(configuration);
 		return configuration;
 	}
 	
 	private void validateConfiguration(final BzstDipConfiguration configuration)
 	{
-		if(
-			configuration.getDocType().isNewTransmission()
-				&& (configuration.getPlatformOperatorDocRefId() == null
-				|| configuration.getPlatformOperatorDocRefId().isBlank())
-		)
+		if(configuration.getDocType().isNewTransmission() && (configuration.getPlatformOperatorDocRefId() == null
+			|| configuration.getPlatformOperatorDocRefId().isBlank()))
 		{
 			throw new ConfigurationException(
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_DOC_REF_ID,
-				"When sending a new transmission (OECD_0) a DocRefId must be set!"
-			);
+				"When sending a new transmission (OECD_0) a DocRefId must be set!");
 		}
 	}
 	
@@ -577,7 +564,9 @@ public class BzstDipConfigurationBuilder
 	private SigningProviderByJks createJksKeyProvider()
 	{
 		final String jksKeystorePassword =
-			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_PASSWORD);
+			this.propertiesSupplier.getPropertyFromConfig(
+				PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_PASSWORD
+			);
 		final String jksKeystoreFile =
 			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_JKS_KEYSTORE_FILE);
 		if(jksKeystorePassword == null && jksKeystoreFile == null)
@@ -586,10 +575,7 @@ public class BzstDipConfigurationBuilder
 		}
 		if(jksKeystorePassword != null && jksKeystoreFile != null)
 		{
-			return new SigningProviderByJks(
-				jksKeystoreFile,
-				jksKeystorePassword
-			);
+			return new SigningProviderByJks(jksKeystoreFile, jksKeystorePassword);
 		}
 		if(jksKeystoreFile == null)
 		{
@@ -607,20 +593,20 @@ public class BzstDipConfigurationBuilder
 			PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_SIGNATURE_ALGORITHM,
 			SigningProviderByPem.DEFAULT_PRIVATE_KEY_ALGORITHM);
 		final String pemCertificateFile =
-			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_CERTIFICATE_FILE);
+			this.propertiesSupplier.getPropertyFromConfig(
+				PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_CERTIFICATE_FILE
+			);
 		final String pemPrivateKeyFile =
-			this.propertiesSupplier.getPropertyFromConfig(PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_PRIVATE_KEY_FILE);
+			this.propertiesSupplier.getPropertyFromConfig(
+				PropertiesSupplier.PROPERTY_NAME_SIGNING_PEM_PRIVATE_KEY_FILE
+			);
 		if(pemCertificateFile == null && pemPrivateKeyFile == null)
 		{
 			return null;
 		}
 		if(pemCertificateFile != null && pemPrivateKeyFile != null)
 		{
-			return new SigningProviderByPem(
-				pemCertificateFile,
-				pemPrivateKeyFile,
-				signatureAlgorithm
-			);
+			return new SigningProviderByPem(pemCertificateFile, pemPrivateKeyFile, signatureAlgorithm);
 		}
 		if(pemCertificateFile == null)
 		{
@@ -667,8 +653,7 @@ public class BzstDipConfigurationBuilder
 			this.getSetPropertyOrReadFromFile(
 				null,
 				PropertiesSupplier.PROPERTY_NAME_PLATFORM_OPERATOR_ADDRESS_CITY),
-			null
-		);
+			null);
 	}
 	
 	private LocalDate getSetPropertyOrReadFromFileDate(
@@ -750,9 +735,7 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
-		return BzstDipOecdDocType.valueOf(this.getSetPropertyOrReadFromFile(
-			null,
-			propertyNameInFile));
+		return BzstDipOecdDocType.valueOf(this.getSetPropertyOrReadFromFile(null, propertyNameInFile));
 	}
 	
 	private BzstDipDpiMessageType getSetPropertyOrReadFromFileDpiMessageType(
@@ -763,10 +746,7 @@ public class BzstDipConfigurationBuilder
 		{
 			return builderProperty;
 		}
-		final String propertyValue = this.getSetPropertyOrReadFromFile(
-			null,
-			propertyNameInFile,
-			null);
+		final String propertyValue = this.getSetPropertyOrReadFromFile(null, propertyNameInFile, null);
 		if(propertyValue != null)
 		{
 			return BzstDipDpiMessageType.valueOf(propertyValue);

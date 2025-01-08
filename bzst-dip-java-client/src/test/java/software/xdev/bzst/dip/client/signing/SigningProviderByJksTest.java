@@ -48,7 +48,7 @@ class SigningProviderByJksTest
 	}
 	
 	@Test
-	void getPrivateKey_wrongPassword()
+	void getPrivateKeyWrongPassword()
 	{
 		final SigningProviderByJks signingProviderByJks = new SigningProviderByJks(
 			CERTIFICATE_KEYSTORE_PATH,
@@ -61,7 +61,7 @@ class SigningProviderByJksTest
 	}
 	
 	@Test
-	void getCertificate_wrongPassword()
+	void getCertificateWrongPassword()
 	{
 		final SigningProviderByJks signingProviderByJks = new SigningProviderByJks(
 			CERTIFICATE_KEYSTORE_PATH,
