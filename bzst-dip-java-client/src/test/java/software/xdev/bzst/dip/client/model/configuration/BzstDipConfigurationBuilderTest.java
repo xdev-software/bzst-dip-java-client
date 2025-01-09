@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
 import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
-import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
