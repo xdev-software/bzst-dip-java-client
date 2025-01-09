@@ -171,12 +171,10 @@ class BzstDipConfigurationBuilderTest
 		Assertions.assertDoesNotThrow(
 			() -> new BzstDipConfigurationBuilder()
 				.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.CESOP)
-				.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.CESOP)
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setCertificateKeystorePassword("test123")
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndicCesop(BzstCesopMessageTypeIndicEnum.CESOP_101)
