@@ -9,12 +9,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opencsv.exceptions.CsvValidationException;
-
 import software.xdev.bzst.dip.client.BzstDipClient;
-import software.xdev.bzst.dip.client.exception.HttpStatusCodeNotExceptedException;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
-import software.xdev.bzst.dip.client.model.message.BzstDipCompleteResult;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCompleteResult;
 
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -23,9 +20,9 @@ public final class ApplicationWithCsvInput
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationWithCsvInput.class);
 	
 	public static void main(final String[] args)
-		throws InterruptedException, HttpStatusCodeNotExceptedException, IOException, CsvValidationException
+		throws InterruptedException, IOException
 	{
-		final BzstDipConfiguration configuration = Application.createConfiguration();
+		final BzstDipConfiguration configuration = ApplicationWithDac7.createConfiguration();
 		
 		final String csvData = getResourceFileAsString("DemoCsvData.csv");
 		

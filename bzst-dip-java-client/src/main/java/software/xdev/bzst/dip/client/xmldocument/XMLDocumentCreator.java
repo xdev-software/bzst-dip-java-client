@@ -46,6 +46,7 @@ import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectablePlatformOperatorType;
 import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSellerType;
 import software.xdev.bzst.dip.client.xmldocument.model.DipType;
+import software.xdev.bzst.dip.client.xmldocument.model.cesop.PaymentDataBodyType;
 
 
 public class XMLDocumentCreator
@@ -114,7 +115,30 @@ public class XMLDocumentCreator
 			
 			return xmlString;
 		}
-		catch(final IOException | JAXBException e)
+		catch(final IOException | JAXBException | DatatypeConfigurationException e)
+		{
+			throw new RuntimeException("Something wrong happened while building the xml document.", e);
+		}
+	}
+	
+	public String buildXMLDocument(
+		final PaymentDataBodyType paymentDataBodyType)
+	{
+		try(final StringWriter sw = new StringWriter())
+		{
+			final Marshaller jaxbMarshaller = createMarshaller();
+			final DipType dipType = this.buildRootElement(
+				paymentDataBodyType
+			);
+			
+			jaxbMarshaller.marshal(dipType, sw);
+			final String xmlString = sw.toString();
+			
+			this.validateXMLDocument(xmlString);
+			
+			return xmlString;
+		}
+		catch(final IOException | JAXBException | DatatypeConfigurationException e)
 		{
 			throw new RuntimeException("Something wrong happened while building the xml document.", e);
 		}
@@ -143,7 +167,7 @@ public class XMLDocumentCreator
 	public DipType buildRootElement(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
 		final CorrectablePlatformOperatorType correctablePlatformOperatorType
-	)
+	) throws DatatypeConfigurationException
 	{
 		final DipType dipType = new DipType();
 		
@@ -158,6 +182,29 @@ public class XMLDocumentCreator
 		final XMLDocumentBodyCreator xmlDocumentBodyCreator = new XMLDocumentBodyCreator(this.configuration);
 		dipType.setBody(
 			xmlDocumentBodyCreator.createBody(correctableReportableSellerTypes, correctablePlatformOperatorType)
+		);
+		dipType.setVersion("1.0");
+		
+		return dipType;
+	}
+	
+	public DipType buildRootElement(
+		final PaymentDataBodyType paymentDataBodyType
+	) throws DatatypeConfigurationException
+	{
+		final DipType dipType = new DipType();
+		
+		final XMLDocumentHeaderCreator xmlDocumentHeaderCreator = new XMLDocumentHeaderCreator(this.configuration);
+		
+		dipType.setHeader(
+			xmlDocumentHeaderCreator.createHeader(
+				this.configuration.getEnvironment().toEnvironmentType()
+			)
+		);
+		
+		final XMLDocumentBodyCreator xmlDocumentBodyCreator = new XMLDocumentBodyCreator(this.configuration);
+		dipType.setBody(
+			xmlDocumentBodyCreator.createBody(paymentDataBodyType)
 		);
 		dipType.setVersion("1.0");
 		

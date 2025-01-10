@@ -40,15 +40,15 @@ public class XMLDocumentHeaderCreator
         final DipHeaderType dipHeaderType = new DipHeaderType();
         dipHeaderType.setEnvironment(environmentType);
         dipHeaderType.setConsignment(this.createConsignment());
-        dipHeaderType.setApplication(creationApplication());
+        dipHeaderType.setApplication(creationApplication(configuration));
 
         return dipHeaderType;
     }
 
-    private static ApplicationType creationApplication()
+    private static ApplicationType creationApplication(final BzstDipConfiguration configuration)
     {
         final ApplicationType applicationType = new ApplicationType();
-        applicationType.setCode("DAC7");
+        applicationType.setCode(configuration.getApplicationCode());
 
         return applicationType;
     }

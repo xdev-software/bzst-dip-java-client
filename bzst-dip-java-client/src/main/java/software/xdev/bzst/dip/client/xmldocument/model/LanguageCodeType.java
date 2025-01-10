@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// CPD-OFF
 package software.xdev.bzst.dip.client.xmldocument.model;
 
 import jakarta.xml.bind.annotation.XmlEnum;

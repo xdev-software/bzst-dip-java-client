@@ -16,12 +16,19 @@
 package software.xdev.bzst.dip.client.model.configuration;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import software.xdev.bzst.dip.client.exception.ConfigurationException;
-import software.xdev.bzst.dip.client.model.message.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipAddressFix;
+import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
+import software.xdev.bzst.dip.client.model.message.dac7.BzstDipCountryCode;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeEnum;
+import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopMessageTypeIndicEnum;
 
 
 @SuppressWarnings("MethodName")
@@ -46,9 +53,7 @@ class BzstDipConfigurationBuilderTest
 				.setTaxID("86095742719")
 				.setValidateTaxID(false)
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
@@ -68,9 +73,7 @@ class BzstDipConfigurationBuilderTest
 			() -> new BzstDipConfigurationBuilder()
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
@@ -90,9 +93,7 @@ class BzstDipConfigurationBuilderTest
 			() -> new BzstDipConfigurationBuilder()
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
@@ -112,9 +113,7 @@ class BzstDipConfigurationBuilderTest
 			() -> new BzstDipConfigurationBuilder()
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
@@ -127,7 +126,7 @@ class BzstDipConfigurationBuilderTest
 	}
 	
 	@Test
-	void buildAndValidate_missingKeystore()
+	void buildAndValidate_missingSigningProvider()
 	{
 		Assertions.assertThrows(
 			ConfigurationException.class,
@@ -135,29 +134,6 @@ class BzstDipConfigurationBuilderTest
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystorePassword("test123")
-				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
-				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
-				.setReportingPeriod(LocalDate.now())
-				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
-				.setPlatformOperatorOrganizationName("TestOrg")
-				.setPlatformOperatorPlatformName("TestApp")
-				.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
-				.buildAndValidate()
-		);
-	}
-	
-	@Test
-	void buildAndValidate_missingKeystorePassword()
-	{
-		Assertions.assertThrows(
-			ConfigurationException.class,
-			() -> new BzstDipConfigurationBuilder()
-				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
-				.setTaxID("86095742719")
-				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
@@ -177,9 +153,7 @@ class BzstDipConfigurationBuilderTest
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
 				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
@@ -191,23 +165,29 @@ class BzstDipConfigurationBuilderTest
 	}
 	
 	@Test
-	void buildAndValidate_missingMessageTypeIndic()
+	void buildAndValidate_cesop()
 	{
-		Assertions.assertThrows(
-			ConfigurationException.class,
+		Assertions.assertDoesNotThrow(
 			() -> new BzstDipConfigurationBuilder()
+				.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.CESOP)
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setCertificateKeystorePassword("test123")
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
+				.setMessageTypeIndicCesop(BzstCesopMessageTypeIndicEnum.CESOP_101)
 				.setReportingPeriod(LocalDate.now())
 				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
 				.setPlatformOperatorOrganizationName("TestOrg")
 				.setPlatformOperatorPlatformName("TestApp")
 				.setPlatformOperatorAddress(new BzstDipAddressFix("TestCity"))
+				.setTransmittingCountry(BzstDipCountryCode.DE)
+				.setMessageType(BzstCesopMessageTypeEnum.PMT)
+				.setReportingPeriodCesopQuarter(2)
+				.setReportingPeriodCesopYear("2024")
+				.setMessageRefId(UUID.randomUUID().toString())
+				.setTimestamp(ZonedDateTime.parse("2024-05-08T14:02:53Z", DateTimeFormatter.ISO_ZONED_DATE_TIME))
 				.buildAndValidate()
 		);
 	}
@@ -221,9 +201,7 @@ class BzstDipConfigurationBuilderTest
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now().plusDays(1))
@@ -244,9 +222,7 @@ class BzstDipConfigurationBuilderTest
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setDocTypeIndic(BzstDipOecdDocType.OECD_1)
@@ -266,9 +242,7 @@ class BzstDipConfigurationBuilderTest
 				.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 				.setTaxID("86095742719")
 				.setTaxNumber("123")
-				.setCertificateKeystoreInputStream(() -> ClassLoader.getSystemClassLoader()
-					.getResourceAsStream("DemoKeystore.jks"))
-				.setCertificateKeystorePassword("test123")
+				.setSigningProvider(new SigningProviderByJks("DemoKeystore.jks", "test123"))
 				.setRealmEnvironmentBaseUrl(BzstDipConfiguration.ENDPOINT_URL_TEST)
 				.setMessageTypeIndic(BzstDipDpiMessageType.DPI_401)
 				.setReportingPeriod(LocalDate.now())
