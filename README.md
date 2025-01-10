@@ -25,8 +25,6 @@ See the [BZSt Information](https://www.bzst.de/EN/Service/Portalinformation/Logi
 > [!NOTE]
 > **BZSt Online-Portal** (deprecated) is different from **BZSt online.portal**.
 
-## Disclaimer
-
 > [!IMPORTANT]  
 > We are currently on version 2.0.0. Since testing with the BZSt is quite difficult,
 > **we could not test this version fully**.
