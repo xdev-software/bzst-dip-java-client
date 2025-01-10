@@ -25,6 +25,17 @@ See the [BZSt Information](https://www.bzst.de/EN/Service/Portalinformation/Logi
 > [!NOTE]
 > **BZSt Online-Portal** (deprecated) is different from **BZSt online.portal**.
 
+## Disclaimer
+
+> [!IMPORTANT]  
+> We are currently on version 2.0.0. Since testing with the BZSt is quite difficult,
+> **we could not test this version fully**.
+>
+> If you don't want to take any risk using our client, you can still use the **stable and
+tested [version 1.0.3 of this library](https://github.com/xdev-software/bzst-dip-java-client/releases/tag/v1.0.3)**.
+>
+> If you are **willing to test v2.0.0**, we would very much appreciate your feedback!
+
 ## Rationale
 
 We created this client to make it as easy as possible for the developer to use the BZSt DIP.
