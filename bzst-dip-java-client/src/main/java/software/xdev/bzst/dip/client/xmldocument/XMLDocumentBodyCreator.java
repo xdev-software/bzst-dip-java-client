@@ -133,6 +133,7 @@ public class XMLDocumentBodyCreator
 		return dataType;
 	}
 	
+	@SuppressWarnings("PMD.UnusedFormalParameter") // TODO Needs to be resolved!
 	private Object createData(
 		final PaymentDataBodyType paymentDataBodyType) throws DatatypeConfigurationException
 	{

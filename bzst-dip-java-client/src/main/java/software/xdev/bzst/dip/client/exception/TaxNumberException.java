@@ -23,6 +23,6 @@ public class TaxNumberException extends ConfigurationException
 {
 	public TaxNumberException(final String taxNumber)
 	{
-		super("The taxnumber (Steueridentifikationsnummer) is not valid!");
+		super("The taxnumber (Steueridentifikationsnummer) '" + taxNumber + "' is not valid!");
 	}
 }

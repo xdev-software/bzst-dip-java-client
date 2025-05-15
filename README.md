@@ -105,12 +105,17 @@ client.id=abcd1234-ab12-ab12-ab12-abcdef123456
 
 ### Configuration
 
-The client can be configured through a properties file (see [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties) and [ApplicationWithConfigurationFromProperties.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithConfigurationFromProperties.java)) or by creating a configuration object (see [Application.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/Application.java)).
+The client can be configured through a properties file (
+see [app.properties](./bzst-dip-java-client-demo/src/main/resources/app.properties)
+and [ApplicationWithConfigurationFromProperties.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithConfigurationFromProperties.java))
+or by creating a configuration object (
+see [ApplicationWithDac7.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithDac7.java)).
 
 ```java
 public static BzstDipConfiguration createConfiguration()
 {
 	return new BzstDipConfigurationBuilder()
+		.setApplicationCode(BzstDipConfiguration.SupportedApplicationCode.DAC7)
 		.setClientId("abcd1234-ab12-ab12-ab12-abcdef123456")
 		.setTaxID("86095742719")
 		.setTaxNumber("123")
@@ -125,6 +130,12 @@ public static BzstDipConfiguration createConfiguration()
 		.buildAndValidate();
 }
 ```
+
+Messages are sent with
+DAC7 ([ApplicationWithDac7.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithDac7.java)) or
+the
+CESOP ([ApplicationWithCesop.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithCesop.java))
+Format.
 
 ## Support
 

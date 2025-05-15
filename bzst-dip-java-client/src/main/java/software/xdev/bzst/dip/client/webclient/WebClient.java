@@ -141,8 +141,6 @@ public class WebClient
 			)
 		)
 		{
-			final String text = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-			
 			// TODO: Check text
 			return new BzstDipSingleTransferResult(dataTransferNumber, 2);
 			
