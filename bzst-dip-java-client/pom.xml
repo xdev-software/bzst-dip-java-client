@@ -49,7 +49,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<jjwt.version>0.12.6</jjwt.version>
-		<jackson.version>2.18.2</jackson.version>
+		<jackson.version>2.19.0</jackson.version>
 
 		<generatedDirRelative>src/generated/java</generatedDirRelative>
 
