@@ -338,7 +338,7 @@ public class ReportableSellerCreator
 	 */
 	public static boolean isNULLAsString(final String checkNULLString)
 	{
-		return checkNULLString.equals(NULL_STRING);
+		return NULL_STRING.equals(checkNULLString);
 	}
 	
 	private static OrganisationINType createIN(final String in)

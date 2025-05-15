@@ -56,7 +56,7 @@ class SigningProviderByJksTest
 		);
 		Assertions.assertThrows(
 			SigningException.class,
-			() -> signingProviderByJks.getPrivateKey()
+			signingProviderByJks::getPrivateKey
 		);
 	}
 	
@@ -69,7 +69,7 @@ class SigningProviderByJksTest
 		);
 		Assertions.assertThrows(
 			SigningException.class,
-			() -> signingProviderByJks.getCertificate()
+			signingProviderByJks::getCertificate
 		);
 	}
 }
