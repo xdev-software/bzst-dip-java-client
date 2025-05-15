@@ -18,7 +18,7 @@
 		<connection>scm:git:https://github.com/xdev-software/bzst-dip-java-client.git</connection>
 	</scm>
 
-	<inceptionYear>2023</inceptionYear>
+	<inceptionYear>2024</inceptionYear>
 
 	<organization>
 		<name>XDEV Software</name>
