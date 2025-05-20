@@ -1,3 +1,7 @@
+# 2.0.2
+* Migrated deployment to _Sonatype Maven Central Portal_ [#155](https://github.com/xdev-software/standard-maven-template/issues/155)
+* Updated dependencies
+
 # 2.0.1
 * Updated dependencies
     * Including ``org.apache.httpcomponents.client5:httpclient5`` to ``5.4.3`` due to CVE-2025-27820
