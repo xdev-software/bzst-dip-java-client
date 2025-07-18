@@ -47,7 +47,64 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<generatedDirRelative>src/generated/java</generatedDirRelative>
+
+		<!-- Ignore generated code -->
+		<sonar.exclusions>
+			src/generated/**
+		</sonar.exclusions>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.fasterxml.jackson</groupId>
+				<artifactId>jackson-bom</artifactId>
+				<version>2.19.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- HTTP client: apache client -->
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.5</version>
+		</dependency>
+
+		<!-- JSON processing: jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<pluginManagement>
@@ -137,6 +194,25 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.6.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${generatedDirRelative}</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<profiles>
@@ -204,6 +280,164 @@
 			</build>
 		</profile>
 		<profile>
+			<id>openapi-generator</id>
+			<properties>
+				<componentName>INSERT_NAME_HERE</componentName>
+
+				<generatedDir>${project.basedir}/${generatedDirRelative}</generatedDir>
+				<openApiRelativeGeneratorDir>src/gen</openApiRelativeGeneratorDir>
+				<openApiGeneratorDir>
+					${project.basedir}/target/generated-sources/openapi/${openApiRelativeGeneratorDir}
+				</openApiGeneratorDir>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>3.5.0</version>
+						<executions>
+							<execution>
+								<id>pre-generation-clean</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>clean</goal>
+								</goals>
+								<configuration>
+									<excludeDefaultDirectories>true</excludeDefaultDirectories>
+									<filesets>
+										<fileset>
+											<directory>${generatedDir}</directory>
+										</fileset>
+									</filesets>
+								</configuration>
+							</execution>
+							<execution>
+								<id>post-generation-clean</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>clean</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.openapitools</groupId>
+						<artifactId>openapi-generator-maven-plugin</artifactId>
+						<version>7.14.0</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+								<configuration>
+									<inputSpec>${project.basedir}/../openapi/openapi.yml</inputSpec>
+									<generatorName>java</generatorName>
+									<configOptions>
+										<sourceFolder>${openApiRelativeGeneratorDir}</sourceFolder>
+										<library>apache-httpclient</library>
+										<apiPackage>software.xdev.${componentName}.api</apiPackage>
+										<modelPackage>software.xdev.${componentName}.model</modelPackage>
+										<invokerPackage>software.xdev.${componentName}.client</invokerPackage>
+										<!-- Otherwise throw and catch everywhere -->
+										<useRuntimeException>true</useRuntimeException>
+										<!-- Some fields of API have been ignored because they are unused -->
+										<disallowAdditionalPropertiesIfNotPresent>false
+										</disallowAdditionalPropertiesIfNotPresent>
+										<!-- Use newer Jakarta EE instead of Javax -->
+										<useJakartaEe>true</useJakartaEe>
+										<hideGenerationTimestamp>true</hideGenerationTimestamp>
+									</configOptions>
+									<!-- No tests and documentation because we don't use that -->
+									<generateModelTests>false</generateModelTests>
+									<generateApiTests>false</generateApiTests>
+									<generateModelDocumentation>false</generateModelDocumentation>
+									<generateApiDocumentation>false</generateApiDocumentation>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.3.1</version>
+						<executions>
+							<execution>
+								<id>copy-generated-resources</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${generatedDir}</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${openApiGeneratorDir}</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>software.xdev</groupId>
+						<artifactId>find-and-replace-maven-plugin</artifactId>
+						<version>1.0.4</version>
+						<executions>
+							<execution>
+								<!-- Remove so that we don't need additional dependency -->
+								<id>remove-unused-import-com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>file-contents</goal>
+								</goals>
+								<configuration>
+									<baseDir>${generatedDirRelative}/software/xdev/${componentName}/client/</baseDir>
+									<fileMask>ApiClient.java</fileMask>
+									<!-- @formatter:off DO NOT INTRODUCE LINE BREAK -->
+									<findRegex>^import com\.fasterxml\.jackson\.jaxrs\.json\.JacksonJsonProvider;(\r?\n)</findRegex>
+									<!-- @formatter:on -->
+									<replaceLineBased>false</replaceLineBased>
+								</configuration>
+							</execution>
+							<execution>
+								<!-- Changes with each generator version -->
+								<id>remove-generated-annotation</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>file-contents</goal>
+								</goals>
+								<configuration>
+									<baseDir>${generatedDirRelative}/software/xdev/${componentName}/</baseDir>
+									<recursive>true</recursive>
+									<fileMask>.java</fileMask>
+									<findRegex>^@jakarta\.annotation\.Generated.*(\r?\n)</findRegex>
+									<replaceAll>false</replaceAll>
+									<replaceLineBased>false</replaceLineBased>
+								</configuration>
+							</execution>
+							<execution>
+								<!-- Requiring Java serialization indicates a serious misuse of the API -->
+								<id>remove-serialVersionUID</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>file-contents</goal>
+								</goals>
+								<configuration>
+									<baseDir>${generatedDirRelative}/software/xdev/${componentName}/</baseDir>
+									<recursive>true</recursive>
+									<fileMask>.java</fileMask>
+									<findRegex>^.*serialVersionUID.*(\r?\n)(\s*\r?\n)?</findRegex>
+									<replaceAll>false</replaceAll>
+									<replaceLineBased>false</replaceLineBased>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<id>checkstyle</id>
 			<build>
 				<plugins>
@@ -247,6 +481,10 @@
 							<rulesets>
 								<ruleset>../.config/pmd/java/ruleset.xml</ruleset>
 							</rulesets>
+							<!-- All code is auto-generated -->
+							<excludes>
+								<exclude>**/**</exclude>
+							</excludes>
 						</configuration>
 						<dependencies>
 							<dependency>
