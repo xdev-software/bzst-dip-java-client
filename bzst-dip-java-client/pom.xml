@@ -5,20 +5,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>software.xdev</groupId>
-	<artifactId>template-placeholder</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>bzst-dip-java-client</artifactId>
+	<version>2.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>template-placeholder</name>
-	<description>template-placeholder</description>
-	<url>https://github.com/xdev-software/template-placeholder</url>
+	<name>bzst-dip-java-client</name>
+	<description>bzst-dip-java-client</description>
+	<url>https://github.com/xdev-software/bzst-dip-java-client</url>
 
 	<scm>
-		<url>https://github.com/xdev-software/template-placeholder</url>
-		<connection>scm:git:https://github.com/xdev-software/template-placeholder.git</connection>
+		<url>https://github.com/xdev-software/bzst-dip-java-client</url>
+		<connection>scm:git:https://github.com/xdev-software/bzst-dip-java-client.git</connection>
 	</scm>
 
-	<inceptionYear>2023</inceptionYear>
+	<inceptionYear>2024</inceptionYear>
 
 	<organization>
 		<name>XDEV Software</name>
@@ -54,6 +54,8 @@
 		<sonar.exclusions>
 			src/generated/**
 		</sonar.exclusions>
+
+		<jjwt.version>0.12.6</jjwt.version>
 	</properties>
 
 	<dependencyManagement>
@@ -103,6 +105,64 @@
 			<groupId>jakarta.annotation</groupId>
 			<artifactId>jakarta.annotation-api</artifactId>
 			<version>3.0.0</version>
+		</dependency>
+
+		<!-- Custom project stuff -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>4.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.17</version>
+		</dependency>
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.13.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<version>2.24.3</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -282,7 +342,8 @@
 		<profile>
 			<id>openapi-generator</id>
 			<properties>
-				<componentName>INSERT_NAME_HERE</componentName>
+				<componentDir>bzst/dip/client/generated</componentDir>
+				<componentPackage>bzst.dip.client.generated</componentPackage>
 
 				<generatedDir>${project.basedir}/${generatedDirRelative}</generatedDir>
 				<openApiRelativeGeneratorDir>src/gen</openApiRelativeGeneratorDir>
@@ -336,9 +397,9 @@
 									<configOptions>
 										<sourceFolder>${openApiRelativeGeneratorDir}</sourceFolder>
 										<library>apache-httpclient</library>
-										<apiPackage>software.xdev.${componentName}.api</apiPackage>
-										<modelPackage>software.xdev.${componentName}.model</modelPackage>
-										<invokerPackage>software.xdev.${componentName}.client</invokerPackage>
+										<apiPackage>software.xdev.${componentPackage}.api</apiPackage>
+										<modelPackage>software.xdev.${componentPackage}.model</modelPackage>
+										<invokerPackage>software.xdev.${componentPackage}.client</invokerPackage>
 										<!-- Otherwise throw and catch everywhere -->
 										<useRuntimeException>true</useRuntimeException>
 										<!-- Some fields of API have been ignored because they are unused -->
@@ -392,7 +453,7 @@
 									<goal>file-contents</goal>
 								</goals>
 								<configuration>
-									<baseDir>${generatedDirRelative}/software/xdev/${componentName}/client/</baseDir>
+									<baseDir>${generatedDirRelative}/software/xdev/${componentDir}/client/</baseDir>
 									<fileMask>ApiClient.java</fileMask>
 									<!-- @formatter:off DO NOT INTRODUCE LINE BREAK -->
 									<findRegex>^import com\.fasterxml\.jackson\.jaxrs\.json\.JacksonJsonProvider;(\r?\n)</findRegex>
@@ -408,7 +469,7 @@
 									<goal>file-contents</goal>
 								</goals>
 								<configuration>
-									<baseDir>${generatedDirRelative}/software/xdev/${componentName}/</baseDir>
+									<baseDir>${generatedDirRelative}/software/xdev/${componentDir}/</baseDir>
 									<recursive>true</recursive>
 									<fileMask>.java</fileMask>
 									<findRegex>^@jakarta\.annotation\.Generated.*(\r?\n)</findRegex>
@@ -424,7 +485,7 @@
 									<goal>file-contents</goal>
 								</goals>
 								<configuration>
-									<baseDir>${generatedDirRelative}/software/xdev/${componentName}/</baseDir>
+									<baseDir>${generatedDirRelative}/software/xdev/${componentDir}/</baseDir>
 									<recursive>true</recursive>
 									<fileMask>.java</fileMask>
 									<findRegex>^.*serialVersionUID.*(\r?\n)(\s*\r?\n)?</findRegex>
@@ -455,6 +516,7 @@
 						<configuration>
 							<configLocation>../.config/checkstyle/checkstyle.xml</configLocation>
 							<includeTestSourceDirectory>true</includeTestSourceDirectory>
+							<excludes>**/xmldocument/model/**/*</excludes>
 						</configuration>
 						<executions>
 							<execution>
