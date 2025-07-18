@@ -2,7 +2,7 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/xdev-software/bzst-dip-java-client/check-build.yml?branch=develop)](https://github.com/xdev-software/bzst-dip-java-client/actions/workflows/check-build.yml?query=branch%3Adevelop)
 [![API Specification Editor](https://img.shields.io/badge/API--Spec-Editor-85ea2d?logo=swagger)](https://editor.swagger.io/?url=https://raw.githubusercontent.com/xdev-software/bzst-dip-java-client/develop/openapi/openapi.yml)
 
-# <img src="assets/Logo.svg" height="28" alt="XDEV BZST-DIP-Java-Client Logo"> bzst-dip-java-client
+# <img src="assets/logo-v2.svg" height="24" alt="XDEV BZST-DIP-Java-Client Logo"> bzst-dip-java-client
 
 Client for using the [Mass data transmission DIP (mass data interface)](https://www.bzst.de/EN/Businesses/CESOP/electronic_data_transmission/electronic_data_transmission_node.html#js-toc-entry1).
 
