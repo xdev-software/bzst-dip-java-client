@@ -35,7 +35,7 @@ tested [version 1.0.3 of this library](https://github.com/xdev-software/bzst-dip
 We created this client to make it as easy as possible for the developer to use the BZSt DIP.
 Through usage of the builder pattern (see [Configuration](#configuration) below), DTOs and a typesafe data model we ensure high usability and readability.
 
-The BZSt provides [XSD](https://www.bzst.de/SharedDocs/Downloads/DE/Digitale_Plattformbetreiber/amtlicher_datensatz_entwurf) that define the expected XML structure and make it possible to generate java classes ([BZSt Docs](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2)).<br/>
+The BZSt provides [XSD](https://www.bzst.de/DE/Unternehmen/Umsatzsteuer/CESOP/Benutzerhandbuch/cesop-benutzerhandbuch.html) that define the expected XML structure and make it possible to generate java classes ([BZSt Docs](https://www.bzst.de/DE/Unternehmen/Intern_Informationsaustausch/DAC7/Handbuecher/handbuecher.html?nn=127558#js-toc-entry2)).<br/>
 Our library validates each request through these XSD find errors before they are sent to the DIP.
 
 ## Installation
@@ -65,7 +65,7 @@ openssl rsa -in key.pem -pubout > publicKey.pub
 ```
 
 Now you can already use these two files to sign your requests. See
-the [example with PEM signing](./bzst-dip-java-client-demo\src\main\java\software\xdev\ApplicationWithPem.java).
+the [example with PEM signing](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithPem.java).
 
 ### Create Java KeyStore (JKS)
 
@@ -134,7 +134,7 @@ CESOP ([ApplicationWithCesop.java](./bzst-dip-java-client-demo/src/main/java/sof
 Format.
 
 ## Demo
-A minimal demo is also available [here](./template-placeholder-demo/src/main/java/software/xdev/Application.java).
+A minimal demo is also available [here](./bzst-dip-java-client-demo/src/main/java/software/xdev/Application.java).
 
 ## Support
 
