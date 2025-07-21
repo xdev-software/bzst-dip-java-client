@@ -133,9 +133,6 @@ the
 CESOP ([ApplicationWithCesop.java](./bzst-dip-java-client-demo/src/main/java/software/xdev/ApplicationWithCesop.java))
 Format.
 
-## Demo
-A minimal demo is also available [here](./bzst-dip-java-client-demo/src/main/java/software/xdev/Application.java).
-
 ## Support
 
 If you need support as soon as possible, and you can't wait for any pull request, feel free to use [our support](https://xdev.software/en/services/support).
