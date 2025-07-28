@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xs:schema [
+		<!ELEMENT xs:schema (xs:import|xs:element|xs:complexType|xs:simpleType)*>
+		<!ATTLIST xs:schema
+				xmlns:xs CDATA #REQUIRED
+				xmlns:vc CDATA #REQUIRED
+				xmlns:cesop CDATA #REQUIRED
+				xmlns:iso CDATA #REQUIRED
+				xmlns:cm CDATA #REQUIRED
+				targetNamespace CDATA #REQUIRED
+				elementFormDefault CDATA #REQUIRED
+				vc:minVersion CDATA #REQUIRED>
+		<!ELEMENT xs:import (#PCDATA)>
+		<!ATTLIST xs:import
+				namespace CDATA #REQUIRED
+				schemaLocation CDATA #REQUIRED>
+		<!ELEMENT xs:element (xs:complexType|xs:annotation)*>
+		<!ATTLIST xs:element
+				maxOccurs CDATA #IMPLIED
+				minOccurs CDATA #IMPLIED
+				name CDATA #REQUIRED
+				nillable CDATA #IMPLIED
+				type CDATA #IMPLIED>
+		<!ELEMENT xs:complexType (xs:annotation|xs:sequence|xs:attribute|xs:simpleContent)*>
+		<!ATTLIST xs:complexType
+				name CDATA #IMPLIED>
+		<!ELEMENT xs:annotation (xs:documentation)*>
+		<!ELEMENT xs:documentation (#PCDATA)>
+		<!ATTLIST xs:documentation
+				xml:lang CDATA #REQUIRED>
+		<!ELEMENT xs:sequence (xs:element|xs:choice)*>
+		<!ELEMENT xs:choice (xs:element)*>
+		<!ELEMENT xs:attribute (xs:annotation)*>
+		<!ATTLIST xs:attribute
+				default CDATA #IMPLIED
+				fixed CDATA #IMPLIED
+				name CDATA #REQUIRED
+				type CDATA #REQUIRED
+				use CDATA #REQUIRED>
+		<!ELEMENT xs:simpleContent (xs:extension)*>
+		<!ELEMENT xs:extension (xs:attribute)*>
+		<!ATTLIST xs:extension
+				base CDATA #REQUIRED>
+		<!ELEMENT xs:simpleType (xs:restriction)*>
+		<!ATTLIST xs:simpleType
+				name CDATA #REQUIRED>
+		<!ELEMENT xs:restriction (xs:enumeration)*>
+		<!ATTLIST xs:restriction
+				base CDATA #REQUIRED>
+		<!ELEMENT xs:enumeration (xs:annotation)*>
+		<!ATTLIST xs:enumeration
+				value CDATA #REQUIRED>
+		]>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:cesop="urn:ec.europa.eu:taxud:fiscalis:cesop:v1" xmlns:iso="urn:eu:taxud:isotypes:v1" xmlns:cm="urn:eu:taxud:commontypes:v1" targetNamespace="urn:ec.europa.eu:taxud:fiscalis:cesop:v1" elementFormDefault="qualified" vc:minVersion="1.0">
+	<xs:import namespace="urn:eu:taxud:isotypes:v1" schemaLocation="cesop_isotypes.xsd"/>
+	<xs:import namespace="urn:eu:taxud:commontypes:v1" schemaLocation="cesop_commontypes.xsd"/>
+	<xs:element name="CESOP">
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation xml:lang="en">CESOP payment data message root element.
+					</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element name="MessageSpec" type="cesop:MessageSpec_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The MessageSpec element represents the header of the CESOP payment data message.
+							</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:element name="PaymentDataBody" type="cesop:PaymentDataBody_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The PaymentDataBody element represents the body of the CESOP payment data message.
+								</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ValidationResult" type="cesop:ValidationResult_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The ValidationResult element represents the body of the CESOP validation result message.
+								</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:decimal" use="required" fixed="4.02">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Schema version of the CESOP XSD.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MessageSpec_Type">
+		<xs:sequence>
+			<xs:element name="TransmittingCountry" type="iso:MSCountryCode_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Member State of the national TAX administration through which the Payment data transits (ISO-3166 Alpha 2).
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageType" type="cesop:MessageType_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The element declares the type of the message like Payment data or Validation result.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageTypeIndic" type="cesop:MessageTypeIndic_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The element declares if the message contains new data, correction/deletion for previously sent data, or there is no data to report.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageRefId" type="cm:UUID">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Message Reference ID element contains a unique identifier for the message in form of a UUID version 4.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrMessageRefId" type="cm:UUID" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Correlation Message Reference ID element allows correlation of dependent messages. Examples of dependent messages are the following: any message which failed the validation and the related Validation result message, initial Payment data message and the related Correction payment data message.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SendingPSP" type="cesop:PSP_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Sending PSP element uniquely defines the Payment Service Provider, which centralises the submission of the payment data to national TAX administration for its subsidiaries.
+					This element must be omitted if the SendingPSP and the ReportingPSP are the same entity.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReportingPeriod" type="cesop:ReportingPeriod_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2a). The Reporting Period element defines the quarter and the year, to which the payment data submitted by the Payment Service Provider refers.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Timestamp" type="cm:dateTimeWithRequiredTimeZone">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The exact date and time when the PSP has generated the message.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentDataBody_Type">
+		<xs:sequence>
+			<xs:element name="ReportingPSP" type="cesop:PSP_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Reporting PSP element uniquely defines the Payment Service Provider, which reports the payment data to national TAX administration.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReportedPayee" type="cesop:ReportedPayee_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Reported Payee element defines the payee, to which the payment data submitted by Payment Service Provider relates. The 'ReportedPayee' element is repeatable as a PSP can report data from many Payees.
+					This element is mandatory as soon as transactions are reported. It can only be omitted in case there is no transaction to report.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PSP_Type">
+		<xs:sequence>
+			<xs:element name="PSPId" type="cesop:PSPId_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1a). The BIC or any other business identifier code that unambiguously identifies the Payment Service Provider.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="cm:Name_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The name of the Payment Service Provider reporting the payment data to national TAX administration.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Representative_Type">
+		<xs:sequence>
+			<xs:element name="RepresentativeId" type="cesop:PSPId_Type" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1e). The BIC or any other business identifier code that unambiguously identifies, and gives the location of, the payment service provider acting on behalf of the payee where the payee receives funds without having any payment account.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="cm:Name_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The name of the Representative of the Payee.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReportedPayee_Type">
+		<xs:sequence>
+			<xs:element name="Name" type="cm:Name_Type" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1b). The name of the Reported Payee company or natural person.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="iso:CountryCode_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1d). The country of the payee's origin (ISO-3166 Alpha 2).
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="cm:Address_Type" nillable="true" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1f). The address of the payee as it appears in the records of the payment services provider.
+					From the legal basis, this element must be provided if available. Otherwise it can be empty.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmailAddress" type="cm:Email_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The email address of the payee.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WebPage" type="cm:WebPage_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The web page of the payee.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TAXIdentification" type="cesop:TAXIdentifier_Type" nillable="true" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1c). Any VAT identification number or other national tax number of the payee.
+					From the legal basis, this element must be provided if available. Otherwise it can be empty.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountIdentifier" type="cesop:AccountIdentifier_Type" nillable="true" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1d). The IBAN of the payee’s payment account or any other identifier which unambiguously identifies, and gives the location of, the payee.
+					This field is mandatory when funds are transferred to a payment account of the payee.
+					From the legal basis, this element must be provided if available. Otherwise it can be empty.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReportedTransaction" type="cesop:ReportedTransaction_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1g and 1h). The parent Reported Transaction element listing all the received payments and payment refunds for the given payee reported by the PSP.
+					This element is optional only in case of deletion of the related Reported Payee. Otherwise the element is mandatory.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Representative" type="cesop:Representative_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (1e). The payment service provider acting on behalf of the payee where the payee receives funds without having any payment account.
+This element is mandatory only when the payee receives funds without having a payment account.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocSpec" type="cm:DocSpec_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The DocSpec type defines data to make it possible to correct records in the message.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReportedTransaction_Type">
+		<xs:sequence>
+			<xs:element name="TransactionIdentifier" type="cm:StringMin1Max40_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2d). Any reference which unambiguously identifies the payment for the PSP.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorrTransactionIdentifier" type="cm:StringMin1Max40_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The reference of the correlated transaction. Used, in case of 'transaction refund', to indicate the reference of the related 'received payment'.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTime" type="cm:TransactionDate_Type" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2a). The element expresses the date and the time of the related transaction.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Amount" type="cm:Amount_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2b). The amount and the currency of the payment or of the payment refund. The currency code refers to ISO-4217 three-byte alpha version.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentMethod" type="cm:PaymentMethod_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The payment method used.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InitiatedAtPhysicalPremisesOfMerchant" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2e). Information that the payment is initiated at the physical premises of the merchant. The element has a value 'true' (or '1') if the payment is initiated at the premises of the merchant. Otherwise, the element has a value 'false' (or '0').
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PayerMS" type="cesop:PayerMS_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2c). Member State of the payer. The payer is the Principal of the transaction, always located in EU. (ISO-3166 Alpha 2).
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PSPRole" type="cm:PSPRole_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The role of the Payment Service Provider acting on behalf of the payee.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="IsRefund" type="cm:Refund_Type" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Article 243d (1g and 1h). The element identifies the refund. Value 'false' (or '0') represents a 'payment', value 'true' (or '1') represents a 'payment refund'.
+				This attribute is optional. If not provided, the default value 'false' will be assigned.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ReportingPeriod_Type">
+		<xs:sequence>
+			<xs:element name="Quarter" type="cm:Quarter_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2a). The element represents the quarter to which the payment data refers.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Year" type="cm:Year_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Article 243d (2a). The element represents the year to which the payment data refers.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PSPId_Type">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Article 243d (1a and 1e). The BIC or any other business identifier code that unambiguously identifies the Payment Service Provider. As the identifier may be not strictly numeric, it is just defined as a string of characters. Attribute 'PSPIdType' defines the type of identification number. </xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="cm:StringMin1Max200_Type">
+				<xs:attribute name="PSPIdType" type="cm:PSPIdType_Type" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Type of identification number.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PayerMS_Type">
+		<xs:simpleContent>
+			<xs:extension base="iso:MSCountryCode_Type">
+				<xs:attribute name="PayerMSSource" type="cm:AccountIdentifierType_Type" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Type of location identifier identifying the country of the Payer.
+				</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AccountIdentifier_Type">
+		<xs:simpleContent>
+			<xs:extension base="cm:StringMin0Max200_Type">
+				<xs:attribute name="CountryCode" type="iso:CountryCode_Type" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The country code of the location (ISO-3166 Alpha 2). Must be provided only if an account identifier is provided.
+				</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="type" type="cm:AccountIdentifierType_Type" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Type of the location identifier. Must be provided only if an account identifier is provided.
+				</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TAXIdentifier_Type">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+					Article 243d(1c) If a TAX identifier is available, it must be reported. Otherwise it can be empty.
+					</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VATId" type="cm:VATId_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The EU confirmed VAT identification number of the payee.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TAXId" type="cm:TAXId_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Any taxation identifier of the payee.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MessageType_Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PMT">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message type is 'Payment data' (or 'No Payment data').
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VLD">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message type is 'Validation result message'.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageTypeIndic_Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CESOP100">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message contains new data.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CESOP101">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message contains corrections or deletions of previously sent data.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CESOP102">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message indicates there is no data to report.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ValidationResult_Type">
+		<xs:sequence>
+			<xs:element name="ValidationResult" type="cesop:ValidationResultType_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates if the payment data message has been successfully validated, partially rejected or fully rejected.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidationErrors" type="cesop:ValidationError_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of detected errors.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidationError_Type">
+		<xs:sequence>
+			<xs:element name="ErrorCode" type="cesop:ErrorCode_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Error code related to the error detected during the validation of the related payment data message.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorCounter" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates how many times the related error has been raised for the related Payment Data Message, including the current one.
+					 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorShortDesc" type="cm:StringMin1Max100_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Short description of the error code.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorDescription" type="cm:StringMin1Max1000_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Full description of the error code.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionIdentifier" type="cm:StringMin1Max40_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Transaction identifier, which identifies the erroneous transaction.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocRefId" type="cm:UUID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The unique reference of the parent element in form of a UUID version 4.
+					When the error is related to a Reported Payee or a Reported Transaction, this field allows to link the error to the related DocSpec.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ValidationResultType_Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VALIDATED">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message has been positively validated.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PARTIALLY REJECTED">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message has been partially rejected.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FULLY REJECTED">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message has been fully rejected.
+			 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErrorCode_Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="10010">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">MessageRefID is not unique.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10020">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ‘Timestamp’ element refers to a wrong value.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10030">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The period is before 01/01/2024.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10040">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong CorrMessageRefID.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10050">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong format of the MessageRefID.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10060">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong format of the CorrMessageRefID.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10070">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">An initial Payment Data message can only contain new data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10080">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A correction message can only contain corrections and/or deletions.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10090">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message is not a payment data message.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10100">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The reporting period cannot be updated.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10110">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">CorrMessageRefId wrongly used in MessageSpec.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10120">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong TransmittingCountry
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20010">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">DocRefID is not unique within the message.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20020">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">DocRefID is not unique within the system.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20030">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong DocRefID format.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20040">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong CorrDocRefId value.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20050">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">CorrDocRefId for new data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20060">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Missing CorrDocRefId.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20070">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">CorrDocRefId no longer valid.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20100">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Invalid PSP's BIC format.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20110">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Missing ReportedPayee.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30010">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Business identifier of the Representative is equal to the Business Identifier of the Reporting PSP.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40010">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The reported transaction does not represent cross-border payment.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40020">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong IBAN format.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40030">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">IBAN is not valid.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40040">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">ReportedPayee listed in the No payment data for the requested period message.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40050">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The 'ReportedTransaction' element is missing.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40060">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Discrepancy in the 'AccountIdentifier' attributes.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40070">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Invalid Representative's BIC format.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40080">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Discrepancy between ‘AccountIdentifier’ and ‘Representative’.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45010">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Wrong value of the ‘IsRefund’ element in the ‘AmountCurrency’ element.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45030">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ‘DateTime’ element refers to a wrong value.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45040">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ‘TransactionIdentifier’ element is not unique within the Payment data message.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45050">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ‘TransactionIdentifier’ element is not unique within the system.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45060">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Zero value for ‘Amount’ element.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45080">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Same transaction date provided more than once.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50010">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The XML message is not well formed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50020">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Failed Decryption.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50030">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Failed Decompression.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50040">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Failed Signature Check.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50050">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Failed Threat Scan.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50060">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Failed Virus Scan.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50070">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Message size exceeded.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50080">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Too many errors detected.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99999">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Custom error.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
