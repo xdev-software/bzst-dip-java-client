@@ -1,6 +1,6 @@
-This ``openapi.yml`` was written manually as INSERT_NAME_HERE fails to provide an API schema or something similar.
+This ``openapi.yml`` is based on the [official available one](https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/dip_open_api.yaml) with minor modifications.
 
-The Java API Client can be generated using ``mvn clean compile -P openapi-generator`` inside [``template-placeholder``](../template-placeholder/).
+The Java API Client can be generated using ``mvn clean compile -P openapi-generator`` inside [``bzst-dip-java-client``](../bzst-dip-java-client/).
 
 Helpful links:
 * https://jsonformatter.org/json-to-jsonschema
