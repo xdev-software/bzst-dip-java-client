@@ -50,7 +50,10 @@ import software.xdev.bzst.dip.client.xmldocument.model.TaxesType;
 public class ReportableSellerCreator
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportableSellerCreator.class);
+	
 	public static final String NULL_STRING = "NULL";
+	private static final DateTimeFormatter BIRTH_DATE_DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	
 	private final BzstDipConfiguration configuration;
 	
 	public ReportableSellerCreator(final BzstDipConfiguration configuration)
@@ -219,7 +222,7 @@ public class ReportableSellerCreator
 					createNamePerson(firstName, lastName),
 					addressFixType,
 					legalAddressTypeEnumType,
-					LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+					LocalDate.parse(birthDate, BIRTH_DATE_DTF)
 				)
 			);
 		}

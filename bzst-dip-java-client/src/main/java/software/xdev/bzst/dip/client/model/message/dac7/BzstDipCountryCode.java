@@ -1282,6 +1282,7 @@ public enum BzstDipCountryCode
 	 */
 	XX;
 	
+	@SuppressWarnings("PMD.NPathComplexity")
 	public CountryCodeType toXmlType()
 	{
 		return switch(this)

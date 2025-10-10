@@ -72,6 +72,7 @@ public record BzstCesopPaymentDataBody(BzstCesopReportingPSP reportingPSP, List<
 		return paymentDataBodyType;
 	}
 	
+	@SuppressWarnings("PMD.ReplaceJavaUtilCalendar")
 	private List<ReportedPayeeType> convertToReportedPayeesType() throws DatatypeConfigurationException
 	{
 		final List<ReportedPayeeType> reportedPayeeTypes = new ArrayList<>();

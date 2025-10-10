@@ -16,6 +16,9 @@
 package software.xdev.bzst.dip.client.model.message.dac7;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public record BzstDipSingleTransferResult(String transferNumber, int httpStatusCode)
@@ -30,6 +33,10 @@ public record BzstDipSingleTransferResult(String transferNumber, int httpStatusC
 		INTERNER_FEHLER(500),
 		UNDEFINIERT(-1);
 		
+		private static final Map<Integer, StatusCodeMeaning> CODE_TO_MEANING =
+			Arrays.stream(StatusCodeMeaning.values())
+				.collect(Collectors.toMap(s -> s.httpStatusCode, Function.identity()));
+		
 		private final int httpStatusCode;
 		
 		StatusCodeMeaning(final int httpStatusCode)
@@ -39,9 +46,7 @@ public record BzstDipSingleTransferResult(String transferNumber, int httpStatusC
 		
 		public static StatusCodeMeaning getMeaningFromStatusCode(final int httpStatusCode)
 		{
-			return Arrays.stream(StatusCodeMeaning.values()).filter(
-				meaning -> meaning.httpStatusCode == httpStatusCode
-			).findFirst().orElseGet(() -> UNDEFINIERT);
+			return CODE_TO_MEANING.getOrDefault(httpStatusCode, UNDEFINIERT);
 		}
 	}
 	

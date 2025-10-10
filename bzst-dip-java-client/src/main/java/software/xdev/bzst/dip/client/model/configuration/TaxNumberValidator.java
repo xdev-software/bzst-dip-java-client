@@ -45,6 +45,8 @@ public final class TaxNumberValidator
 	 */
 	public static final int IDNR_CHECKSUM_LENGTH = 1;
 	
+	private static final Pattern TAX_NUMBER_DIGITS_CHECK_PATTERN = Pattern.compile("^[1-9][0-9]{10}$");
+	private static final Pattern ID_NUMBER_DIGITS_CHECK_PATTERN = Pattern.compile("^[1-9][0-9]{9}$");
 	private static final Pattern PATTERN_3_DIGITS_SEQUENCE = Pattern.compile("(.)\\1\\1");
 	public static final int SIZE_FOR_TRIPLETS_ALLOWED = 8;
 	public static final int SIZE_FOR_DOUBLET_ALLOWED = 9;
@@ -74,7 +76,7 @@ public final class TaxNumberValidator
 		}
 		
 		// digits only, no leading zero
-		if(!taxNumber.matches("^[1-9][0-9]{10}$"))
+		if(!TAX_NUMBER_DIGITS_CHECK_PATTERN.matcher(taxNumber).matches())
 		{
 			throw new TaxNumberException(taxNumber);
 		}
@@ -99,11 +101,10 @@ public final class TaxNumberValidator
 	 */
 	private static boolean doValidateIdNr(final String taxNumber)
 	{
-		
 		Objects.requireNonNull(taxNumber);
 		
 		// 10-digits, no leading zero.
-		if(!taxNumber.matches("^[1-9][0-9]{9}$"))
+		if(!ID_NUMBER_DIGITS_CHECK_PATTERN.matcher(taxNumber).matches())
 		{
 			return false;
 		}

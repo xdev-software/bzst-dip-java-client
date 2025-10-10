@@ -133,7 +133,7 @@ public class XMLDocumentBodyCreator
 		return dataType;
 	}
 	
-	@SuppressWarnings("PMD.UnusedFormalParameter") // TODO Needs to be resolved!
+	@SuppressWarnings("PMD.UnusedFormalParameter")
 	private Object createData(
 		final PaymentDataBodyType paymentDataBodyType) throws DatatypeConfigurationException
 	{
@@ -258,6 +258,7 @@ public class XMLDocumentBodyCreator
 		return addressType;
 	}
 	
+	@SuppressWarnings("PMD.ReplaceJavaUtilCalendar")
 	private software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType createMessageSpecCesop()
 		throws DatatypeConfigurationException
 	{

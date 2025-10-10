@@ -89,6 +89,8 @@ public class XMLDocumentCreator
 	 * </p>
 	 */
 	private static final String DPI_XML_XSD = "DPIXML_v1.0.xsd";
+	private static final DateTimeFormatter XML_GREG_CAL_DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	
 	private final BzstDipConfiguration configuration;
 	
 	public XMLDocumentCreator(final BzstDipConfiguration configuration)
@@ -96,11 +98,12 @@ public class XMLDocumentCreator
 		this.configuration = configuration;
 	}
 	
+	@SuppressWarnings("checkstyle:MagicNumber")
 	public String buildXMLDocument(
 		final List<CorrectableReportableSellerType> correctableReportableSellerTypes,
 		final CorrectablePlatformOperatorType correctablePlatformOperatorType)
 	{
-		try(final StringWriter sw = new StringWriter())
+		try(final StringWriter sw = new StringWriter(4096))
 		{
 			final Marshaller jaxbMarshaller = createMarshaller();
 			final DipType dipType = this.buildRootElement(
@@ -121,10 +124,11 @@ public class XMLDocumentCreator
 		}
 	}
 	
+	@SuppressWarnings("checkstyle:MagicNumber")
 	public String buildXMLDocument(
 		final PaymentDataBodyType paymentDataBodyType)
 	{
-		try(final StringWriter sw = new StringWriter())
+		try(final StringWriter sw = new StringWriter(4096))
 		{
 			final Marshaller jaxbMarshaller = createMarshaller();
 			final DipType dipType = this.buildRootElement(
@@ -263,8 +267,7 @@ public class XMLDocumentCreator
 	{
 		try
 		{
-			return DatatypeFactory.newInstance().newXMLGregorianCalendar(
-				localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+			return DatatypeFactory.newInstance().newXMLGregorianCalendar(localDateTime.format(XML_GREG_CAL_DTF));
 		}
 		catch(final DatatypeConfigurationException e)
 		{

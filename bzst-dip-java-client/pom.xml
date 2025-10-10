@@ -550,7 +550,7 @@
 							</rulesets>
 							<!-- All code is auto-generated -->
 							<excludes>
-								<exclude>**/**</exclude>
+								<exclude>software/xdev/bzst/dip/client/generated/**</exclude>
 							</excludes>
 						</configuration>
 						<dependencies>

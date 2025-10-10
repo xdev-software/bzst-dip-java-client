@@ -93,6 +93,7 @@ public class BearerTokenRequester
 		return BEARER_STRING + this.getAccessToken();
 	}
 	
+	@SuppressWarnings("PMD.ReplaceJavaUtilDate")
 	private String createRequestToken()
 	{
 		LOGGER.debug("Creating jwt token...");

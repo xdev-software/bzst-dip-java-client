@@ -82,11 +82,15 @@ public final class XmlSigner
 	 *
 	 * @return the signed xml document as string
 	 */
+	@SuppressWarnings("checkstyle:MagicNumber")
 	public String signXMLDocument(final String unsignedXmlString)
 	{
-		try(final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			final ByteArrayInputStream unsignedXmlByteArrayInputStream =
-				new ByteArrayInputStream(unsignedXmlString.getBytes(StandardCharsets.UTF_8)))
+		final byte[] unsignedXmlStringBytes = unsignedXmlString.getBytes(StandardCharsets.UTF_8);
+		try(final ByteArrayInputStream unsignedXmlByteArrayInputStream =
+			new ByteArrayInputStream(unsignedXmlStringBytes);
+			// Output needs at least the size of input + ~3000bytes overhead
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(
+				unsignedXmlStringBytes.length + 4096))
 		{
 			final DocumentBuilderFactory dbf = DocumentBuilderFactoryNoExternalEntities.newInstance();
 			dbf.setNamespaceAware(true);
