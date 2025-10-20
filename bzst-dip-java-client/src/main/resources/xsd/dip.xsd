@@ -1,0 +1,156 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   xmlns="http://itzbund.de/ozg/bzst/post/dip/v1/"
+		   targetNamespace="http://itzbund.de/ozg/bzst/post/dip/v1/"
+		   elementFormDefault="qualified">
+<!--	<xs:include schemaLocation="dip-types.xsd"/>-->
+	<xs:element name="dip" type="DipType"/>
+	<xs:complexType name="DipType">
+		<xs:sequence>
+			<xs:element name="header" type="DipHeaderType"/>
+			<xs:element name="body" type="DipBodyType"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="DipHeaderType">
+		<xs:sequence>
+			<xs:element name="consignment" type="ConsignmentType"/>
+			<xs:element name="application" type="ApplicationType"/>
+		</xs:sequence>
+		<xs:attribute name="environment" type="environmentType" use="required">
+			<xs:annotation>
+				<xs:documentation>Angabe der Zielumgebung, PROD für Produktivlieferungen, TEST für Testumgebungen</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DipBodyType">
+		<xs:sequence>
+			<xs:element name="consignmentItem" type="ConsignmentItemType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Multipliztiät zur Lieferung mehrerer Anträge/Meldungen in einer Lieferung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsignmentType">
+		<xs:sequence>
+			<xs:element name="customerIdentifier" type="CustomerIdentifierType">
+				<xs:annotation>
+					<xs:documentation>Identifikationskennung des Datenübermittlers, anhand dieser eineindeutig verifiziert werden kann. I.d.R. ein dem Fachverfahren/Fachbereich bekannte Kennung z.B. ELSTER-Konto-ID oder BZST-Zertifikats-Nummer </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="creationTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Erzeugungszeitpunkt der Lieferung als Zeitstempel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="transferticketId" type="customTicketIdNumberType">
+				<xs:annotation>
+					<xs:documentation>Identifikationsnummer der Lieferung, eine eineindeutige Kennung dieser Lieferung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="referenceId" type="customTicketIdNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifikationsnummer einer Bezugs-Lieferung als Referenz auf die transferticketId einer vorhergehende Lieferung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsignmentItemType">
+		<xs:sequence>
+			<xs:element name="bopAccountId" type="bopAccountIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Benutzerkennung des Antragstellers im POSt2.0 (BOPNeu) für Zustellung eines Verwaltungsaktes im Portal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="data" type="xs:anyType">
+				<xs:annotation>
+					<xs:documentation>Beinhaltet die Nutzdaten im Format des Fachverfahren-XMLs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomerIdentifierType">
+		<xs:sequence>
+			<xs:element name="identityProvider" type="identityProviderType">
+				<xs:annotation>
+					<xs:documentation>Festlegung, welchem Provider die Identifier-Kennung zuzuordnen ist: BZST-CERT einem BZSt-Zertifikat, ELSTER einem ELSTER-Konto</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="identifier" type="identifierType">
+				<xs:annotation>
+					<xs:documentation>Identifier-Kennung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="environmentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TEST"/>
+			<xs:enumeration value="PROD"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="applicationCodeType">
+		<xs:annotation>
+			<xs:documentation>Benennung des Ziel-Fachverfahrens, z.B. DAC7, CESOP, CRS.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="processStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="PARTIALLY_REJECTED"/>
+			<xs:enumeration value="ERROR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="bopAccountIdType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="customTicketIdNumberType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="170"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="identifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="consignmentItemPositionType">
+		<xs:restriction base="xs:unsignedLong">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="identityProviderType">
+		<xs:annotation>
+			<xs:documentation>Festlegung, welchem Provider die Identifier-Kennung zuzuordnen ist: BZST-CERT einem BZSt-Zertifikat, ELSTER einem ELSTER-Konto</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BZST-CERT"/>
+			<xs:enumeration value="ELSTER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="schemaVersionType">
+		<xs:annotation>
+			<xs:documentation>XML-Schemaversion des Fachverfahrens-XSD, welches innerhalb body/consignmentItem/data zum Einsatz kommt.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ApplicationType">
+		<xs:attribute name="code" type="applicationCodeType" use="required">
+			<xs:annotation>
+				<xs:documentation>Benennung des Ziel-Fachverfahrens, z.B. DAC7, CESOP, CRS</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>
