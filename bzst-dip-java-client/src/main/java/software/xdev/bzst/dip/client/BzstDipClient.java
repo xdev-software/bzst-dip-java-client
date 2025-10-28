@@ -23,7 +23,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
+import software.xdev.bzst.dip.client.generated.api.MdsProviderV21Api;
 import software.xdev.bzst.dip.client.generated.client.ApiClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.cesop.BzstCesopPaymentDataBody;
@@ -64,9 +64,9 @@ public class BzstDipClient
 	
 	public BzstDipClient(
 		final BzstDipConfiguration configuration,
-		final MdEinreichenProviderApi mdEinreichenProviderApi)
+		final MdsProviderV21Api mdsProviderV21Api)
 	{
-		this(configuration, new WebClient(configuration, mdEinreichenProviderApi));
+		this(configuration, new WebClient(configuration, mdsProviderV21Api));
 	}
 	
 	public BzstDipClient(final BzstDipConfiguration configuration, final WebClient webClient)
