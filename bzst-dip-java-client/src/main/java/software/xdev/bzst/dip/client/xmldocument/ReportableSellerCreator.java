@@ -180,6 +180,7 @@ public class ReportableSellerCreator
 		return otherActivitiesType;
 	}
 	
+	@SuppressWarnings("PMD.ExcessiveParameterList")
 	private static ReportableSellerType.Identity createIdentity(
 		final CountryCodeType resCountryCode,
 		final TINType tin,
