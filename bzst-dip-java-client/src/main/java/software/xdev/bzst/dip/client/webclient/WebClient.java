@@ -141,7 +141,7 @@ public class WebClient
 			)
 		)
 		{
-			// TODO: Check text
+			// Improve via https://github.com/xdev-software/bzst-dip-java-client/issues/14
 			return new BzstDipSingleTransferResult(dataTransferNumber, 2);
 			
 			// return new BzstDipSingleTransferResult(dataTransferNumber, httpResponse.statusCode());
