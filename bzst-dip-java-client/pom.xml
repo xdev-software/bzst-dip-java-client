@@ -50,7 +50,7 @@
 
 		<generatedDirRelative>src/generated/java</generatedDirRelative>
 
-		<jjwt.version>0.12.6</jjwt.version>
+		<jjwt.version>0.13.0</jjwt.version>
 	</properties>
 
 	<dependencyManagement>
