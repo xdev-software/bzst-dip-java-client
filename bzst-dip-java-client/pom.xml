@@ -579,36 +579,5 @@
 				</plugins>
 			</reporting>
 		</profile>
-
-		<profile>
-			<id>generate-records</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>jaxb2-maven-plugin</artifactId>
-						<version>3.3.0</version>
-						<executions>
-							<execution>
-								<id>xjc</id>
-								<goals>
-									<goal>xjc</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<sources>
-								<source>${project.basedir}/src/main/resources/xsd/dip.xsd</source>
-								<source>${project.basedir}/src/main/resources/xsd/dip-types.xsd</source>
-								<source>${project.basedir}/src/main/resources/xsd/dipResponse.xsd</source>
-							</sources>
-							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-							<packageName>software.xdev.bzst.dip.client.generatedxmls</packageName>
-							<clearOutputDir>false</clearOutputDir>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 	</profiles>
 </project>
