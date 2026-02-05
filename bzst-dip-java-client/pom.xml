@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>software.xdev</groupId>
@@ -578,6 +578,37 @@
 					</plugin>
 				</plugins>
 			</reporting>
+		</profile>
+
+		<profile>
+			<id>generate-records</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jaxb2-maven-plugin</artifactId>
+						<version>3.3.0</version>
+						<executions>
+							<execution>
+								<id>xjc</id>
+								<goals>
+									<goal>xjc</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<sources>
+								<source>${project.basedir}/src/main/resources/xsd/dip.xsd</source>
+								<source>${project.basedir}/src/main/resources/xsd/dip-types.xsd</source>
+								<source>${project.basedir}/src/main/resources/xsd/dipResponse.xsd</source>
+							</sources>
+							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+							<packageName>software.xdev.bzst.dip.client.generatedxmls</packageName>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 </project>

@@ -35,7 +35,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="consignmentItem" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}ConsignmentItemType" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="consignmentItem" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}ConsignmentItemType" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -43,13 +43,13 @@ import jakarta.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DipBodyType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
+@XmlType(name = "DipBodyType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", propOrder = {
 	"consignmentItem"
 })
 public class DipBodyType
 {
 	
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected List<ConsignmentItemType> consignmentItem;
 	
 	/**

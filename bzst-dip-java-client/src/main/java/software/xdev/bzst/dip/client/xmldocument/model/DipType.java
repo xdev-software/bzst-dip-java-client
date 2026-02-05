@@ -34,8 +34,8 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="header" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}DipHeaderType"/&gt;
- *         &lt;element name="body" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}DipBodyType"/&gt;
+ *         &lt;element name="header" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}DipHeaderType"/&gt;
+ *         &lt;element name="body" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}DipBodyType"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -52,9 +52,9 @@ import jakarta.xml.bind.annotation.XmlType;
 public class DipType
 {
 	
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected DipHeaderType header;
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected DipBodyType body;
 	@XmlAttribute(name = "version", required = true)
 	protected String version;
