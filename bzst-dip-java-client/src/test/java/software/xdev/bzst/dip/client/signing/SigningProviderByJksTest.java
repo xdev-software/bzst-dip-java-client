@@ -24,8 +24,8 @@ import software.xdev.bzst.dip.client.exception.SigningException;
 class SigningProviderByJksTest
 {
 	
-	public static final String CERTIFICATE_KEYSTORE_PASSWORD = "test123";
-	public static final String CERTIFICATE_KEYSTORE_PATH = "DemoKeystore.jks";
+	static final String CERTIFICATE_KEYSTORE_PASSWORD = "test123";
+	static final String CERTIFICATE_KEYSTORE_PATH = "DemoKeystore.jks";
 	
 	@Test
 	void getCertificate()
