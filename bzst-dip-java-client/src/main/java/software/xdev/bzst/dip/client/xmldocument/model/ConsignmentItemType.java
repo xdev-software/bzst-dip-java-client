@@ -16,9 +16,12 @@
 
 package software.xdev.bzst.dip.client.xmldocument.model;
 
+import java.math.BigInteger;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
@@ -34,28 +37,32 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="bopAccountId" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}bopAccountIdType" minOccurs="0"/&gt;
+ *         &lt;element name="bopAccountId" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}bopAccountIdType" minOccurs="0"/&gt;
  *         &lt;element name="data" type="{http://www.w3.org/2001/XMLSchema}anyType"/&gt;
  *       &lt;/sequence&gt;
+ *       &lt;attribute name="consignmentItemPosition" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}consignmentItemPositionType" use="required"/&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConsignmentItemType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
+@XmlType(name = "ConsignmentItemType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", propOrder = {
 	"bopAccountId",
 	"data"
 })
 @XmlSeeAlso(DataType.class)
 public class ConsignmentItemType
 {
-	
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
+
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/")
 	protected String bopAccountId;
-	
+
 	@XmlAnyElement(lax = true)
 	protected Object data;
+
+	@XmlAttribute(name = "consignmentItemPosition", required = true)
+	protected BigInteger consignmentItemPosition;
 	
 	/**
 	 * Gets the value of the bopAccountId property.
@@ -95,5 +102,25 @@ public class ConsignmentItemType
 	public void setData(final Object value)
 	{
 		this.data = value;
+	}
+
+	/**
+	 * Gets the value of the consignmentItemPosition property.
+	 *
+	 * @return possible object is {@link BigInteger }
+	 */
+	public BigInteger getConsignmentItemPosition()
+	{
+		return this.consignmentItemPosition;
+	}
+
+	/**
+	 * Sets the value of the consignmentItemPosition property.
+	 *
+	 * @param value allowed object is {@link BigInteger }
+	 */
+	public void setConsignmentItemPosition(final BigInteger value)
+	{
+		this.consignmentItemPosition = value;
 	}
 }

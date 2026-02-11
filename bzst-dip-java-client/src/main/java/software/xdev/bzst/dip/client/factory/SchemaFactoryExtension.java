@@ -40,7 +40,7 @@ public final class SchemaFactoryExtension
         schemaFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         schemaFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
         schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-        schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+        schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file");
         
         return schemaFactory;
     }

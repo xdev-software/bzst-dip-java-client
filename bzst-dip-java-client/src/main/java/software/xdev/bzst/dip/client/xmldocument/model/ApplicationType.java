@@ -38,7 +38,7 @@ import jakarta.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ApplicationType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
+@XmlType(name = "ApplicationType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/")
 public class ApplicationType
 {
 	
