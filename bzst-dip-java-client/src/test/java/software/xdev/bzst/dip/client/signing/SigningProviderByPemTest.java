@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test;
 class SigningProviderByPemTest
 {
 	
-	public static final String DEMO_CERT_PEM = "DemoCert.pem";
-	public static final String DEMO_KEY_PEM = "DemoKey.pem";
+	static final String DEMO_CERT_PEM = "DemoCert.pem";
+	static final String DEMO_KEY_PEM = "DemoKey.pem";
 	
 	@Test
 	void getCertificate()

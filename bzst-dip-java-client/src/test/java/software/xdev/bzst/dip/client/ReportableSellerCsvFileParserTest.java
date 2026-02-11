@@ -50,10 +50,10 @@ import software.xdev.bzst.dip.client.xmldocument.model.CorrectableReportableSell
 class ReportableSellerCsvFileParserTest
 {
 
-	public static final String TEST_CSV_FILE = "src/test/resources/TestCsvData.csv";
-	public static final String TEST_CSV_FILE_WITH_COMMA_SEPERATOR =
+	static final String TEST_CSV_FILE = "src/test/resources/TestCsvData.csv";
+	static final String TEST_CSV_FILE_WITH_COMMA_SEPERATOR =
 		"src/test/resources/TestCsvDataWithCommaSeperator.csv";
-	public static final String TEST_CSV_FILE_WITH_CORRUPTED_DATA =
+	static final String TEST_CSV_FILE_WITH_CORRUPTED_DATA =
 		"src/test/resources/TestCsvDataWithCorruptedData.csv";
 	private final BzstDipConfiguration configuration = new BzstDipConfigurationBuilder()
 		.setClientId("TestClient")
