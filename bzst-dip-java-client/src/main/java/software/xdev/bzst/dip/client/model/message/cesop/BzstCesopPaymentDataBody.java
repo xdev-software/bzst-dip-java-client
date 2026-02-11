@@ -15,8 +15,8 @@
  */
 package software.xdev.bzst.dip.client.model.message.cesop;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -72,7 +72,6 @@ public record BzstCesopPaymentDataBody(BzstCesopReportingPSP reportingPSP, List<
 		return paymentDataBodyType;
 	}
 	
-	@SuppressWarnings("PMD.ReplaceJavaUtilCalendar")
 	private List<ReportedPayeeType> convertToReportedPayeesType() throws DatatypeConfigurationException
 	{
 		final List<ReportedPayeeType> reportedPayeeTypes = new ArrayList<>();
@@ -142,10 +141,9 @@ public record BzstCesopPaymentDataBody(BzstCesopReportingPSP reportingPSP, List<
 			reportedTransactionType.setInitiatedAtPhysicalPremisesOfMerchant(reportedPayee.reportedTransaction()
 				.initiatedAtPhysicalPremisesOfMerchant());
 			
-			final GregorianCalendar gregorianCalendar =
-				GregorianCalendar.from(reportedPayee.reportedTransaction().transactionDateType().value());
-			final XMLGregorianCalendar xmlGregorianCalendar =
-				DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+			final XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
+				.newXMLGregorianCalendar(reportedPayee.reportedTransaction().transactionDateType().value()
+					.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 			
 			transactionDateType.setValue(xmlGregorianCalendar);
 			transactionDateType.setTransactionDateType(
