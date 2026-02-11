@@ -53,19 +53,19 @@ public final class WebClientUtil
 			final DocumentBuilder db = dbf.newDocumentBuilder();
 			final Document doc = db.parse(new InputSource(new StringReader(xmlString)));
 			
-			final NodeList nodeList = doc.getElementsByTagName(TAG_NAME_DATENTRANSFERNUMMER);
-			final List<String> stringList = new ArrayList<>();
+			final NodeList nodes = doc.getElementsByTagName(TAG_NAME_DATENTRANSFERNUMMER);
+			final List<String> strings = new ArrayList<>();
 			
-			for(int i = 0; i < nodeList.getLength(); i++)
+			for(int i = 0; i < nodes.getLength(); i++)
 			{
-				final Node node = nodeList.item(i);
+				final Node node = nodes.item(i);
 				if(node.getNodeType() == Node.ELEMENT_NODE)
 				{
 					final Element tElement = (Element)node;
-					stringList.add(tElement.getTextContent());
+					strings.add(tElement.getTextContent());
 				}
 			}
-			return stringList;
+			return strings;
 		}
 		catch(final ParserConfigurationException | SAXException | IOException e)
 		{
