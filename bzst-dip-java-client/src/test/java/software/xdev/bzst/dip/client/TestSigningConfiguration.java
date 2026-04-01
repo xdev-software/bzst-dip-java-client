@@ -26,12 +26,8 @@ import software.xdev.bzst.dip.client.signing.SigningProviderByJks;
 import software.xdev.bzst.dip.client.signing.SigningProviderByPem;
 
 
-public final class ConfigurationTestUtil
+public final class TestSigningConfiguration
 {
-	private ConfigurationTestUtil()
-	{
-	}
-	
 	public static BzstDipConfiguration getConfigurationWithJksSigning()
 	{
 		return createBuilderWithoutSigning()
@@ -62,5 +58,9 @@ public final class ConfigurationTestUtil
 			.setPlatformOperatorAddress(
 				new BzstDipAddressFix("TestCity")
 			);
+	}
+	
+	private TestSigningConfiguration()
+	{
 	}
 }

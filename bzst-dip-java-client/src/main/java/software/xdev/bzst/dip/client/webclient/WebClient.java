@@ -30,7 +30,7 @@ import software.xdev.bzst.dip.client.generated.client.ApiClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipRequestStatusResult;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipSingleTransferResult;
-import software.xdev.bzst.dip.client.util.WebClientUtil;
+import software.xdev.bzst.dip.client.util.TransferNumberExtractor;
 
 
 /**
@@ -122,7 +122,7 @@ public class WebClient
 			final String responseBody = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			LOGGER.debug("ResponseBody from data transfer number request:\n{}", responseBody);
 			
-			return WebClientUtil.extractTransferNumberFromXml(responseBody);
+			return TransferNumberExtractor.extractFromXml(responseBody);
 		}
 	}
 	

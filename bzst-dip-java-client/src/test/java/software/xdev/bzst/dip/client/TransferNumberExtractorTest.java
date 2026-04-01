@@ -23,17 +23,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import software.xdev.bzst.dip.client.util.WebClientUtil;
+import software.xdev.bzst.dip.client.util.TransferNumberExtractor;
 
 
-class WebClientUtilTest
+class TransferNumberExtractorTest
 {
 	@Test
 	void throwExceptionCanNotParseToXmlTest()
 	{
 		final IOException thrown = assertThrows(
 			IOException.class,
-			() -> WebClientUtil.extractTransferNumberFromXml("12345")
+			() -> TransferNumberExtractor.extractFromXml("12345")
 		);
 		
 		assertEquals("An error occurred while parsing the transfer numbers.", thrown.getMessage());
@@ -43,7 +43,7 @@ class WebClientUtilTest
 	void noTransferNumbersTest() throws IOException
 	{
 		final List<String> dataTransferNumbers =
-			WebClientUtil.extractTransferNumberFromXml(
+			TransferNumberExtractor.extractFromXml(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
 					+ "<Datentransfernummern/>");
 		
@@ -54,7 +54,7 @@ class WebClientUtilTest
 	void transferNumbersTest() throws IOException
 	{
 		final List<String> dataTransferNumbers =
-			WebClientUtil.extractTransferNumberFromXml(
+			TransferNumberExtractor.extractFromXml(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
 					+ "<Datentransfernummern>"
 					+ "<Datentransfernummer>2394headfsoiu</Datentransfernummer>"

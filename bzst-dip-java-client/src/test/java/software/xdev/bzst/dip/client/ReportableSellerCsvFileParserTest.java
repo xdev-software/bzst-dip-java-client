@@ -16,7 +16,7 @@
 package software.xdev.bzst.dip.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static software.xdev.bzst.dip.client.ConfigurationTestUtil.getConfigurationWithJksSigning;
+import static software.xdev.bzst.dip.client.TestSigningConfiguration.getConfigurationWithJksSigning;
 
 import java.io.IOException;
 import java.io.Reader;

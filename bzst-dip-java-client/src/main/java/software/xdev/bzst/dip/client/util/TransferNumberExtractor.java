@@ -37,15 +37,11 @@ import software.xdev.bzst.dip.client.factory.DocumentBuilderFactoryNoExternalEnt
 /**
  * Helps in communicating as web client.
  */
-public final class WebClientUtil
+public final class TransferNumberExtractor
 {
 	public static final String TAG_NAME_DATENTRANSFERNUMMER = "Datentransfernummer";
 	
-	private WebClientUtil()
-	{
-	}
-	
-	public static List<String> extractTransferNumberFromXml(final String xmlString) throws IOException
+	public static List<String> extractFromXml(final String xmlString) throws IOException
 	{
 		try
 		{
@@ -71,5 +67,9 @@ public final class WebClientUtil
 		{
 			throw new IOException("An error occurred while parsing the transfer numbers.", e);
 		}
+	}
+	
+	private TransferNumberExtractor()
+	{
 	}
 }

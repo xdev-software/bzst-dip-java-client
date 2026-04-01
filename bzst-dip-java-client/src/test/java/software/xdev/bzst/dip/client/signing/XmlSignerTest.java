@@ -23,7 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import software.xdev.bzst.dip.client.ConfigurationTestUtil;
+import software.xdev.bzst.dip.client.TestSigningConfiguration;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.xmldocument.XMLDocumentBodyCreator;
 import software.xdev.bzst.dip.client.xmldocument.XMLDocumentCreator;
@@ -34,8 +34,8 @@ class XmlSignerTest
 	private static Stream<Arguments> provideConfigurations()
 	{
 		return Stream.of(
-			Arguments.of(ConfigurationTestUtil.getConfigurationWithJksSigning()),
-			Arguments.of(ConfigurationTestUtil.getConfigurationWithPemSigning())
+			Arguments.of(TestSigningConfiguration.getConfigurationWithJksSigning()),
+			Arguments.of(TestSigningConfiguration.getConfigurationWithPemSigning())
 		);
 	}
 	
