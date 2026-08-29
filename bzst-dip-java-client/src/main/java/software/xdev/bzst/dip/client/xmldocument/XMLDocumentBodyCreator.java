@@ -18,7 +18,7 @@ package software.xdev.bzst.dip.client.xmldocument;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.GregorianCalendar;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -258,33 +258,32 @@ public class XMLDocumentBodyCreator
 		return addressType;
 	}
 	
-	@SuppressWarnings("PMD.ReplaceJavaUtilCalendar")
 	private software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType createMessageSpecCesop()
 		throws DatatypeConfigurationException
 	{
 		LOGGER.debug("Creating messageSpec...");
-		
+
 		final software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType messageSpecType =
 			new software.xdev.bzst.dip.client.xmldocument.model.cesop.MessageSpecType();
-		
+
 		messageSpecType.setTransmittingCountry(MSCountryCodeType.fromValue(this.configuration.getTransmittingCountry()
 			.name()));
 		messageSpecType.setMessageType(MessageTypeType.fromValue(this.configuration.getMessageType().value()));
 		messageSpecType.setMessageTypeIndic(MessageTypeIndicType.fromValue(this.configuration.getMessageTypeIndicEnum()
 			.value()));
 		messageSpecType.setMessageRefId(this.configuration.getMessageRefId());
-		
+
 		final ReportingPeriodType reportingPeriodType = new ReportingPeriodType();
 		reportingPeriodType.setQuarter(this.configuration.getReportingPeriodCesopQuarter());
 		reportingPeriodType.setYear(this.configuration.getReportingPeriodCesopYear());
 		messageSpecType.setReportingPeriod(reportingPeriodType);
-		
-		final GregorianCalendar gregorianCalendar = GregorianCalendar.from(this.configuration.getTimestamp());
-		final XMLGregorianCalendar xmlGregorianCalendar =
-			DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
-		
+
+		final XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
+			.newXMLGregorianCalendar(this.configuration.getTimestamp()
+				.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+
 		messageSpecType.setTimestamp(xmlGregorianCalendar);
-		
+
 		return messageSpecType;
 	}
 	
