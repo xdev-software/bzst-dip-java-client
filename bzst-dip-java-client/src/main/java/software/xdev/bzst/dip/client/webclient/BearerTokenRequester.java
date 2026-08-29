@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import io.jsonwebtoken.Jwts;
-import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
+import software.xdev.bzst.dip.client.generated.api.MdsProviderV21Api;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 
 
@@ -42,12 +42,12 @@ public class BearerTokenRequester
 	private static final String BEARER_STRING = "Bearer ";
 	public static final String MDS_POSTFIX = "/auth/realms/mds";
 	
-	private final MdEinreichenProviderApi client;
+	private final MdsProviderV21Api client;
 	private final BzstDipConfiguration configuration;
 	
 	public BearerTokenRequester(
 		final BzstDipConfiguration configuration,
-		final MdEinreichenProviderApi client
+		final MdsProviderV21Api client
 	)
 	{
 		this.configuration = configuration;

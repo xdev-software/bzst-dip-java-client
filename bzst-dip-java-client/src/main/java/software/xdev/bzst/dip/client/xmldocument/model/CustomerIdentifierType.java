@@ -33,8 +33,8 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="identityProvider" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}identityProviderType"/&gt;
- *         &lt;element name="identifier" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}identifierType"/&gt;
+ *         &lt;element name="identityProvider" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}identityProviderType"/&gt;
+ *         &lt;element name="identifier" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}identifierType"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -42,17 +42,17 @@ import jakarta.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CustomerIdentifierType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
+@XmlType(name = "CustomerIdentifierType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", propOrder = {
 	"identityProvider",
 	"identifier"
 })
 public class CustomerIdentifierType
 {
 	
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	@XmlSchemaType(name = "string")
 	protected IdentityProviderType identityProvider;
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected String identifier;
 	
 	/**

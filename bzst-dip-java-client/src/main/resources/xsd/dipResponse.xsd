@@ -1,0 +1,74 @@
+<!-- Mit XMLSpy v2023 sp1 (x64) (http://www.altova.com) von L Bk (evaluation) bearbeitet -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://itzbund.de/ozg/bzst/post/dip/v2/" targetNamespace="http://itzbund.de/ozg/bzst/post/dip/v2/"
+		   elementFormDefault="qualified">
+	<xs:include schemaLocation="dip-types.xsd"/>
+	<xs:element name="dipResponse" type="DipResponseType"/>
+	<xs:complexType name="DipResponseType">
+		<xs:sequence>
+			<xs:element name="responseTransferticketId" type="customTicketIdNumberType">
+				<xs:annotation>
+					<xs:documentation>TransferticketId der Antwort</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dipProtocol" type="DipProtocolType"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="DipProtocolType">
+		<xs:sequence>
+			<xs:element name="consignment" type="ConsignmentType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Angabe des Elements consignment der zugehörigen Lieferung für Referenzzwecke im Kundensystem. Kann entfallen, falls
+						Vorabprüfungen (z.B. Virus gefunden) das Einlesen des Dip-Headers verhindert haben.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="processStatus" type="processStatusType">
+				<xs:annotation>
+					<xs:documentation>Gesamtergebnis der Lieferung: OK für erfolgreiche Annahme der gesamten Lieferung ohne Validierungsfehler.
+						PARTIALLY_REJECTED, die Lieferung wurde angenommen, es sind allerdings Fehler/Hinweise im Element payloadResult enthalten. ERROR, die
+						Lieferung wurde als ganzes abgelehnt; Fehler sind entweder im Element dipResult oder payloadResult aufgelistet.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dipResult" type="DipResultType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="payloadResult" type="PayloadResultType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DipResultType">
+		<xs:annotation>
+			<xs:documentation>Enthält Fehler, die bei Validierungsfehlern in der POSt 2.0 Massendatenkomponente DIP aufgetreten sind. Vgl. auch Auflistung in
+				Kapitel 7 Prüfungen und Rückmeldungen der DIP-Schnittstelle im Kommunikationshandbuch POSt 2.0 - DIP
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="dipCodeType"/>
+			<xs:element name="message" type="dipMessageType" minOccurs="0"/>
+			<xs:element name="cause" type="xs:anyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Enthält ggf. Grund für den Fehler.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PayloadResultType">
+		<xs:complexContent>
+			<xs:extension base="xs:anyType">
+				<xs:attribute name="consignmentItemPosition" type="consignmentItemPositionType" use="required"/>
+				<xs:attribute name="schemaVersion" type="schemaVersionType"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="dipCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="dipMessageType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="2000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
