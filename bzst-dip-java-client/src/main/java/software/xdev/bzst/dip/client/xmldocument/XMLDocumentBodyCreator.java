@@ -16,6 +16,7 @@
 package software.xdev.bzst.dip.client.xmldocument;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
@@ -92,18 +93,20 @@ public class XMLDocumentBodyCreator
 	) throws DatatypeConfigurationException
 	{
 		final ConsignmentItemType consignmentItem = new ConsignmentItemType();
+		consignmentItem.setConsignmentItemPosition(BigInteger.ZERO);
 		consignmentItem.setData(this.createData(correctableReportableSellerTypes, platformOperatorType));
-		
+
 		return consignmentItem;
 	}
-	
+
 	private ConsignmentItemType createConsignmentItem(
 		final PaymentDataBodyType paymentDataBodyType
 	) throws DatatypeConfigurationException
 	{
 		final ConsignmentItemType consignmentItem = new ConsignmentItemType();
+		consignmentItem.setConsignmentItemPosition(BigInteger.ZERO);
 		consignmentItem.setData(this.createData(paymentDataBodyType));
-		
+
 		return consignmentItem;
 	}
 	

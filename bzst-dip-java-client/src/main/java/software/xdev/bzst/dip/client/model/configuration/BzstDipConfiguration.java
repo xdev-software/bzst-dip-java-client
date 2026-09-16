@@ -147,8 +147,7 @@ public class BzstDipConfiguration
 	 * the portal via Elster) or the BZST number and the associated type (ELSTER or BZSTCERT) are used.
 	 * </p>
 	 * <p>
-	 * See <a href="https://www.bzst.de/SharedDocs/Downloads/DE/EOP_BOP/khb_dip
-	 * .pdf?__blob=publicationFile&v=9">Kommunikationshandbuch DIP-Standard 1.4</a> - Section 5.1.3:
+	 * See <a href="https://www.bzst.de/EN/Service/Portalinformation/Mass_data/DIP/mass_data_dip.html">Kommunikationshandbuch DIP-Standard 2.3</a> - Section 5.1.3:
 	 * </p>
 	 */
 	private final String taxNumber;

@@ -35,10 +35,10 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="customerIdentifier" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}CustomerIdentifierType"/&gt;
+ *         &lt;element name="customerIdentifier" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}CustomerIdentifierType"/&gt;
  *         &lt;element name="creationTime" type="{http://www.w3.org/2001/XMLSchema}dateTime"/&gt;
- *         &lt;element name="transferticketId" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}customTicketIdNumberType"/&gt;
- *         &lt;element name="referenceId" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}customTicketIdNumberType" minOccurs="0"/&gt;
+ *         &lt;element name="transferticketId" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}customTicketIdNumberType"/&gt;
+ *         &lt;element name="referenceId" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}customTicketIdNumberType" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -46,7 +46,7 @@ import jakarta.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConsignmentType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
+@XmlType(name = "ConsignmentType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", propOrder = {
 	"customerIdentifier",
 	"creationTime",
 	"transferticketId",
@@ -55,14 +55,14 @@ import jakarta.xml.bind.annotation.XmlType;
 public class ConsignmentType
 {
 	
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected CustomerIdentifierType customerIdentifier;
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	@XmlSchemaType(name = "dateTime")
 	protected XMLGregorianCalendar creationTime;
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected String transferticketId;
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/")
 	protected String referenceId;
 	
 	/**

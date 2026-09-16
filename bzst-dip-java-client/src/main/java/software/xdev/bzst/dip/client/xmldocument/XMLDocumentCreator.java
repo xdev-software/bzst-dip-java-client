@@ -225,18 +225,10 @@ public class XMLDocumentCreator
 			
 			final Schema schema = factory.newSchema(new Source[]
 				{
-					new StreamSource(this.getClass()
-						.getClassLoader()
-						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + DIP_XSD)),
-					new StreamSource(this.getClass()
-						.getClassLoader()
-						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + ISO_DPI_TYPES_XSD)),
-					new StreamSource(this.getClass()
-						.getClassLoader()
-						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + OECD_DPI_TYPES_XSD)),
-					new StreamSource(this.getClass()
-						.getClassLoader()
-						.getResourceAsStream(XSD_SUBDIRECTORY + "/" + DPI_XML_XSD))
+					createStreamSource(DIP_XSD),
+					createStreamSource(ISO_DPI_TYPES_XSD),
+					createStreamSource(OECD_DPI_TYPES_XSD),
+					createStreamSource(DPI_XML_XSD)
 				});
 			
 			final Validator validator = schema.newValidator();
@@ -251,6 +243,15 @@ public class XMLDocumentCreator
 		}
 	}
 	
+	private StreamSource createStreamSource(final String xsdFileName)
+	{
+		final String resourcePath = XSD_SUBDIRECTORY + "/" + xsdFileName;
+		return new StreamSource(
+			this.getClass().getClassLoader().getResourceAsStream(resourcePath),
+			this.getClass().getClassLoader().getResource(resourcePath).toExternalForm()
+		);
+	}
+
 	public static XMLGregorianCalendar parseLocalDateToXMLGregorianCalendarDate(final LocalDate localDate)
 	{
 		try

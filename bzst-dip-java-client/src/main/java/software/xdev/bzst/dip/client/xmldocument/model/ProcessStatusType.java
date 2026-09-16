@@ -34,7 +34,7 @@ import jakarta.xml.bind.annotation.XmlType;
  * &lt;/simpleType&gt;
  * </pre>
  */
-@XmlType(name = "processStatusType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/")
+@XmlType(name = "processStatusType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/")
 @XmlEnum
 public enum ProcessStatusType
 {

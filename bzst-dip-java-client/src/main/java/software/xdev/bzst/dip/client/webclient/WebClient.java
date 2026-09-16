@@ -25,7 +25,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import software.xdev.bzst.dip.client.generated.api.MdEinreichenProviderApi;
+import software.xdev.bzst.dip.client.generated.api.MdsProviderV21Api;
 import software.xdev.bzst.dip.client.generated.client.ApiClient;
 import software.xdev.bzst.dip.client.model.configuration.BzstDipConfiguration;
 import software.xdev.bzst.dip.client.model.message.dac7.BzstDipRequestStatusResult;
@@ -41,26 +41,37 @@ public class WebClient
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebClient.class);
 	public static final int OK_HTTP_STATUS_CODE = 200;
 	
-	private final MdEinreichenProviderApi client;
+	private final BzstDipConfiguration configuration;
+	private final MdsProviderV21Api client;
 	private final BearerTokenRequester bearerTokenRequester;
 	
 	public WebClient(final BzstDipConfiguration configuration)
 	{
-		this(configuration, new MdEinreichenProviderApi());
-		this.client.getApiClient().setBasePath(configuration.getRealmEnvironmentBaseUrl());
-	}
-	
-	public WebClient(final BzstDipConfiguration configuration, final ApiClient apiClient)
-	{
-		this(configuration, new MdEinreichenProviderApi(apiClient));
+		this(configuration, new ApiClient());
 	}
 	
 	public WebClient(
 		final BzstDipConfiguration configuration,
-		final MdEinreichenProviderApi mdEinreichenProviderApi)
+		final ApiClient apiClient)
 	{
-		this.client = mdEinreichenProviderApi;
-		this.bearerTokenRequester = new BearerTokenRequester(configuration, this.client);
+		this.configuration = configuration;
+		apiClient.setBasePath(configuration.getRealmEnvironmentBaseUrl());
+		
+		this.client = new MdsProviderV21Api(apiClient);
+		
+		this.bearerTokenRequester = new BearerTokenRequester(configuration, new MdsProviderV21Api(apiClient));
+		apiClient.setBearerToken(this.bearerTokenRequester::getAccessToken);
+	}
+	
+	public WebClient(
+		final BzstDipConfiguration configuration,
+		final MdsProviderV21Api mdsProviderV21Api)
+	{
+		this.configuration = configuration;
+		this.client = mdsProviderV21Api;
+		this.bearerTokenRequester = new BearerTokenRequester(
+			configuration,
+			new MdsProviderV21Api(mdsProviderV21Api.getApiClient()));
 	}
 	
 	/**
@@ -68,27 +79,21 @@ public class WebClient
 	 */
 	public String getDataTransferNumber()
 	{
-		return this.getDataTransferNumber("DAC7");
+		return this.getDataTransferNumber(this.configuration.getApplicationCode());
 	}
 	
 	public String getDataTransferNumber(final String fachverfahren)
 	{
 		LOGGER.debug("Getting data transfer number...");
-		return this.client.einreichungAnmelden(
-			fachverfahren,
-			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
-		);
+		return this.client.einreichungAnmelden(fachverfahren);
 	}
 	
 	public void uploadMassData(final String dataTransferNumber, final String xmlString)
 	{
 		LOGGER.debug("Uploading the xml data...");
 		
-		this.client.massendatenEinreichen(
-			dataTransferNumber,
-			this.bearerTokenRequester.getAccessTokenWithBearerPrefix(),
-			new ByteArrayInputStream(xmlString.getBytes())
-		);
+		final InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8));
+		this.client.massendatenEinreichen(dataTransferNumber, inputStream);
 		
 		LOGGER.debug("Uploaded data successfully!");
 	}
@@ -99,10 +104,7 @@ public class WebClient
 	public void closeSubmission(final String dataTransferNumber)
 	{
 		LOGGER.debug("Closing submission...");
-		this.client.einreichungBeenden(
-			dataTransferNumber,
-			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
-		);
+		this.client.einreichungBeenden(dataTransferNumber);
 		LOGGER.debug("Closed submission successfully!");
 	}
 	
@@ -114,9 +116,7 @@ public class WebClient
 	public List<String> requestResultLogs() throws IOException
 	{
 		try(
-			final InputStream inputStream = this.client.alleProtokollnummern(
-				this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
-			)
+			final InputStream inputStream = this.client.alleProtokollnummern()
 		)
 		{
 			final String responseBody = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
@@ -136,9 +136,7 @@ public class WebClient
 	{
 		try(
 			final InputStream inputStream = this.client.protokollAbrufen(
-				dataTransferNumber,
-				this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
-			)
+				dataTransferNumber)
 		)
 		{
 			// Improve via https://github.com/xdev-software/bzst-dip-java-client/issues/14
@@ -153,20 +151,14 @@ public class WebClient
 	 */
 	public BzstDipSingleTransferResult confirmTransfer(final String dataTransferNumber)
 	{
-		this.client.protokollErhalten(
-			dataTransferNumber,
-			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
-		);
+		this.client.protokollErhalten(dataTransferNumber);
 		return new BzstDipSingleTransferResult(dataTransferNumber, OK_HTTP_STATUS_CODE);
 	}
 	
 	public void abortSubmission(final String dataTransferNumber)
 	{
 		LOGGER.error("Aborting submission...");
-		this.client.einreichungAbbrechen(
-			dataTransferNumber,
-			this.bearerTokenRequester.getAccessTokenWithBearerPrefix()
-		);
+		this.client.einreichungAbbrechen(dataTransferNumber);
 		LOGGER.debug("Aborted successfully.");
 	}
 	
@@ -206,5 +198,12 @@ public class WebClient
 			this.confirmTransfer(transferNumber);
 		}
 		return singleTransferResult;
+	}
+	
+	public void uploadAttachment(final String dataTransferNumber, final InputStream attachment)
+	{
+		LOGGER.debug("Uploading attachment...");
+		this.client.anhangEinreichen(dataTransferNumber, attachment);
+		LOGGER.debug("Uploaded attachment successfully!");
 	}
 }

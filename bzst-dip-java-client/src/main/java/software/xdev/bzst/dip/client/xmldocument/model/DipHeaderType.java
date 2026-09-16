@@ -33,26 +33,26 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="consignment" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}ConsignmentType"/&gt;
- *         &lt;element name="application" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}ApplicationType"/&gt;
+ *         &lt;element name="consignment" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}ConsignmentType"/&gt;
+ *         &lt;element name="application" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}ApplicationType"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="environment" use="required" type="{http://itzbund.de/ozg/bzst/post/dip/v1/}environmentType" /&gt;
+ *       &lt;attribute name="environment" use="required" type="{http://itzbund.de/ozg/bzst/post/dip/v2/}environmentType" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DipHeaderType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", propOrder = {
+@XmlType(name = "DipHeaderType", namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", propOrder = {
 	"consignment",
 	"application"
 })
 public class DipHeaderType
 {
 	
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected ConsignmentType consignment;
-	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v1/", required = true)
+	@XmlElement(namespace = "http://itzbund.de/ozg/bzst/post/dip/v2/", required = true)
 	protected ApplicationType application;
 	@XmlAttribute(name = "environment", required = true)
 	protected EnvironmentType environment;
