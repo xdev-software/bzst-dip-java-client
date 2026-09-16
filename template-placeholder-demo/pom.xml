@@ -27,6 +27,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<mainClass>software.xdev.Application</mainClass>
+
+		<log4j2-version>2.26.1</log4j2-version>
 	</properties>
 
 	<dependencies>
@@ -34,6 +36,19 @@
 			<groupId>software.xdev</groupId>
 			<artifactId>template-placeholder</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<!-- SLF4J comes from Apache Httpclient -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j2-version}</version>
 		</dependency>
 	</dependencies>
 
