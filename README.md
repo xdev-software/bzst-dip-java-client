@@ -134,8 +134,7 @@ CESOP ([ApplicationWithCesop.java](./bzst-dip-java-client-demo/src/main/java/sof
 Format.
 
 ## Support
-
-If you need support as soon as possible, and you can't wait for any pull request, feel free to use [our support](https://xdev.software/en/services/support).
+If you need support as soon as possible and you can't wait for any pull request, feel free to use [our support](https://xdev.software/en/services-products/support).
 
 ## Contributing
 See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
