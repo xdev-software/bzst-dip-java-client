@@ -4,6 +4,11 @@
 
 # <img src="assets/logo-v2.svg" height="24" alt="XDEV BZST-DIP-Java-Client Logo"> bzst-dip-java-client
 
+> [!IMPORTANT]
+> Due to breaking changes of the DIP API this client was discontinued.<br/>
+> We thank everyone who contributed.<br/>
+> If you require further help, feel free to contact [our support](https://xdev.software/en/services-products/support).
+
 Client for using the [Mass data transmission DIP (mass data interface)](https://www.bzst.de/EN/Businesses/CESOP/electronic_data_transmission/electronic_data_transmission_node.html#js-toc-entry1).
 
 The BZSt (Bundeszentralamt für Steuern / Federal Central Tax Office) provides the Digital Inbox (DIP) as a service for payment service providers to transmit financial data.
